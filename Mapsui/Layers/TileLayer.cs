@@ -121,6 +121,8 @@ namespace Mapsui.Layers
         /// <inheritdoc />
         public override IEnumerable<IFeature> GetFeaturesInView(BoundingBox box, double resolution)
         {
+            System.Diagnostics.Debug.WriteLine($"TileLayer.GetFeaturesInView {DateTime.Now.Ticks}:");
+
             if (_tileSource?.Schema == null) return Enumerable.Empty<IFeature>();
             UpdateMemoryCacheMinAndMax();
             return _renderGetStrategy.GetFeatures(box, resolution, _tileSource?.Schema, MemoryCache);
