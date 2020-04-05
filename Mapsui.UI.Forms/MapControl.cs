@@ -46,6 +46,7 @@ namespace Mapsui.UI.Forms
         private const int touchSlop = 8;
 
         private bool _initialized = false;
+        internal bool _updating;
         private double _innerRotation;
         private ConcurrentDictionary<long, TouchEvent> _touches = new ConcurrentDictionary<long, TouchEvent>();
         private Geometries.Point _firstTouch;
@@ -265,6 +266,9 @@ namespace Mapsui.UI.Forms
 
         public void RefreshGraphics()
         {
+            if (_updating)
+                return;
+
             if (!_initialized && GRContext == null)
             {
                 // Could this be null before Home is called? If so we should change the logic.

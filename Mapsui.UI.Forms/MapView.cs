@@ -88,6 +88,8 @@ namespace Mapsui.UI.Forms
             // Add MapView layers to Map
             AddLayers();
 
+            _mapControl._updating = true;
+
             // Add some events to _mapControl.Map.Layers
             _mapControl.Map.Layers.LayerAdded += HandlerLayerChanged;
             _mapControl.Map.Layers.LayerMoved += HandlerLayerChanged;
@@ -166,6 +168,8 @@ namespace Mapsui.UI.Forms
 
             _mapDrawableLayer.DataSource = new ObservableCollectionProvider<Drawable>(_drawable);
             _mapDrawableLayer.Style = null;  // We don't want a global style for this layer
+
+            _mapControl._updating = false;
         }
 
         #region Events
@@ -968,11 +972,13 @@ namespace Mapsui.UI.Forms
         /// </summary>
         private void AddLayers()
         {
+            _mapControl._updating = true;
             // Add MapView layers
             _mapControl.Map.Layers.Add(_mapDrawableLayer);
             _mapControl.Map.Layers.Add(_mapPinLayer);
             _mapControl.Map.Layers.Add(_mapCalloutLayer);
             _mapControl.Map.Layers.Add(MyLocationLayer);
+            _mapControl._updating = false;
         }
 
         /// <summary>
@@ -980,11 +986,13 @@ namespace Mapsui.UI.Forms
         /// </summary>
         private void RemoveLayers()
         {
+            _mapControl._updating = true;
             // Remove MapView layers
             _mapControl.Map.Layers.Remove(MyLocationLayer);
             _mapControl.Map.Layers.Remove(_mapCalloutLayer);
             _mapControl.Map.Layers.Remove(_mapPinLayer);
             _mapControl.Map.Layers.Remove(_mapDrawableLayer);
+            _mapControl._updating = false;
         }
 
         /// <summary>
