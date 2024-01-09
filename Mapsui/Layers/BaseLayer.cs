@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading;
 using Mapsui.Fetcher;
 using Mapsui.Logging;
 using Mapsui.Styles;
 using Mapsui.Widgets;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
 
 namespace Mapsui.Layers;
 
@@ -157,6 +156,25 @@ public abstract class BaseLayer : ILayer
             if (_style == value) return;
             _style = value;
             OnPropertyChanged(nameof(Style));
+        }
+    }
+
+    int _zOrder = 0;
+
+    /// <summary>
+    /// Z-Order of layers 
+    /// </summary>
+    /// <remarks>
+    /// Smaller values are retrieved earlier
+    /// </remarks>
+    public int ZOrder
+    {
+        get => _zOrder;
+        set
+        {
+            if (_zOrder == value) return;
+            _zOrder = value;
+            OnPropertyChanged(nameof(ZOrder));
         }
     }
 
