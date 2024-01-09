@@ -29,12 +29,12 @@ public class LayerCollection : IEnumerable<ILayer>
 
     public IEnumerator<ILayer> GetEnumerator()
     {
-        return _layers.GetEnumerator();
+        return _layers.OrderBy(l => l.ZOrder).ThenBy(l => l.Id).GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return _layers.GetEnumerator();
+        return _layers.OrderBy(l => l.ZOrder).ThenBy(l => l.Id).GetEnumerator();
     }
 
     public void Clear()
@@ -70,7 +70,7 @@ public class LayerCollection : IEnumerable<ILayer>
         _layers = new ConcurrentQueue<ILayer>(copy);
     }
 
-    public ILayer this[int index] => _layers.ToArray()[index];
+    public ILayer this[int index] => _layers.OrderBy(l => l.ZOrder).ThenBy(l => l.Id).ToArray()[index];
 
     public void Add(params ILayer[] layers)
     {
@@ -78,6 +78,7 @@ public class LayerCollection : IEnumerable<ILayer>
         OnChanged(layers, null);
     }
 
+    [Obsolete("Use ZOrder for this")]
     public void Move(int index, ILayer layer)
     {
         var copy = _layers.ToArray().ToList();
@@ -93,6 +94,7 @@ public class LayerCollection : IEnumerable<ILayer>
         OnChanged(null, null, new[] { layer });
     }
 
+    [Obsolete("Use ZOrder for this")]
     public void Insert(int index, params ILayer[] layers)
     {
         if (layers == null || !layers.Any())
@@ -195,6 +197,8 @@ public class LayerCollection : IEnumerable<ILayer>
     {
         LayerAdded?.Invoke(layer);
     }
+
+    [Obsolete()]
 
     private void OnLayerMoved(ILayer layer)
     {
