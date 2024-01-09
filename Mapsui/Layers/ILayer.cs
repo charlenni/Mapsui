@@ -60,6 +60,14 @@ public interface ILayer : IAnimatable, INotifyPropertyChanged, IDisposable
     IStyle? Style { get; set; }
 
     /// <summary>
+    /// Z-Order of layers 
+    /// </summary>
+    /// <remarks>
+    /// Smaller values are retrieved earlier
+    /// </remarks>
+    int ZOrder { get; set; }
+
+    /// <summary>
     /// Opacity of layer
     /// </summary>
     double Opacity { get; set; }
