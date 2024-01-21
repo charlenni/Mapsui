@@ -22,6 +22,11 @@ public class Marker : PointFeature
 {
     private readonly static Dictionary<MarkerType, string> _defaultPins = new();
 
+    // Default offsets for all pin markers (center/bottom)
+    private static Offset _defaultPinAnchor = new RelativeOffset(0.0, 0.5);
+    // Default offsets for callout for all markers (center/top too, but anchor of pin is center/bottom not center/center)
+    private static Offset _defaultPinCalloutAnchor = new RelativeOffset(0.0, 1.0);
+
     private readonly SymbolStyle _style = new SymbolStyle();
     private readonly CalloutStyle _calloutStyle = new CalloutStyle();
 
@@ -74,22 +79,6 @@ public class Marker : PointFeature
             if (value.Equals(_scale)) return;
             _scale = value;
             _style.SymbolScale = _scale;
-        }
-    }
-
-    // Default offsets for all pin markers (center/bottom)
-    private static Offset _defaultPinAnchor = new RelativeOffset(0.0, 0.5);
-
-    /// <summary>
-    /// Anchor of bitmap in pixel
-    /// </summary>
-    public Offset Anchor
-    {
-        get => _style.SymbolOffset;
-        set
-        {
-            if (value.Equals(_style.SymbolOffset)) return;
-            _style.SymbolOffset = value;
         }
     }
 
@@ -149,23 +138,6 @@ public class Marker : PointFeature
     /// True if the callout is visible
     /// </summary>
     public bool HasCallout => _calloutStyle.Enabled;
-
-    // Default offsets for callout for all pin markers (center/top too, but anchor of pin is center/bottom not center/center)
-    private static Offset _defaultPinCalloutAnchor = new RelativeOffset(0.0, 1.0);
-
-    /// <summary>
-    /// Anchor of bitmap in pixel
-    /// </summary>
-    public Offset CalloutAnchor
-    {
-        get => _calloutStyle.SymbolOffset;
-        set
-        {
-            if (value.Equals(_calloutStyle.SymbolOffset)) 
-                return;
-            _calloutStyle.SymbolOffset = value;
-        }
-    }
 
     /// <summary>
     /// Show callout with <see cref="Title" /> and <see cref="Subtitle" /> as text
