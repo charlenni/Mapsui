@@ -18,7 +18,10 @@ public static class MemoryLayerExtensions
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
-    public static MemoryLayer AddMarker(this MemoryLayer layer, double x, double y, MarkerType type = MarkerType.Pin_Circle, string? title = null, string? subtitle = null, Styles.Color? color = null, double scale = 1.0, Offset? anchor = null, Offset? calloutAnchor = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
+    /// <param name="color">Color of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="touched">Action called when marker is touched</param>
+    public static MemoryLayer AddMarker(this MemoryLayer layer, double x, double y, MarkerType type = MarkerType.Pin_Circle, Styles.Color? color = null, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
     {
         var marker = new Marker(x, y, type);
 
@@ -26,8 +29,6 @@ public static class MemoryLayerExtensions
         marker.Scale = scale;
         marker.Title = title;
         marker.Subtitle = subtitle;
-        if (anchor != null) marker.Anchor = anchor;
-        if (calloutAnchor != null) marker.CalloutAnchor = calloutAnchor;
         if (color != null) marker.Color = color;
         if (touched != null) marker.Touched = touched;
 
@@ -41,10 +42,13 @@ public static class MemoryLayerExtensions
     /// </summary>
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
+    /// <param name="color">Color of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="touched">Action called when marker is touched</param>
     /// <param name="y">Y position</param>
-    public static MemoryLayer AddMarker(this MemoryLayer layer, (double x, double y) position, MarkerType type = MarkerType.Pin_Circle, string? title = null, string? subtitle = null, Styles.Color? color = null, double scale = 1.0, Offset? anchor = null, Offset? calloutAnchor = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
+    public static MemoryLayer AddMarker(this MemoryLayer layer, (double x, double y) position, MarkerType type = MarkerType.Pin_Circle, Color? color = null, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
     {
-        return AddMarker(layer, position.x, position.y, type, title, subtitle, color, scale, anchor, calloutAnchor, touched);
+        return AddMarker(layer, position.x, position.y, type, color, scale, title, subtitle, touched);
     }
 
     /// <summary>
@@ -52,9 +56,12 @@ public static class MemoryLayerExtensions
     /// </summary>
     /// <param name="layer">Layer to use</param>
     /// <param name="point">Point for position</param>
-    public static MemoryLayer AddMarker(this MemoryLayer layer, MPoint position, MarkerType type = MarkerType.Pin_Circle, string? title = null, string? subtitle = null, Styles.Color? color = null, double scale = 1.0, Offset? anchor = null, Offset? calloutAnchor = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
+    /// <param name="color">Color of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="touched">Action called when marker is touched</param>
+    public static MemoryLayer AddMarker(this MemoryLayer layer, MPoint position, MarkerType type = MarkerType.Pin_Circle, Color? color = null, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, Marker, MapInfoEventArgs>? touched = null)
     {
-        return AddMarker(layer, position.X, position.Y, type, title, subtitle, color, scale, anchor, calloutAnchor, touched);
+        return AddMarker(layer, position.X, position.Y, type, color, scale, title, subtitle, touched);
     }
 
     /// <summary>
