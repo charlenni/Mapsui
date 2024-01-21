@@ -8,6 +8,16 @@ using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Features;
 
+/// <summary>
+/// Marker to display on a map
+/// </summary>
+/// <remarks>
+/// A Marker is a <see cref="PointFeature"/> with a given style, so that it shows
+/// a pin. There are many predefined types of pins, where you could set color and scale.
+/// Additionally there is the possibilite to set a title and a subtitle which are used
+/// to show a Callout for this marker then it is touched. The touched behavior could
+/// changed by implementing an own action. 
+/// </remarks>
 public class Marker : PointFeature
 {
     private readonly static Dictionary<MarkerType, string> _defaultPins = new();
@@ -54,7 +64,7 @@ public class Marker : PointFeature
     private double _scale = 1.0;
 
     /// <summary>
-    /// Scaling of marker
+    /// Scale of marker
     /// </summary>
     public double Scale
     {
@@ -86,7 +96,7 @@ public class Marker : PointFeature
     private Color _color = Color.Red;
     
     /// <summary>
-    /// Color for pin
+    /// Color for marker
     /// </summary>
     public Color Color
     { 
