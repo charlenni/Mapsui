@@ -210,6 +210,8 @@ public static class PointFeatureExtensions
     public static PointFeature SetScale(this PointFeature marker, double scale)
     {
         SetSymbolValue(marker, (symbol) => symbol.SymbolScale = scale);
+        // When setting scale, also SymbolOffset of CalloutStyle has to be adjusted
+        SetCalloutValue(marker, (callout) => callout.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
 
         return marker;
     }
