@@ -12,6 +12,64 @@ namespace Mapsui.Extensions;
 public static class MemoryLayerExtensions
 {
     /// <summary>
+    /// Create a new marker
+    /// </summary>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="color">Color of marker</param>
+    /// <param name="opacity">Opacity of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>Marker as PointFeature</returns>
+    public static PointFeature CreateMarker(this MemoryLayer layer, double x, double y, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        var marker = new PointFeature(x, y);
+
+        marker.InitMarker(color, opacity, scale, title, subtitle, touched);
+
+        return marker;
+    }
+
+    /// <summary>
+    /// Create a new marker
+    /// </summary>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="color">Color of marker</param>
+    /// <param name="opacity">Opacity of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>Marker as PointFeature</returns>
+    public static PointFeature CreateMarker(this MemoryLayer layer, (double x, double y) position, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return CreateMarker(layer, position.x, position.y, color, opacity, scale, title, subtitle, touched);
+    }
+
+    /// <summary>
+    /// Create a new marker
+    /// </summary>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="position">MPoint for position</param>
+    /// <param name="color">Color of marker</param>
+    /// <param name="opacity">Opacity of marker</param>
+    /// <param name="scale">Scale of marker</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>Marker as PointFeature</returns>
+    public static PointFeature CreateMarker(this MemoryLayer layer, MPoint position, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return CreateMarker(layer, position.X, position.Y, color, opacity, scale, title, subtitle, touched);
+    }
+
+
+    /// <summary>
     /// Add a marker to the layer
     /// </summary>
     /// <param name="layer">Layer to use</param>
@@ -23,11 +81,10 @@ public static class MemoryLayerExtensions
     /// <param name="title">Title for callout</param>
     /// <param name="subtitle">Subtitle for callout</param>
     /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>MemoryLayer</returns>
     public static MemoryLayer AddMarker(this MemoryLayer layer, double x, double y, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
-        var marker = new PointFeature(x, y);
-
-        marker.InitMarker(color, opacity, scale, title, subtitle, touched);
+        var marker = CreateMarker(layer, x, y, color, opacity, scale, title, subtitle, touched);
 
         ((ConcurrentBag<IFeature>)layer.Features).Add(marker);
 
@@ -46,6 +103,7 @@ public static class MemoryLayerExtensions
     /// <param name="title">Title for callout</param>
     /// <param name="subtitle">Subtitle for callout</param>
     /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>MemoryLayer</returns>
     public static MemoryLayer AddMarker(this MemoryLayer layer, (double x, double y) position, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
         return AddMarker(layer, position.x, position.y, color, opacity, scale, title, subtitle, touched);
@@ -55,13 +113,14 @@ public static class MemoryLayerExtensions
     /// Add a <see cref="Marker"/> to the layer
     /// </summary>
     /// <param name="layer">Layer to use</param>
-    /// <param name="position">Point for position</param>
+    /// <param name="position">MPoint for position</param>
     /// <param name="color">Color of marker</param>
     /// <param name="opacity">Opacity of marker</param>
     /// <param name="scale">Scale of marker</param>
     /// <param name="title">Title for callout</param>
     /// <param name="subtitle">Subtitle for callout</param>
     /// <param name="touched">Action called when marker is touched</param>
+    /// <returns>MemoryLayer</returns>
     public static MemoryLayer AddMarker(this MemoryLayer layer, MPoint position, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
         return AddMarker(layer, position.X, position.Y, color, opacity, scale, title, subtitle, touched);
