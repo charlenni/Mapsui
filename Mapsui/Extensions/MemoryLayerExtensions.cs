@@ -14,6 +14,11 @@ public static class MemoryLayerExtensions
     /// <summary>
     /// Create a new marker
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateMarker and <see cref="AddMarker"/> is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
@@ -30,12 +35,19 @@ public static class MemoryLayerExtensions
 
         marker.InitMarker(() => layer.DataHasChanged(), color, opacity, scale, title, subtitle, touched);
 
+        ((ConcurrentBag<IFeature>)layer.Features).Add(marker);
+
         return marker;
     }
 
     /// <summary>
     /// Create a new marker
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateMarker and <see cref="AddMarker"/> is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
@@ -54,6 +66,11 @@ public static class MemoryLayerExtensions
     /// <summary>
     /// Create a new marker
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateMarker and <see cref="AddMarker"/> is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="position">MPoint for position</param>
     /// <param name="color">Color of marker</param>
@@ -72,6 +89,11 @@ public static class MemoryLayerExtensions
     /// <summary>
     /// Add a marker to the layer
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateMarker"/> and AddMarker is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
@@ -92,8 +114,13 @@ public static class MemoryLayerExtensions
     }
 
     /// <summary>
-    /// Add a <see cref="Marker"/> to the layer
+    /// Add a marker to layer
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateMarker"/> and AddMarker is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
@@ -110,8 +137,13 @@ public static class MemoryLayerExtensions
     }
 
     /// <summary>
-    /// Add a <see cref="Marker"/> to the layer
+    /// Add a marker to the layer
     /// </summary>
+    /// <remarks>
+    /// A marker always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateMarker"/> and AddMarker is, that CreateMarker returns the marker
+    /// while AddMarker returns the MemoryLayer.
+    /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="position">MPoint for position</param>
     /// <param name="color">Color of marker</param>
