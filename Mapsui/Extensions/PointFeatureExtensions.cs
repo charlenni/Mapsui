@@ -114,7 +114,9 @@ public static class PointFeatureExtensions
     /// <returns>True, if the feature is a marker</returns>
     public static bool IsMarker(this PointFeature feature)
     {
-        return feature.Fields.Contains(MarkerKey);
+        return feature.Fields.Contains(MarkerKey) 
+            && feature[MarkerSymbolKey] == feature.Styles.First() 
+            && feature[MarkerCalloutKey] == feature.Styles.Skip(1).First();
     }
 
     /// <summary>
