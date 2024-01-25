@@ -20,6 +20,7 @@ public static class PointFeatureExtensions
     public const string MarkerCalloutKey = MarkerKey + ".Callout";
     public const string MarkerColorKey = MarkerKey + ".Color";
     public const string MarkerTouchedKey = MarkerKey+".Touched";
+    public const string MarkerInvalidateKey = MarkerKey + ".Invalidate";
 
     private static readonly string markerImage;
     private static readonly double markerImageHeight;
@@ -55,7 +56,7 @@ public static class PointFeatureExtensions
     /// <param name="title"></param>
     /// <param name="subtitle"></param>
     /// <param name="touched"></param>
-    public static void InitMarker(this PointFeature marker, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    public static void InitMarker(this PointFeature marker, Action invalidate, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
         marker[MarkerKey] = true;
 
@@ -102,6 +103,7 @@ public static class PointFeatureExtensions
         marker[MarkerCalloutKey] = callout;
         marker[MarkerColorKey] = color;
 
+        if (invalidate != null) marker[MarkerInvalidateKey] = invalidate;
         if (touched != null) marker[MarkerTouchedKey] = touched;
     }
 
@@ -333,6 +335,8 @@ public static class PointFeatureExtensions
     private static void ChangeCalloutEnabled(PointFeature marker, bool flag)
     {
         SetCalloutValue(marker, (callout) => callout.Enabled = flag);
+
+        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
     }
 
     /// <summary>
@@ -349,6 +353,8 @@ public static class PointFeatureExtensions
 
         if (symbol != null)
             action(symbol);
+
+        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
     }
 
     /// <summary>
@@ -365,6 +371,8 @@ public static class PointFeatureExtensions
 
         if (callout != null)
             action(callout);
+
+        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
     }
 
     /// <summary>
