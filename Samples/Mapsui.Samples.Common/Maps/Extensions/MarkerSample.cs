@@ -71,8 +71,6 @@ public class MarkerSample : ISample
 
         marker.ShowCallout(markerLayer);
 
-        ((ConcurrentBag<IFeature>)markerLayer.Features).Add(marker);
-
         // Zoom map, so that all markers are visible
         map.Navigator.ZoomToBox(markerLayer.Extent?.Grow(50000));
 
