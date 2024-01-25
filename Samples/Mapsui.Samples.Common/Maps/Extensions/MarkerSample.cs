@@ -1,4 +1,5 @@
-﻿using Mapsui.Extensions;
+﻿using BruTile.Wms;
+using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Samples.Common.Maps.Styles;
@@ -7,6 +8,8 @@ using Mapsui.Tiling;
 using Mapsui.Widgets;
 using Mapsui.Widgets.ScaleBar;
 using System;
+using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Mapsui.Samples.Common.Maps.Extensions;
@@ -15,6 +18,8 @@ public class MarkerSample : ISample
 {
     public string Name => "Marker";
     public string Category => "Extensions";
+
+    private static Timer? _timer;
 
     public Task<Map> CreateMapAsync()
     {
@@ -35,15 +40,15 @@ public class MarkerSample : ISample
         // Create layer for markers
         using var markerLayer = map.AddMarkerLayer("Marker")
             // Create marker for NYC
-            .AddMarker(SphericalMercator.FromLonLat(-73.935242, 40.730610), 
-                Color.Red, 
-                scale: 1.0, 
+            .AddMarker(SphericalMercator.FromLonLat(-73.935242, 40.730610),
+                Color.Red,
+                scale: 1.0,
                 title: "New York City")
             // Create marker for Boston
-            .AddMarker(SphericalMercator.FromLonLat(-71.057083, 42.361145), 
-                Color.LightGreen, 
-                scale: 0.8, 
-                title: "Boston", 
+            .AddMarker(SphericalMercator.FromLonLat(-71.057083, 42.361145),
+                Color.LightGreen,
+                scale: 0.8,
+                title: "Boston",
                 subtitle: "MA")
             // Create marker for Washington DC
             .AddMarker(SphericalMercator.FromLonLat(-77.03637, 38.89511),
@@ -52,6 +57,21 @@ public class MarkerSample : ISample
                 scale: 1.5,
                 title: "Washington DC",
                 touched: MarkerTouched);
+
+        // Marker with changable values
+        var titleCity = "Philadelphia";
+        var marker = markerLayer.CreateMarker(SphericalMercator.FromLonLat(-75.165222, 39.952583), title: titleCity);
+
+        _timer?.Dispose();
+        _timer = new Timer((t) => {
+            marker.SetColor(DemoColor());
+            marker.SetScale(marker.GetTitle().Length >= titleCity.Length ? 0.5 : marker.GetScale() + 0.1);
+            marker.SetTitle(marker.GetTitle().Length >= titleCity.Length ? titleCity.Substring(0, 1) : titleCity.Substring(0, marker.GetTitle().Length + 1));
+        }, null, 1000, 1000);
+
+        marker.ShowCallout(markerLayer);
+
+        ((ConcurrentBag<IFeature>)markerLayer.Features).Add(marker);
 
         // Zoom map, so that all markers are visible
         map.Navigator.ZoomToBox(markerLayer.Extent?.Grow(50000));
