@@ -28,7 +28,7 @@ public static class MemoryLayerExtensions
     {
         var marker = new PointFeature(x, y);
 
-        marker.InitMarker(color, opacity, scale, title, subtitle, touched);
+        marker.InitMarker(() => layer.DataHasChanged(), color, opacity, scale, title, subtitle, touched);
 
         return marker;
     }
