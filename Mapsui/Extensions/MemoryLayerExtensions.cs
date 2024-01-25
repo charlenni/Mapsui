@@ -161,7 +161,7 @@ public static class MemoryLayerExtensions
     /// <summary>
     /// Hide all callouts on this layer
     /// </summary>
-    /// <param name="layer"></param>
+    /// <param name="layer">MemoryLayer for which to hide all callouts</param>
     public static void HideAllCallouts(this MemoryLayer layer)
     {
         foreach (var m in layer.Features.Where(f => f.Fields.Contains(PointFeatureExtensions.MarkerKey) && ((PointFeature)f).HasCallout()))
