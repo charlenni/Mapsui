@@ -72,7 +72,7 @@ public class MarkerSample : ISample
         var titleCity = "Philadelphia";
         var marker = layer.CreateMarker(SphericalMercator.FromLonLat(-75.165222, 39.952583), title: titleCity);
 
-                    // Create symbol for Albany
+        // Create symbol for Albany
         var symbol = layer.CreateSymbol(SphericalMercator.FromLonLat(-73.756233, 42.652580),
                 symbolType: SymbolType.Triangle,
                 color: DemoColor(),
@@ -87,6 +87,7 @@ public class MarkerSample : ISample
             symbol.SetColor(DemoColor());
         }, null, 1000, 1000);
 
+        // Show callout for this marker
         marker.ShowCallout(layer);
 
         // Zoom map, so that all markers are visible
