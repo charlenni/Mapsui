@@ -35,16 +35,16 @@ public static  class MapExtensions
         // Add handling of touches
         map.Info += (object? sender, MapInfoEventArgs args) =>
         {
-            if (args.MapInfo?.Feature == null || args.MapInfo.Feature is not PointFeature || !((PointFeature)args.MapInfo.Feature).IsMarker()) 
+            if (args.MapInfo?.Feature == null || args.MapInfo.Feature is not PointFeature || !(((PointFeature)args.MapInfo.Feature).IsMarker() || ((PointFeature)args.MapInfo.Feature).IsSymbol())) 
                 return;
 
             // Has the marker an own action to call when it is touched?
-            var marker = (PointFeature)args.MapInfo.Feature;
-            var action = (Action<ILayer, IFeature, MapInfoEventArgs>?)marker[PointFeatureExtensions.TouchedKey];
+            var feature = (PointFeature)args.MapInfo.Feature;
+            var action = (Action<ILayer, IFeature, MapInfoEventArgs>?)feature[PointFeatureExtensions.TouchedKey];
 
             if (action != null)
             {
-                action(layer, marker, args);
+                action(layer, feature, args);
 
                 // When action handled 
                 if (args.Handled)
@@ -55,7 +55,7 @@ public static  class MapExtensions
                 }
             }
 
-            var callout = marker.Styles.Where(s => s is CalloutStyle).First();
+            var callout = feature.Styles.Where(s => s is CalloutStyle).First();
 
             if (callout == null)
                 return;
