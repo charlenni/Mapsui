@@ -16,11 +16,11 @@ public static class PointFeatureExtensions
 {
     // Const for using to access feature fields
     public const string MarkerKey = "Marker";
-    public const string MarkerSymbolKey = MarkerKey + ".Symbol";
-    public const string MarkerCalloutKey = MarkerKey + ".Callout";
     public const string MarkerColorKey = MarkerKey + ".Color";
-    public const string MarkerTouchedKey = MarkerKey+".Touched";
-    public const string MarkerInvalidateKey = MarkerKey + ".Invalidate";
+    public const string SymbolKey = MarkerKey + ".Symbol";
+    public const string CalloutKey = MarkerKey + ".Callout";
+    public const string TouchedKey = MarkerKey+".Touched";
+    public const string InvalidateKey = MarkerKey + ".Invalidate";
 
     private static readonly string markerImage;
     private static readonly double markerImageHeight;
@@ -99,12 +99,12 @@ public static class PointFeatureExtensions
         marker.Styles.Add(symbol);
         marker.Styles.Add(callout);
 
-        marker[MarkerSymbolKey] = symbol;
-        marker[MarkerCalloutKey] = callout;
+        marker[SymbolKey] = symbol;
+        marker[CalloutKey] = callout;
         marker[MarkerColorKey] = color;
 
-        if (invalidate != null) marker[MarkerInvalidateKey] = invalidate;
-        if (touched != null) marker[MarkerTouchedKey] = touched;
+        if (invalidate != null) marker[InvalidateKey] = invalidate;
+        if (touched != null) marker[TouchedKey] = touched;
     }
 
     /// <summary>
@@ -115,8 +115,8 @@ public static class PointFeatureExtensions
     public static bool IsMarker(this PointFeature feature)
     {
         return feature.Fields.Contains(MarkerKey) 
-            && feature[MarkerSymbolKey] == feature.Styles.First() 
-            && feature[MarkerCalloutKey] == feature.Styles.Skip(1).First();
+            && feature[SymbolKey] == feature.Styles.First() 
+            && feature[CalloutKey] == feature.Styles.Skip(1).First();
     }
 
     /// <summary>
@@ -157,10 +157,7 @@ public static class PointFeatureExtensions
     /// <returns>Opacity of marker</returns>
     public static double GetOpacity(this PointFeature marker)
     {
-        if (!IsMarker(marker))
-            return 1.0;
-
-        var symbol = marker.Get<SymbolStyle>(MarkerSymbolKey);
+        var symbol = marker.Get<SymbolStyle>(SymbolKey);
 
         if (symbol != null)
         {
@@ -193,7 +190,7 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return 1.0;
 
-        var symbol = marker.Get<SymbolStyle>(MarkerSymbolKey);
+        var symbol = marker.Get<SymbolStyle>(SymbolKey);
 
         if (symbol != null)
         {
@@ -228,7 +225,7 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return string.Empty;
 
-        var callout = marker.Get<CalloutStyle>(MarkerCalloutKey);
+        var callout = marker.Get<CalloutStyle>(CalloutKey);
 
         if (callout != null)
             return callout.Title ?? string.Empty;
@@ -259,7 +256,7 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return string.Empty;
 
-        var callout = marker.Get<CalloutStyle>(MarkerCalloutKey);
+        var callout = marker.Get<CalloutStyle>(CalloutKey);
 
         if (callout != null)
             return callout.Subtitle ?? string.Empty;
@@ -323,7 +320,7 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return false;
 
-        var callout = marker.Get<CalloutStyle>(MarkerCalloutKey);
+        var callout = marker.Get<CalloutStyle>(CalloutKey);
 
         if (callout != null)
             return callout.Enabled;
@@ -340,7 +337,7 @@ public static class PointFeatureExtensions
     {
         SetCalloutValue(marker, (callout) => callout.Enabled = flag);
 
-        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
+        marker.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
@@ -353,12 +350,12 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return;
 
-        var symbol = marker.Get<SymbolStyle>(MarkerSymbolKey);
+        var symbol = marker.Get<SymbolStyle>(SymbolKey);
 
         if (symbol != null)
             action(symbol);
 
-        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
+        marker.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
@@ -371,12 +368,12 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return;
 
-        var callout = marker.Get<CalloutStyle>(MarkerCalloutKey);
+        var callout = marker.Get<CalloutStyle>(CalloutKey);
 
         if (callout != null)
             action(callout);
 
-        marker.Get<Action>(MarkerInvalidateKey)?.Invoke();
+        marker.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
