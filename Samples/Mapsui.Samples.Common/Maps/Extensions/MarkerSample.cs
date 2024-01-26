@@ -38,7 +38,7 @@ public class MarkerSample : ISample
         // Add a scalebar
         map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
         // Create layer for markers
-        using var markerLayer = map.AddMarkerLayer("Marker")
+        using var layer = map.AddMarkerLayer("Marker")
             // Create marker for NYC
             .AddMarker(SphericalMercator.FromLonLat(-73.935242, 40.730610),
                 Color.Red,
@@ -56,23 +56,41 @@ public class MarkerSample : ISample
                 opacity: 0.7,
                 scale: 1.5,
                 title: "Washington DC",
-                touched: MarkerTouched);
+                touched: MarkerTouched)
+            // Create symbol for Baltimore
+            .AddSymbol(SphericalMercator.FromLonLat(-76.609383, 39.299236),
+                color: DemoColor(),
+                title: "Baltimore")
+            // Create symbol for Toms River
+            .AddSymbol(SphericalMercator.FromLonLat(-74.198456, 39.954639),
+                symbolType: SymbolType.Rectangle,
+                color: DemoColor(),
+                title: "Toms River",
+                subtitle: "NJ");
 
         // Marker with changable values
         var titleCity = "Philadelphia";
-        var marker = markerLayer.CreateMarker(SphericalMercator.FromLonLat(-75.165222, 39.952583), title: titleCity);
+        var marker = layer.CreateMarker(SphericalMercator.FromLonLat(-75.165222, 39.952583), title: titleCity);
+
+                    // Create symbol for Albany
+        var symbol = layer.CreateSymbol(SphericalMercator.FromLonLat(-73.756233, 42.652580),
+                symbolType: SymbolType.Triangle,
+                color: DemoColor(),
+                scale: 1.0,
+                title: "Albany");
 
         _timer?.Dispose();
         _timer = new Timer((t) => {
             marker.SetColor(DemoColor());
             marker.SetScale(marker.GetTitle().Length >= titleCity.Length ? 0.5 : marker.GetScale() + 0.1);
             marker.SetTitle(marker.GetTitle().Length >= titleCity.Length ? titleCity.Substring(0, 1) : titleCity.Substring(0, marker.GetTitle().Length + 1));
+            symbol.SetColor(DemoColor());
         }, null, 1000, 1000);
 
-        marker.ShowCallout(markerLayer);
+        marker.ShowCallout(layer);
 
         // Zoom map, so that all markers are visible
-        map.Navigator.ZoomToBox(markerLayer.Extent?.Grow(50000));
+        map.Navigator.ZoomToBox(layer.Extent?.Grow(50000));
 
         return map;
     }
