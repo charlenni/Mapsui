@@ -17,8 +17,9 @@ public static class PointFeatureExtensions
     // Const for using to access feature fields
     public const string MarkerKey = "Marker";
     public const string MarkerColorKey = MarkerKey + ".Color";
-    public const string SymbolKey = MarkerKey + ".Symbol";
-    public const string CalloutKey = MarkerKey + ".Callout";
+    public const string SymbolKey = "Symbol";
+    public const string SymbolStyleKey = "SymbolStyle";
+    public const string CalloutStyleKey = "CalloutStyle";
     public const string TouchedKey = MarkerKey+".Touched";
     public const string InvalidateKey = MarkerKey + ".Invalidate";
 
@@ -64,13 +65,46 @@ public static class PointFeatureExtensions
 
         Init(marker, invalidate, color, opacity, scale, title, subtitle, touched);
 
-        SetSymbolValue(marker, (symbol) => symbol.SymbolType = SymbolType.Image);
-        SetSymbolValue(marker, (symbol) => symbol.BitmapId = GetPinWithColor(color));
-        SetSymbolValue(marker, (symbol) => symbol.SymbolOffset = new RelativeOffset(0.0, 0.5));
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.SymbolType = SymbolType.Image);
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.BitmapId = GetPinWithColor(color));
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.SymbolOffset = new RelativeOffset(0.0, 0.5));
 
-        SetCalloutValue(marker, (callout) => callout.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
+        SetCalloutValue(marker, (calloutStyle) => calloutStyle.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
 
         marker[MarkerColorKey] = color;
+    }
+
+    /// <summary>
+    /// Init a PointFeature, so that it is a symbol
+    /// </summary>
+    /// <param name="symbol">PointFeature to use</param>
+    /// <param name="invalidate">Action to call when something is changed via extensions</param>
+    /// <param name="color">Color for this marker</param>
+    /// <param name="opacity">Opacity for this marker</param>
+    /// <param name="scale">Scale for this marker</param>
+    /// <param name="title">Title of callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action to call, when this marker is touched</param>
+    public static void InitSymbol(this PointFeature symbol, Action invalidate, SymbolType symbolType = SymbolType.Ellipse, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        // Only ellipse, rectangle or triangle are allowed for symbols
+        if (symbolType != SymbolType.Ellipse && symbolType != SymbolType.Rectangle && symbolType != SymbolType.Triangle)
+            return;
+
+        symbol[SymbolKey] = true;
+
+        color = color ?? Color.White;
+
+        Init(symbol, invalidate, color, opacity, scale, title, subtitle, touched);
+
+        SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolType = symbolType);
+        SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolOffset = new RelativeOffset(0.0, 0.0));
+        SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolScale = 0.5);
+        SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Fill != null) symbolStyle.Fill.Color = color; });
+        SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Color = Color.Black; });
+        SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Width = 4.0; });
+
+        SetCalloutValue(symbol, (calloutStyle) => calloutStyle.SymbolOffset = new Offset(0.0, 0.0));
     }
 
     /// <summary>
@@ -80,9 +114,27 @@ public static class PointFeatureExtensions
     /// <returns>True, if the feature is a marker</returns>
     public static bool IsMarker(this PointFeature feature)
     {
-        return feature.Fields.Contains(MarkerKey) 
-            && feature[SymbolKey] == feature.Styles.First() 
-            && feature[CalloutKey] == feature.Styles.Skip(1).First();
+        return IsOfType(feature, MarkerKey);
+    }
+
+    /// <summary>
+    /// Check, if feature is a symbol
+    /// </summary>
+    /// <param name="feature">Feature to check</param>
+    /// <returns>True, if the feature is a symbol</returns>
+    public static bool IsSymbol(this PointFeature feature)
+    {
+        return IsOfType(feature, SymbolKey);
+    }
+
+    /// <summary>
+    /// Check, if feature is one of the special features
+    /// </summary>
+    /// <param name="feature">Feature to check</param>
+    /// <returns>True, if the feature is a special one</returns>
+    public static bool IsSpecial(this PointFeature feature)
+    {
+        return IsMarker(feature) || IsSymbol(feature);
     }
 
     /// <summary>
@@ -94,6 +146,9 @@ public static class PointFeatureExtensions
     {
         if (IsMarker(feature))
             return feature.Get<Color>(MarkerColorKey);
+
+        if (IsSymbol(feature))
+            return feature.Get<SymbolStyle>(SymbolStyleKey)?.Fill?.Color;
 
         return null;
     }
@@ -108,9 +163,12 @@ public static class PointFeatureExtensions
     {
         if (IsMarker(feature))
         {
-            SetSymbolValue(feature, (symbol) => symbol.BitmapId = GetPinWithColor(color));
+            SetSymbolValue(feature, (symbolStyle) => symbolStyle.BitmapId = GetPinWithColor(color));
             feature[MarkerColorKey] = color;
         }
+
+        if (IsSymbol(feature))
+            SetSymbolValue(feature, (symbolStyle) => { if (symbolStyle.Fill != null) symbolStyle.Fill.Color = color; });
 
         return feature;
     }
@@ -122,7 +180,7 @@ public static class PointFeatureExtensions
     /// <returns>Opacity of feature</returns>
     public static double GetOpacity(this PointFeature feature)
     {
-        var symbol = feature.Get<SymbolStyle>(SymbolKey);
+        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
 
         return symbol?.Opacity ?? 1.0;
     }
@@ -150,7 +208,7 @@ public static class PointFeatureExtensions
         if (!IsMarker(marker))
             return 1.0;
 
-        var symbol = marker.Get<SymbolStyle>(SymbolKey);
+        var symbol = marker.Get<SymbolStyle>(SymbolStyleKey);
 
         if (symbol != null)
         {
@@ -182,7 +240,7 @@ public static class PointFeatureExtensions
     /// <returns>Title from callout of feature</returns>
     public static string GetTitle(this PointFeature feature)
     {
-        var callout = feature.Get<CalloutStyle>(CalloutKey);
+        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
 
         return callout?.Title ?? string.Empty;
     }
@@ -207,7 +265,7 @@ public static class PointFeatureExtensions
     /// <returns>Subtitle from callout of feature</returns>
     public static string GetSubtitle(this PointFeature feature)
     {
-        var callout = feature.Get<CalloutStyle>(CalloutKey);
+        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
 
         return callout?.Subtitle ?? string.Empty;
     }
@@ -265,7 +323,7 @@ public static class PointFeatureExtensions
     /// <returns>True, if callout of feature is visible</returns>
     public static bool HasCallout(this PointFeature feature)
     {
-        var callout = feature.Get<CalloutStyle>(CalloutKey);
+        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
 
         return callout?.Enabled ?? false;
     }
@@ -316,11 +374,23 @@ public static class PointFeatureExtensions
         feature.Styles.Add(symbol);
         feature.Styles.Add(callout);
 
-        feature[SymbolKey] = symbol;
-        feature[CalloutKey] = callout;
+        feature[SymbolStyleKey] = symbol;
+        feature[CalloutStyleKey] = callout;
 
         if (invalidate != null) feature[InvalidateKey] = invalidate;
         if (touched != null) feature[TouchedKey] = touched;
+    }
+
+    /// <summary>
+    /// Check, if feature is of given type
+    /// </summary>
+    /// <param name="feature">Feature to check</param>
+    /// <returns>True, if the feature is of given type</returns>
+    public static bool IsOfType(this PointFeature feature, string key)
+    {
+        return feature.Fields.Contains(key)
+            && feature[SymbolStyleKey] == feature.Styles.First()
+            && feature[CalloutStyleKey] == feature.Styles.Skip(1).First();
     }
 
     /// <summary>
@@ -342,7 +412,7 @@ public static class PointFeatureExtensions
     /// <param name="action">Action to set value</param>
     private static void SetSymbolValue(PointFeature feature, Action<SymbolStyle> action)
     {
-        var symbol = feature.Get<SymbolStyle>(SymbolKey);
+        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
 
         if (symbol != null)
             action(symbol);
@@ -357,7 +427,7 @@ public static class PointFeatureExtensions
     /// <param name="action">Action to set value</param>
     private static void SetCalloutValue(PointFeature feature, Action<CalloutStyle> action)
     {
-        var callout = feature.Get<CalloutStyle>(CalloutKey);
+        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
 
         if (callout != null)
             action(callout);
