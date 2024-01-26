@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static System.Net.WebRequestMethods;
 using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Extensions;
@@ -23,28 +24,14 @@ public static class PointFeatureExtensions
     public const string TouchedKey = MarkerKey+".Touched";
     public const string InvalidateKey = MarkerKey + ".Invalidate";
 
-    private static readonly string markerImage;
-    private static readonly double markerImageHeight;
-    private static readonly Regex extractHeight = new Regex("height=\\\"(\\d+)\\\"", RegexOptions.Compiled);
-
-    /// <summary>
-    /// Read markerImage and extract height
-    /// </summary>
-    static PointFeatureExtensions()
-    {
-        // Load SVG for Marker
-        using (var s = new StreamReader(EmbeddedResourceLoader.Load($"Resources.Images.Pin.svg", typeof(PointFeatureExtensions))))
-        {
-            markerImage = s.ReadToEnd();
-
-            var result = extractHeight.Matches(markerImage);
-
-            if (result.Count < 1)
-                return;
-
-            markerImageHeight = result[0].Success ? double.Parse(result[0].Groups[1].Value ?? "") : 0;
-        }
-    }
+    private const string markerImage = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"39\" height=\"59\">" +
+                          "  <g stroke-width=\"2.935\" stroke-linejoin=\"round\">" +
+                          "    <path d=\"M34.719 29.415c4.783-7.514 3.355-17.576-3.413-23.503a17.89 17.89 0 0 0-13.221-4.387c-3.83.308-7.463 1.845-10.367 4.387C.95 11.839-.52 21.858 4.28 29.393c6.1 9.304 11.227 6.878 15.234 28.14 3.986-21.223 9.123-18.837 15.206-28.119z\" fill=\"#color\" stroke=\"#color\"/>" +
+                          "    <path d=\"M34.719 29.415c4.783-7.514 3.355-17.576-3.413-23.503a17.89 17.89 0 0 0-13.221-4.387c-3.83.308-7.463 1.845-10.367 4.387C.95 11.839-.52 21.858 4.28 29.393c6.1 9.304 11.227 6.878 15.234 28.14 3.986-21.223 9.123-18.837 15.206-28.119z\" fill=\"none\" stroke=\"#000\" stroke-opacity=\".2\"/>" +
+                          "  </g>" +
+                          "  <circle cx=\"19.5\" cy=\"19.5\" r=\"7\" fill-opacity=\".4\"/>" +
+                          "</svg>";
+    private const double markerImageHeight = 59.0;
 
     /// <summary>
     /// Init a PointFeature, so that it is a marker
@@ -102,7 +89,7 @@ public static class PointFeatureExtensions
         SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolScale = 0.5);
         SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Fill != null) symbolStyle.Fill.Color = color; });
         SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Color = Color.Black; });
-        SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Width = 4.0; });
+        SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Width = 5.0; });
 
         SetCalloutValue(symbol, (calloutStyle) => calloutStyle.SymbolOffset = new Offset(0.0, 0.0));
     }
@@ -447,7 +434,7 @@ public static class PointFeatureExtensions
         if (BitmapRegistry.Instance.TryGetBitmapId($"{MarkerKey}_{colorInHex}", out int bitmapId))
             return bitmapId;
 
-        var svg = markerImage.Replace("#000000", $"#{colorInHex}");
+        var svg = markerImage.Replace("#color", $"#{colorInHex}");
 
         return BitmapRegistry.Instance.Register(svg, $"{MarkerKey}_{colorInHex}");
     }
