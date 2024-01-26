@@ -49,66 +49,32 @@ public static class PointFeatureExtensions
     /// Init a PointFeature, so that it is a marker
     /// </summary>
     /// <param name="marker">PointFeature to use</param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="color"></param>
-    /// <param name="scale"></param>
-    /// <param name="title"></param>
-    /// <param name="subtitle"></param>
-    /// <param name="touched"></param>
+    /// <param name="invalidate">Action to call when something is changed via extensions</param>
+    /// <param name="color">Color for this marker</param>
+    /// <param name="opacity">Opacity for this marker</param>
+    /// <param name="scale">Scale for this marker</param>
+    /// <param name="title">Title of callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action to call, when this marker is touched</param>
     public static void InitMarker(this PointFeature marker, Action invalidate, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
         marker[MarkerKey] = true;
 
         color = color ?? Color.Red;
 
-        var symbol = new SymbolStyle()
-        {
-            Enabled = true,
-            SymbolType = SymbolType.Image,
-            BitmapId = GetPinWithColor(color),
-            SymbolOffset = new RelativeOffset(0.0, 0.5),
-            SymbolScale = scale,
-            Opacity = (float)opacity,
-        };
+        Init(marker, invalidate, color, opacity, scale, title, subtitle, touched);
 
-        var callout = new CalloutStyle()
-        {
-            Enabled = false,
-            Type = CalloutType.Single,
-            ArrowPosition = 0.5f,
-            ArrowAlignment = ArrowAlignment.Bottom,
-            SymbolOffset = new Offset(0.0, markerImageHeight * scale),
-            Padding = new MRect(10, 5),
-            Color = Color.Black,
-            BackgroundColor = Color.White,
-            MaxWidth = 200,
-            TitleFontColor = Color.Black,
-            TitleTextAlignment = Widgets.Alignment.Center,
-            SubtitleFontColor = Color.Black,
-            SubtitleTextAlignment = Widgets.Alignment.Center,
-        };
+        SetSymbolValue(marker, (symbol) => symbol.SymbolType = SymbolType.Image);
+        SetSymbolValue(marker, (symbol) => symbol.BitmapId = GetPinWithColor(color));
+        SetSymbolValue(marker, (symbol) => symbol.SymbolOffset = new RelativeOffset(0.0, 0.5));
 
-        callout.Title = title;
-        callout.TitleFont.Size = 16;
-        callout.Subtitle = subtitle;
-        callout.SubtitleFont.Size = 12;
-        callout.Type = String.IsNullOrEmpty(callout.Subtitle) ? CalloutType.Single : CalloutType.Detail;
+        SetCalloutValue(marker, (callout) => callout.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
 
-        marker.Styles.Clear();
-        marker.Styles.Add(symbol);
-        marker.Styles.Add(callout);
-
-        marker[SymbolKey] = symbol;
-        marker[CalloutKey] = callout;
         marker[MarkerColorKey] = color;
-
-        if (invalidate != null) marker[InvalidateKey] = invalidate;
-        if (touched != null) marker[TouchedKey] = touched;
     }
 
     /// <summary>
-    /// Check if feature is a marker
+    /// Check, if feature is a marker
     /// </summary>
     /// <param name="feature">Feature to check</param>
     /// <returns>True, if the feature is a marker</returns>
@@ -120,64 +86,58 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
-    /// Get color of this marker
+    /// Get color of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Color of marker</returns>
-    public static Color? GetColor(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Color of feature</returns>
+    public static Color? GetColor(this PointFeature feature)
     {
-        if (!IsMarker(marker))
-            return null;
+        if (IsMarker(feature))
+            return feature.Get<Color>(MarkerColorKey);
 
-        return marker.Get<Color>(MarkerColorKey);
+        return null;
     }
 
     /// <summary>
-    /// Set color for marker
+    /// Set color for feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="color">Color to set</param>
-    /// <returns>Marker</returns>
-    public static PointFeature SetColor(this PointFeature marker, Color color)
+    /// <returns>Feature</returns>
+    public static PointFeature SetColor(this PointFeature feature, Color color)
     {
-        if (!IsMarker(marker))
-            return marker;
-
-        SetSymbolValue(marker, (symbol) => symbol.BitmapId = GetPinWithColor(color));
-
-        marker[MarkerColorKey] = color;
-
-        return marker;
-    }
-
-    /// <summary>
-    /// Get opacity of this marker
-    /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Opacity of marker</returns>
-    public static double GetOpacity(this PointFeature marker)
-    {
-        var symbol = marker.Get<SymbolStyle>(SymbolKey);
-
-        if (symbol != null)
+        if (IsMarker(feature))
         {
-            return symbol.Opacity;
+            SetSymbolValue(feature, (symbol) => symbol.BitmapId = GetPinWithColor(color));
+            feature[MarkerColorKey] = color;
         }
 
-        return 1.0;
+        return feature;
     }
 
     /// <summary>
-    /// Set opacity of this marker
+    /// Get opacity of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <param name="scale">Opacity to set</param>
-    /// <returns>Marker</returns>
-    public static PointFeature SetOpacity(this PointFeature marker, double opacity)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Opacity of feature</returns>
+    public static double GetOpacity(this PointFeature feature)
     {
-        SetSymbolValue(marker, (symbol) => symbol.Opacity = (float)opacity);
+        var symbol = feature.Get<SymbolStyle>(SymbolKey);
 
-        return marker;
+        return symbol?.Opacity ?? 1.0;
+    }
+
+    /// <summary>
+    /// Set opacity of this feature
+    /// </summary>
+    /// <param name="feature">Feature to use</param>
+    /// <param name="scale">Opacity to set</param>
+    /// <returns>Feature</returns>
+    public static PointFeature SetOpacity(this PointFeature feature, double opacity)
+    {
+        SetSymbolValue(feature, (symbol) => symbol.Opacity = (float)opacity);
+
+        return feature;
     }
 
     /// <summary>
@@ -216,164 +176,193 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
-    /// Get title of callout for this marker
+    /// Get title of callout for this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Title from callout of marker</returns>
-    public static string GetTitle(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Title from callout of feature</returns>
+    public static string GetTitle(this PointFeature feature)
     {
-        if (!IsMarker(marker))
-            return string.Empty;
+        var callout = feature.Get<CalloutStyle>(CalloutKey);
 
-        var callout = marker.Get<CalloutStyle>(CalloutKey);
-
-        if (callout != null)
-            return callout.Title ?? string.Empty;
-
-        return string.Empty;
+        return callout?.Title ?? string.Empty;
     }
 
     /// <summary>
-    /// Set title of callout of this marker
+    /// Set title of callout of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="text">Title to set</param>
-    /// <returns>Marker</returns>
-    public static PointFeature SetTitle(this PointFeature marker, string text)
+    /// <returns>Feature</returns>
+    public static PointFeature SetTitle(this PointFeature feature, string text)
     {
-        SetCalloutValue(marker, (callout) => callout.Title = text);
+        SetCalloutValue(feature, (callout) => callout.Title = text);
 
-        return marker;
+        return feature;
     }
 
     /// <summary>
-    /// Get subtitle of callout for this marker
+    /// Get subtitle of callout for this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Subtitle from callout of marker</returns>
-    public static string GetSubtitle(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Subtitle from callout of feature</returns>
+    public static string GetSubtitle(this PointFeature feature)
     {
-        if (!IsMarker(marker))
-            return string.Empty;
+        var callout = feature.Get<CalloutStyle>(CalloutKey);
 
-        var callout = marker.Get<CalloutStyle>(CalloutKey);
-
-        if (callout != null)
-            return callout.Subtitle ?? string.Empty;
-
-        return string.Empty;
+        return callout?.Subtitle ?? string.Empty;
     }
 
     /// <summary>
-    /// Set subtitle of callout of this marker
+    /// Set subtitle of callout of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="text">Subtitle to set</param>
-    /// <returns>Marker</returns>
-    public static PointFeature SetSubtitle(this PointFeature marker, string text)
+    /// <returns>Feature</returns>
+    public static PointFeature SetSubtitle(this PointFeature feature, string text)
     {
-        SetCalloutValue(marker, (callout) => { 
+        SetCalloutValue(feature, (callout) => { 
             callout.Subtitle = text; 
             callout.Type = String.IsNullOrEmpty(text) ? CalloutType.Single : CalloutType.Detail; 
         });
 
-        return marker;
+        return feature;
     }
 
     /// <summary>
-    /// Show callout of this marker
+    /// Show callout of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <param name="layer">Layer this marker belongs to</param>
-    /// <returns>Marker</returns>
-    public static PointFeature ShowCallout(this PointFeature marker, ILayer layer)
+    /// <param name="feature">Feature to use</param>
+    /// <param name="layer">Layer this feature belongs to</param>
+    /// <returns>Feature</returns>
+    public static PointFeature ShowCallout(this PointFeature feature, ILayer layer)
     {
         if (layer is MemoryLayer memoryLayer)
         {
             memoryLayer.HideAllCallouts();
         }
 
-        ChangeCalloutEnabled(marker, true);
+        ChangeCalloutEnabled(feature, true);
 
-        return marker;
+        return feature;
     }
 
     /// <summary>
-    /// Hide callout of this marker
+    /// Hide callout of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Marker</returns>
-    public static PointFeature HideCallout(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Feature</returns>
+    public static PointFeature HideCallout(this PointFeature feature)
     {
-        ChangeCalloutEnabled(marker, false);
+        ChangeCalloutEnabled(feature, false);
 
-        return marker;
+        return feature;
     }
 
     /// <summary>
-    /// Check, if callout of this marker is visible
+    /// Check, if callout of this feature is visible
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>True, if callout of marker is visible</returns>
-    public static bool HasCallout(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>True, if callout of feature is visible</returns>
+    public static bool HasCallout(this PointFeature feature)
     {
-        if (!IsMarker(marker))
-            return false;
+        var callout = feature.Get<CalloutStyle>(CalloutKey);
 
-        var callout = marker.Get<CalloutStyle>(CalloutKey);
+        return callout?.Enabled ?? false;
+    }
 
-        if (callout != null)
-            return callout.Enabled;
+    /// <summary>
+    /// Init each type of marker/symbol created with this extensions
+    /// </summary>
+    /// <param name="feature">PointFeature to use</param>
+    /// <param name="invalidate">Action to call when something is changed via extensions</param>
+    /// <param name="color">Color for this marker</param>
+    /// <param name="opacity">Opacity for this marker</param>
+    /// <param name="scale">Scale for this marker</param>
+    /// <param name="title">Title of callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action to call, when this marker is touched</param>
+    private static void Init(this PointFeature feature, Action invalidate, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        var symbol = new SymbolStyle()
+        {
+            Enabled = true,
+            SymbolScale = scale,
+            Opacity = (float)opacity,
+        };
 
-        return false;
+        var callout = new CalloutStyle()
+        {
+            Enabled = false,
+            Type = CalloutType.Single,
+            ArrowPosition = 0.5f,
+            ArrowAlignment = ArrowAlignment.Bottom,
+            Padding = new MRect(10, 5),
+            Color = Color.Black,
+            BackgroundColor = Color.White,
+            MaxWidth = 200,
+            TitleFontColor = Color.Black,
+            TitleTextAlignment = Widgets.Alignment.Center,
+            SubtitleFontColor = Color.Black,
+            SubtitleTextAlignment = Widgets.Alignment.Center,
+        };
+
+        callout.Title = title;
+        callout.TitleFont.Size = 16;
+        callout.Subtitle = subtitle;
+        callout.SubtitleFont.Size = 12;
+        callout.Type = String.IsNullOrEmpty(callout.Subtitle) ? CalloutType.Single : CalloutType.Detail;
+
+        feature.Styles.Clear();
+        feature.Styles.Add(symbol);
+        feature.Styles.Add(callout);
+
+        feature[SymbolKey] = symbol;
+        feature[CalloutKey] = callout;
+
+        if (invalidate != null) feature[InvalidateKey] = invalidate;
+        if (touched != null) feature[TouchedKey] = touched;
     }
 
     /// <summary>
     /// Change the CalloutStyle Enabled flag to a new value
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="flag">True, if the callout should be visible, else false</param>
-    private static void ChangeCalloutEnabled(PointFeature marker, bool flag)
+    private static void ChangeCalloutEnabled(PointFeature feature, bool flag)
     {
-        SetCalloutValue(marker, (callout) => callout.Enabled = flag);
+        SetCalloutValue(feature, (callout) => callout.Enabled = flag);
 
-        marker.Get<Action>(InvalidateKey)?.Invoke();
+        feature.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
     /// Set a value in SymbolStyle
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="action">Action to set value</param>
-    private static void SetSymbolValue(PointFeature marker, Action<SymbolStyle> action)
+    private static void SetSymbolValue(PointFeature feature, Action<SymbolStyle> action)
     {
-        if (!IsMarker(marker))
-            return;
-
-        var symbol = marker.Get<SymbolStyle>(SymbolKey);
+        var symbol = feature.Get<SymbolStyle>(SymbolKey);
 
         if (symbol != null)
             action(symbol);
 
-        marker.Get<Action>(InvalidateKey)?.Invoke();
+        feature.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
     /// Set a value in CalloutStyle
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="action">Action to set value</param>
-    private static void SetCalloutValue(PointFeature marker, Action<CalloutStyle> action)
+    private static void SetCalloutValue(PointFeature feature, Action<CalloutStyle> action)
     {
-        if (!IsMarker(marker))
-            return;
-
-        var callout = marker.Get<CalloutStyle>(CalloutKey);
+        var callout = feature.Get<CalloutStyle>(CalloutKey);
 
         if (callout != null)
             action(callout);
 
-        marker.Get<Action>(InvalidateKey)?.Invoke();
+        feature.Get<Action>(InvalidateKey)?.Invoke();
     }
 
     /// <summary>
