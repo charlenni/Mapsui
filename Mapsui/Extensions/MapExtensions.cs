@@ -40,7 +40,7 @@ public static  class MapExtensions
 
             // Has the marker an own action to call when it is touched?
             var marker = (PointFeature)args.MapInfo.Feature;
-            var action = (Action<ILayer, IFeature, MapInfoEventArgs>?)marker[PointFeatureExtensions.MarkerTouchedKey];
+            var action = (Action<ILayer, IFeature, MapInfoEventArgs>?)marker[PointFeatureExtensions.TouchedKey];
 
             if (action != null)
             {
