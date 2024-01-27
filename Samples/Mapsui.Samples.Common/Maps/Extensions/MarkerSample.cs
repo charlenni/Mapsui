@@ -87,6 +87,13 @@ public class MarkerSample : ISample
             symbol.SetColor(DemoColor());
         }, null, 1000, 1000);
 
+        // Change a value direct in style
+        marker.SetSymbolValue((s) => s.Opacity = 0.8f);
+
+        // Another possibility to change a value direct in style
+        if (marker.GetSymbolStyle() is SymbolStyle style) 
+            style.Opacity = 0.8f;
+
         // Show callout for this marker
         marker.ShowCallout(layer);
 
