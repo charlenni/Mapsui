@@ -311,6 +311,162 @@ public static class MemoryLayerExtensions
 
     #endregion
 
+    #region IconSymbol
+
+    /// <summary>
+    /// Create a new icon symbol
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateIconSymbol and <see cref="AddIconSymbol"/> is, that CreateIconSymbol returns the 
+    /// icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>IconSymbol as PointFeature</returns>
+    public static PointFeature CreateIconSymbol(this MemoryLayer layer, double x, double y, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        var iconSymbol = new PointFeature(x, y);
+
+        iconSymbol.InitIconSymbol(() => layer.DataHasChanged(), svg, offset, opacity, scale, title, subtitle, touched);
+
+        ((ConcurrentBag<IFeature>)layer.Features).Add(iconSymbol);
+
+        return iconSymbol;
+    }
+
+    /// <summary>
+    /// Create a new icon symbol
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateIconSymbol and <see cref="AddIconSymbol"/> is, that CreateIconSymbol returns the 
+    /// icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>IconSymbol as PointFeature</returns>
+    public static PointFeature CreateIconSymbol(this MemoryLayer layer, (double x, double y) position, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return CreateIconSymbol(layer, position.x, position.y, svg, offset, opacity, scale, title, subtitle, touched);
+    }
+
+    /// <summary>
+    /// Create a new icon symbol
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// CreateIconSymbol and <see cref="AddIconSymbol"/> is, that CreateIconSymbol returns the 
+    /// icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="position">MPoint for position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>IconSymbol as PointFeature</returns>
+    public static PointFeature CreateIconSymbol(this MemoryLayer layer, MPoint position, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return CreateIconSymbol(layer, position.X, position.Y, svg, offset, opacity, scale, title, subtitle, touched);
+    }
+
+    /// <summary>
+    /// Add a icon symbol to the layer
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateIconSymbol"/> and AddIconSymbol is, that CreateIconSymbol returns 
+    /// the icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>MemoryLayer</returns>
+    public static MemoryLayer AddIconSymbol(this MemoryLayer layer, double x, double y, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        var Symbol = CreateIconSymbol(layer, x, y, svg, offset, opacity, scale, title, subtitle, touched);
+
+        ((ConcurrentBag<IFeature>)layer.Features).Add(Symbol);
+
+        return layer;
+    }
+
+    /// <summary>
+    /// Add a icon symbol to the layer
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateIconSymbol"/> and AddIconSymbol is, that CreateIconSymbol returns 
+    /// the icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>MemoryLayer</returns>
+    public static MemoryLayer AddIconSymbol(this MemoryLayer layer, (double x, double y) position, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return AddIconSymbol(layer, position.x, position.y, svg, offset, opacity, scale, title, subtitle, touched);
+    }
+
+    /// <summary>
+    /// Add a icon symbol to the layer
+    /// </summary>
+    /// <remarks>
+    /// A icon symbol always belongs to a <see cref="MemoryLayer"/>. The difference between 
+    /// <see cref="CreateIconSymbol"/> and AddIconSymbol is, that CreateIconSymbol returns 
+    /// the icon symbol while AddIconSymbol returns the MemoryLayer.
+    /// </remarks>
+    /// <param name="layer">Layer to use</param>
+    /// <param name="position">MPoint for position</param>
+    /// <param name="svg">SVG of icon symbol</param>
+    /// <param name="offset">Offset of icon symbol</param>
+    /// <param name="opacity">Opacity of icon symbol</param>
+    /// <param name="scale">Scale of icon symbol</param>
+    /// <param name="title">Title for callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action called when icon symbol is touched</param>
+    /// <returns>MemoryLayer</returns>
+    public static MemoryLayer AddIconSymbol(this MemoryLayer layer, MPoint position, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        return AddIconSymbol(layer, position.X, position.Y, svg, offset, opacity, scale, title, subtitle, touched);
+    }
+
+    #endregion
+
     /// <summary>
     /// Hide all callouts on this layer
     /// </summary>
