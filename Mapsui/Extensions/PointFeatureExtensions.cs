@@ -187,31 +187,6 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
-    /// Get opacity of this feature
-    /// </summary>
-    /// <param name="feature">Feature to use</param>
-    /// <returns>Opacity of feature</returns>
-    public static double GetOpacity(this PointFeature feature)
-    {
-        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
-
-        return symbol?.Opacity ?? 1.0;
-    }
-
-    /// <summary>
-    /// Set opacity of this feature
-    /// </summary>
-    /// <param name="feature">Feature to use</param>
-    /// <param name="scale">Opacity to set</param>
-    /// <returns>Feature</returns>
-    public static PointFeature SetOpacity(this PointFeature feature, double opacity)
-    {
-        SetSymbolValue(feature, (symbol) => symbol.Opacity = (float)opacity);
-
-        return feature;
-    }
-
-    /// <summary>
     /// Get scale of this marker
     /// </summary>
     /// <param name="marker">Marker to use</param>
