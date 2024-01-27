@@ -125,6 +125,32 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
+    /// Get SymbolStyle used by this special feature
+    /// </summary>
+    /// <param name="feature">Feature for which to get SymbolStyle</param>
+    /// <returns>SymbolStyle used or null</returns>
+    public static SymbolStyle? GetSymbolStyle(this PointFeature feature) 
+    {
+        if (!IsSpecial(feature))
+            return null;
+
+        return feature.Get<SymbolStyle>(SymbolStyleKey);
+    }
+
+    /// <summary>
+    /// Get CalloutStyle used by this special feature
+    /// </summary>
+    /// <param name="feature">Feature for which to get CalloutStyle</param>
+    /// <returns>CalloutStyle used or null</returns>
+    public static CalloutStyle? GetCalloutStyle(this PointFeature feature)
+    {
+        if (!IsSpecial(feature))
+            return null;
+
+        return feature.Get<CalloutStyle>(CalloutStyleKey);
+    }
+
+    /// <summary>
     /// Get color of this feature
     /// </summary>
     /// <param name="feature">Feature to use</param>
@@ -274,6 +300,36 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
+    /// Set a value in SymbolStyle
+    /// </summary>
+    /// <param name="feature">Feature to use</param>
+    /// <param name="action">Action to set value</param>
+    public static void SetSymbolValue(this PointFeature feature, Action<SymbolStyle> action)
+    {
+        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
+
+        if (symbol != null)
+            action(symbol);
+
+        feature.Get<Action>(InvalidateKey)?.Invoke();
+    }
+
+    /// <summary>
+    /// Set a value in CalloutStyle
+    /// </summary>
+    /// <param name="feature">Feature to use</param>
+    /// <param name="action">Action to set value</param>
+    public static void SetCalloutValue(this PointFeature feature, Action<CalloutStyle> action)
+    {
+        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
+
+        if (callout != null)
+            action(callout);
+
+        feature.Get<Action>(InvalidateKey)?.Invoke();
+    }
+
+    /// <summary>
     /// Show callout of this feature
     /// </summary>
     /// <param name="feature">Feature to use</param>
@@ -388,36 +444,6 @@ public static class PointFeatureExtensions
     private static void ChangeCalloutEnabled(PointFeature feature, bool flag)
     {
         SetCalloutValue(feature, (callout) => callout.Enabled = flag);
-
-        feature.Get<Action>(InvalidateKey)?.Invoke();
-    }
-
-    /// <summary>
-    /// Set a value in SymbolStyle
-    /// </summary>
-    /// <param name="feature">Feature to use</param>
-    /// <param name="action">Action to set value</param>
-    private static void SetSymbolValue(PointFeature feature, Action<SymbolStyle> action)
-    {
-        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
-
-        if (symbol != null)
-            action(symbol);
-
-        feature.Get<Action>(InvalidateKey)?.Invoke();
-    }
-
-    /// <summary>
-    /// Set a value in CalloutStyle
-    /// </summary>
-    /// <param name="feature">Feature to use</param>
-    /// <param name="action">Action to set value</param>
-    private static void SetCalloutValue(PointFeature feature, Action<CalloutStyle> action)
-    {
-        var callout = feature.Get<CalloutStyle>(CalloutStyleKey);
-
-        if (callout != null)
-            action(callout);
 
         feature.Get<Action>(InvalidateKey)?.Invoke();
     }
