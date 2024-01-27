@@ -38,7 +38,7 @@ public class MarkerSample : ISample
         // Add a scalebar
         map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
         // Create layer for markers
-        using var layer = map.AddMarkerLayer("Marker")
+        using var layer = map.AddCalloutLayer("Marker")
             // Create marker for NYC
             .AddMarker(SphericalMercator.FromLonLat(-73.935242, 40.730610),
                 Color.Red,

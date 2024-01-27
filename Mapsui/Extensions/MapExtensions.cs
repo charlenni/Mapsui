@@ -11,7 +11,7 @@ namespace Mapsui.Extensions;
 public static  class MapExtensions
 {
     /// <summary>
-    /// Add a layer for markers
+    /// Add a layer for symbols/markers which could show a callout
     /// </summary>
     /// <remarks>
     /// This layer should be the topmost <see cref="Layer"> in a <see cref="Map">, so that the <see cref="CalloutStyle">
@@ -20,7 +20,7 @@ public static  class MapExtensions
     /// <param name="map">Map to add this layer too</param>
     /// <param name="name">Name of layer</param>
     /// <returns>Created MemoryLayer</returns>
-    public static MemoryLayer AddMarkerLayer(this Map map, string name)
+    public static MemoryLayer AddCalloutLayer(this Map map, string name)
     {
         // Create layer
         var layer = new MemoryLayer(name)
