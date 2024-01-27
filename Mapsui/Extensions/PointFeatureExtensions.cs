@@ -2,6 +2,7 @@
 using Mapsui.Styles;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Extensions;
@@ -24,6 +25,7 @@ public static class PointFeatureExtensions
     public const string MarkerKey = "Marker";
     public const string MarkerColorKey = MarkerKey + ".Color";
     public const string SymbolKey = "Symbol";
+    public const string IconSymbolKey = "IconSymbol";
     public const string SymbolStyleKey = "SymbolStyle";
     public const string CalloutStyleKey = "CalloutStyle";
     public const string TouchedKey = MarkerKey+".Touched";
@@ -37,6 +39,9 @@ public static class PointFeatureExtensions
                           "  <circle cx=\"19.5\" cy=\"19.5\" r=\"7\" fill-opacity=\".4\"/>" +
                           "</svg>";
     private const double markerImageHeight = 59.0;
+
+    private static readonly Regex extractWidth = new Regex("width=\\\"(\\d+)\\\"", RegexOptions.Compiled);
+    private static readonly Regex extractHeight = new Regex("height=\\\"(\\d+)\\\"", RegexOptions.Compiled);
 
     /// <summary>
     /// Init a PointFeature, so that it is a marker
@@ -55,7 +60,7 @@ public static class PointFeatureExtensions
 
         color = color ?? Color.Red;
 
-        Init(marker, invalidate, color, opacity, scale, title, subtitle, touched);
+        Init(marker, invalidate, opacity, scale, title, subtitle, touched);
 
         SetSymbolValue(marker, (symbolStyle) => symbolStyle.SymbolType = SymbolType.Image);
         SetSymbolValue(marker, (symbolStyle) => symbolStyle.BitmapId = GetPinWithColor(color));
@@ -87,7 +92,7 @@ public static class PointFeatureExtensions
 
         color = color ?? Color.White;
 
-        Init(symbol, invalidate, color, opacity, scale, title, subtitle, touched);
+        Init(symbol, invalidate, opacity, scale, title, subtitle, touched);
 
         SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolType = symbolType);
         SetSymbolValue(symbol, (symbolStyle) => symbolStyle.SymbolOffset = new RelativeOffset(0.0, 0.0));
@@ -97,6 +102,35 @@ public static class PointFeatureExtensions
         SetSymbolValue(symbol, (symbolStyle) => { if (symbolStyle.Outline != null) symbolStyle.Outline.Width = 5.0; });
 
         SetCalloutValue(symbol, (calloutStyle) => calloutStyle.SymbolOffset = new Offset(0.0, 0.0));
+    }
+
+    /// <summary>
+    /// Init a PointFeature, so that it is a icon symbol
+    /// </summary>
+    /// <param name="marker">PointFeature to use</param>
+    /// <param name="invalidate">Action to call when something is changed via extensions</param>
+    /// <param name="color">Color for this icon symbol</param>
+    /// <param name="opacity">Opacity for this icon symbol</param>
+    /// <param name="scale">Scale for this icon symbol</param>
+    /// <param name="title">Title of callout</param>
+    /// <param name="subtitle">Subtitle for callout</param>
+    /// <param name="touched">Action to call, when this icon symbol is touched</param>
+    public static void InitIconSymbol(this PointFeature marker, Action invalidate, string svg, Offset offset, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    {
+        marker[IconSymbolKey] = true;
+
+        Init(marker, invalidate, opacity, scale, title, subtitle, touched);
+
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.SymbolType = SymbolType.Image);
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.BitmapId = BitmapRegistry.Instance.Register(svg));
+        SetSymbolValue(marker, (symbolStyle) => symbolStyle.SymbolOffset = offset);
+
+        // Try to get width and height of svg
+        (var width, var height) = ExtractSizeFromSVG(svg);
+
+        var calloutOffset = offset.CalcOffset(width, height);
+
+        SetCalloutValue(marker, (calloutStyle) => calloutStyle.SymbolOffset = new Offset(-calloutOffset.X, (height * 0.5 + calloutOffset.Y) * scale));
     }
 
     /// <summary>
@@ -120,13 +154,23 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
+    /// Check, if feature is a icon symbol
+    /// </summary>
+    /// <param name="feature">Feature to check</param>
+    /// <returns>True, if the feature is a icon symbol</returns>
+    public static bool IsIconSymbol(this PointFeature feature)
+    {
+        return IsOfType(feature, IconSymbolKey);
+    }
+
+    /// <summary>
     /// Check, if feature is one of the special features
     /// </summary>
     /// <param name="feature">Feature to check</param>
     /// <returns>True, if the feature is a special one</returns>
     public static bool IsSpecial(this PointFeature feature)
     {
-        return IsMarker(feature) || IsSymbol(feature);
+        return IsMarker(feature) || IsSymbol(feature) || IsIconSymbol(feature);
     }
 
     /// <summary>
@@ -356,13 +400,12 @@ public static class PointFeatureExtensions
     /// </summary>
     /// <param name="feature">PointFeature to use</param>
     /// <param name="invalidate">Action to call when something is changed via extensions</param>
-    /// <param name="color">Color for this marker</param>
     /// <param name="opacity">Opacity for this marker</param>
     /// <param name="scale">Scale for this marker</param>
     /// <param name="title">Title of callout</param>
     /// <param name="subtitle">Subtitle for callout</param>
     /// <param name="touched">Action to call, when this marker is touched</param>
-    private static void Init(this PointFeature feature, Action invalidate, Color? color = null, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
+    private static void Init(this PointFeature feature, Action invalidate, double opacity = 1.0, double scale = 1.0, string? title = null, string? subtitle = null, Action<ILayer, IFeature, MapInfoEventArgs>? touched = null)
     {
         var symbol = new SymbolStyle()
         {
@@ -443,5 +486,31 @@ public static class PointFeatureExtensions
         var svg = markerImage.Replace("#color", $"#{colorInHex}");
 
         return BitmapRegistry.Instance.Register(svg, $"{MarkerKey}_{colorInHex}");
+    }
+
+    /// <summary>
+    /// Extract width and height from SVG string
+    /// </summary>
+    /// <param name="svg">String containing SVG icon</param>
+    /// <returns>Tupel of width and height, if found in SVG or 0.0</returns>
+    private static (double, double) ExtractSizeFromSVG(string svg)
+    {
+        // Extract width
+        var width = 0.0;
+
+        var matches = extractWidth.Matches(svg.ToLower());
+
+        if (matches.Count >= 1)
+            width = matches[0].Success ? double.Parse(matches[0].Groups[1].Value ?? "") : 0;
+
+        // Extract height
+        var height = 0.0;
+
+        matches = extractHeight.Matches(svg.ToLower());
+
+        if (matches.Count >= 1)
+            height = matches[0].Success ? double.Parse(matches[0].Groups[1].Value ?? "") : 0;
+
+        return (width, height);
     }
 }
