@@ -187,16 +187,16 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
-    /// Get scale of this marker
+    /// Get scale of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
-    /// <returns>Scale of marker</returns>
-    public static double GetScale(this PointFeature marker)
+    /// <param name="feature">Feature to use</param>
+    /// <returns>Scale of feature</returns>
+    public static double GetScale(this PointFeature feature)
     {
-        if (!IsMarker(marker))
+        if (!IsSpecial(feature))
             return 1.0;
 
-        var symbol = marker.Get<SymbolStyle>(SymbolStyleKey);
+        var symbol = feature.Get<SymbolStyle>(SymbolStyleKey);
 
         if (symbol != null)
         {
@@ -207,18 +207,18 @@ public static class PointFeatureExtensions
     }
 
     /// <summary>
-    /// Set scale of this marker
+    /// Set scale of this feature
     /// </summary>
-    /// <param name="marker">Marker to use</param>
+    /// <param name="feature">Feature to use</param>
     /// <param name="scale">Scale to set</param>
-    /// <returns>Marker</returns>
-    public static PointFeature SetScale(this PointFeature marker, double scale)
+    /// <returns>feature</returns>
+    public static PointFeature SetScale(this PointFeature feature, double scale)
     {
-        SetSymbolValue(marker, (symbol) => symbol.SymbolScale = scale);
+        SetSymbolValue(feature, (symbol) => symbol.SymbolScale = scale);
         // When setting scale, also SymbolOffset of CalloutStyle has to be adjusted
-        SetCalloutValue(marker, (callout) => callout.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
+        SetCalloutValue(feature, (callout) => callout.SymbolOffset = new Offset(0.0, markerImageHeight * scale));
 
-        return marker;
+        return feature;
     }
 
     /// <summary>
