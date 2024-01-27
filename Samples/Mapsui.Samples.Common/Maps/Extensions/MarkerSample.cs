@@ -97,6 +97,12 @@ public class MarkerSample : ISample
         // Show callout for this marker
         marker.ShowCallout(layer);
 
+        var iconSymbol = layer.CreateIconSymbol(SphericalMercator.FromLonLat(-75, 41),
+                svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\"><path d=\"M2.945 20.131l-2.667-5.98h2.99l2.829 4.31 15.463-.485L14.232.197h3.987l11.314 17.429 2.613-.027q2.317 0 4.202.593l1.724.566q1.913.647 1.913 1.347 0 .754-1.913 1.401l-1.724.566q-1.886.593-4.283.593l-2.532-.054-11.314 17.456h-3.987l7.327-17.779-15.463-.485-2.829 4.31H.278z\"/></svg>",
+                offset: new RelativeOffset(0.5, -0.5),
+                scale: 1.0,
+                title: "Airplan");
+
         // Zoom map, so that all markers are visible
         map.Navigator.ZoomToBox(layer.Extent?.Grow(50000));
 
