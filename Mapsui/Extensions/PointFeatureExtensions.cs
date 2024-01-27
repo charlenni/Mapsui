@@ -1,11 +1,7 @@
 ﻿using Mapsui.Layers;
 using Mapsui.Styles;
-using Mapsui.Utilities;
 using System;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using static System.Net.WebRequestMethods;
 using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Extensions;
@@ -13,6 +9,15 @@ namespace Mapsui.Extensions;
 /// <summary>
 /// Extensions for PointFeature
 /// </summary>
+/// <remarks>
+/// This are all extension functions to make it easy to create a <see cref="PointFeature"/>
+/// that behaves like a marker or a symbol. They add two styles to each PointFeature for the
+/// symbol itself and a possible callout.
+/// 
+/// If there are special extensions to get or set a value, then use them. They do more than
+/// one thing (e.g. setting color creates a new marker or setting subtitle change the callout 
+/// type).
+/// </remarks>
 public static class PointFeatureExtensions
 {
     // Const for using to access feature fields
