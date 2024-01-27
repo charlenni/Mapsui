@@ -35,7 +35,7 @@ public static  class MapExtensions
         // Add handling of touches
         map.Info += (object? sender, MapInfoEventArgs args) =>
         {
-            if (args.MapInfo?.Feature == null || args.MapInfo.Feature is not PointFeature || !(((PointFeature)args.MapInfo.Feature).IsMarker() || ((PointFeature)args.MapInfo.Feature).IsSymbol())) 
+            if (args.MapInfo?.Feature == null || args.MapInfo.Feature is not PointFeature || !(((PointFeature)args.MapInfo.Feature).IsSpecial())) 
                 return;
 
             // Has the marker an own action to call when it is touched?
