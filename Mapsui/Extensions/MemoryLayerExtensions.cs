@@ -174,6 +174,7 @@ public static class MemoryLayerExtensions
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
@@ -203,6 +204,7 @@ public static class MemoryLayerExtensions
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
@@ -225,6 +227,7 @@ public static class MemoryLayerExtensions
     /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="position">MPoint for position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
@@ -248,6 +251,7 @@ public static class MemoryLayerExtensions
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
@@ -275,6 +279,7 @@ public static class MemoryLayerExtensions
     /// <param name="layer">Layer to use</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
@@ -297,6 +302,7 @@ public static class MemoryLayerExtensions
     /// </remarks>
     /// <param name="layer">Layer to use</param>
     /// <param name="position">MPoint for position</param>
+    /// <param name="symbolType">SymbolType to use</param>
     /// <param name="color">Color of symbol</param>
     /// <param name="opacity">Opacity of symbol</param>
     /// <param name="scale">Scale of symbol</param>
