@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mapsui.Features;
 using Mapsui.Styles;
 using Mapsui.Utilities;
 

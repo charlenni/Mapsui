@@ -13,6 +13,7 @@ using System.Text;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Nts.Providers.Shapefile.Indexing;
+using Mapsui.NTS.Features;
 
 #pragma warning disable SYSLIB0001
 

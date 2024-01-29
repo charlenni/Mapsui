@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Nts.Extensions;

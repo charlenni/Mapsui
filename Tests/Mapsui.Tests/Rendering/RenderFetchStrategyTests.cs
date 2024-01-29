@@ -1,6 +1,7 @@
 ﻿using System;
 using BruTile.Cache;
 using BruTile.Predefined;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Tiling.Extensions;
 using Mapsui.Tiling.Rendering;

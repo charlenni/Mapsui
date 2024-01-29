@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Mapsui.Features;
 
 namespace Mapsui.Projections;
 

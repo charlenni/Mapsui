@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Mapsui.Cache;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Projections;

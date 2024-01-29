@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using BitMiracle.LibTiff.Classic;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
 using Mapsui.Styles;

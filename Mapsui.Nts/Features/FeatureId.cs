@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Mapsui.Features;
+namespace Mapsui.NTS.Features;
+
 public static class FeatureId
 {
     public static long CreateId(int layerId, uint featureId)

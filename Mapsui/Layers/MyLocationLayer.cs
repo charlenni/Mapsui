@@ -1,5 +1,6 @@
 ﻿using Mapsui.Animations;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Styles;
 using Mapsui.Utilities;
 using System;

@@ -5,6 +5,7 @@ using Mapsui.Styles.Thematics;
 using NUnit.Framework;
 using System.Collections.Generic;
 using NUnit.Framework.Legacy;
+using Mapsui.Features;
 
 namespace Mapsui.Tests.Rendering;
 

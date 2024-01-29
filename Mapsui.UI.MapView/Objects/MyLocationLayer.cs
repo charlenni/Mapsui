@@ -9,6 +9,7 @@ using Mapsui.Nts.Extensions;
 using Mapsui.Utilities;
 using Animation = Mapsui.Animations.Animation;
 using Mapsui.UI.Maui;
+using Mapsui.Features;
 
 namespace Mapsui.UI.Objects;
 

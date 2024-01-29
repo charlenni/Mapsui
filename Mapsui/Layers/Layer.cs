@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Providers;
 using Mapsui.Styles;

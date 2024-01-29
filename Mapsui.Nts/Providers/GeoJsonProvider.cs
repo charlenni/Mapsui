@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Mapsui.Layers;
+using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Features;
+using Mapsui.Providers;
+using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.Index.Strtree;
+using NetTopologySuite.IO.Converters;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Mapsui.Features;
-using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
-using Mapsui.Providers;
-using NetTopologySuite.Features;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Index.Strtree;
-using NetTopologySuite.IO.Converters;
+using IFeature = Mapsui.Features.IFeature;
 
 namespace Mapsui.Nts.Providers;
 
@@ -172,7 +173,7 @@ public class GeoJsonProvider : IProvider, IProviderExtended
     public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         var fetchExtent = fetchInfo.Extent.ToEnvelope();
-        IEnumerable<IFeature> result = FeatureCollection.Query(fetchExtent);
+        IEnumerable<IFeature> result = (IEnumerable<IFeature>)FeatureCollection.Query(fetchExtent);
         return Task.FromResult(result);
     }
 

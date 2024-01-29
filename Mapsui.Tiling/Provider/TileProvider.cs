@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BruTile;
 using BruTile.Cache;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Providers;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Nts;
 using Mapsui.Samples.Common;

@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Authentication.ExtendedProtection;
 using System.Threading;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;

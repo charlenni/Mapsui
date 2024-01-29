@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BruTile;
 using BruTile.Cache;
 using BruTile.Predefined;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Tests.Fetcher.Providers;

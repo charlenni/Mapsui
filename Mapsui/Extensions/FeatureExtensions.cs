@@ -1,3 +1,4 @@
+using Mapsui.Features;
 using Mapsui.Projections;
 using System;
 using System.Collections.Generic;

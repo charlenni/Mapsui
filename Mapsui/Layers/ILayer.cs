@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Mapsui.Animations;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Styles;
 using Mapsui.Widgets.ButtonWidgets;

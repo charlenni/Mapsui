@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using Mapsui.Cache;
 
-namespace Mapsui.Features;
+namespace Mapsui.NTS.Features;
+
 public class FeatureKeyCreator<T> where T : notnull
 {
     private readonly LruCache<T, uint> _keys;

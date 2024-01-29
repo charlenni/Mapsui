@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BruTile.Cache;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Projections;

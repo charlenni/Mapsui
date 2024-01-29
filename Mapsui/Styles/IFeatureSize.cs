@@ -1,4 +1,5 @@
-﻿using Mapsui.Rendering;
+﻿using Mapsui.Features;
+using Mapsui.Rendering;
 
 namespace Mapsui.Styles;
 

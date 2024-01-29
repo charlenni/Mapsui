@@ -2,6 +2,7 @@
 // The Mapsui authors licensed this file under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Providers;

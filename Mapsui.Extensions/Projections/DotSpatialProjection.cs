@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using DotSpatial.Projections;
 using DotSpatial.Projections.AuthorityCodes;
+using Mapsui.Features;
 using Mapsui.Nts;
 using Mapsui.Nts.Projections;
 using Mapsui.Projections;

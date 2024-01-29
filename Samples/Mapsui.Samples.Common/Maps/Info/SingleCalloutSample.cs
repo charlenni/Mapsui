@@ -1,4 +1,5 @@
 ﻿using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Providers;

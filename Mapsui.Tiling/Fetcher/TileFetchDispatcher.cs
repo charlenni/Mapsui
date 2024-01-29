@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BruTile;
 using BruTile.Cache;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Logging;

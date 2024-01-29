@@ -1,4 +1,5 @@
 using System;
+using Mapsui.Features;
 
 namespace Mapsui.Styles.Thematics;
 

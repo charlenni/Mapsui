@@ -1,4 +1,5 @@
-﻿using Mapsui.Layers;
+﻿using Mapsui.Features;
+using Mapsui.Layers;
 using Mapsui.Nts;
 using Mapsui.Nts.Extensions;
 using Mapsui.Styles;

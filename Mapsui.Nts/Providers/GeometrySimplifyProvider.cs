@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mapsui.Extensions;
-using Mapsui.Features;
+﻿using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.NTS.Features;
 using Mapsui.Providers;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Simplify;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mapsui.Nts.Providers;
 

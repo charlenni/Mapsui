@@ -1,4 +1,5 @@
-﻿using Mapsui.Layers;
+﻿using Mapsui.Features;
+using Mapsui.Layers;
 using System.Collections.Generic;
 using System.Linq;
 

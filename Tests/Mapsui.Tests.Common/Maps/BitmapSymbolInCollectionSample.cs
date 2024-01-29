@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Nts;
 using Mapsui.Providers;

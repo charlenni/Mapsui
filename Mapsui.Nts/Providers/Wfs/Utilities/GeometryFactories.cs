@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
+using Mapsui.Features;
 using Mapsui.Logging;
 using Mapsui.Nts;
 using Mapsui.Nts.Extensions;

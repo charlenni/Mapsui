@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mapsui.Extensions;
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Logging;
 using Mapsui.Providers;

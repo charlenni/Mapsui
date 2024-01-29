@@ -1,3 +1,4 @@
+using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Logging;
 using Mapsui.Styles;

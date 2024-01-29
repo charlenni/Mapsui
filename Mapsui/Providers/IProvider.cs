@@ -5,6 +5,7 @@
 // This file was originally created by Morten Nielsen (www.iter.dk) as part of SharpMap
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mapsui.Features;
 using Mapsui.Layers;
 
 namespace Mapsui.Providers;
