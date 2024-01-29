@@ -4,7 +4,7 @@
 
 // This file was originally created by Morten Nielsen (www.iter.dk) as part of SharpMap
 
-namespace Mapsui.Providers.Wms;
+namespace Mapsui.Extensions.Providers.Wms;
 
 /// <summary>
 /// Class for generating the WmsCapabilities Xml

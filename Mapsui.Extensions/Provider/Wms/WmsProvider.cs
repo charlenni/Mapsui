@@ -24,10 +24,11 @@ using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Rendering;
 using Mapsui.Utilities;
 
-namespace Mapsui.Providers.Wms;
+namespace Mapsui.Extensions.Providers.Wms;
 
 /// <summary>
 /// Web Map Service layer

@@ -1,7 +1,7 @@
 ﻿using Mapsui.Extensions.Projections;
 using Mapsui.Layers;
 using Mapsui.Providers;
-using Mapsui.Providers.Wms;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Styles;
 using Mapsui.Widgets;
 using Mapsui.Widgets.ButtonWidgets;

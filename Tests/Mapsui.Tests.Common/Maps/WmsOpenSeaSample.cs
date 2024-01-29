@@ -6,7 +6,7 @@ using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Limiting;
 using Mapsui.Projections;
-using Mapsui.Providers.Wms;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 using Mapsui.Tiling.Extensions;

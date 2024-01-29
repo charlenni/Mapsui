@@ -12,7 +12,7 @@ using Mapsui.Extensions;
 using Mapsui.Logging;
 using Mapsui.Styles;
 
-namespace Mapsui.Providers.Wms;
+namespace Mapsui.Extensions.Providers.Wms;
 
 /// <summary>
 /// Class for requesting and parsing a WMS servers capabilities

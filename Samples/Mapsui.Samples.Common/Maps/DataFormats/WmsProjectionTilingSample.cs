@@ -2,7 +2,7 @@
 using Mapsui.Extensions.Projections;
 using Mapsui.Layers;
 using Mapsui.Providers;
-using Mapsui.Providers.Wms;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Samples.Common.Utilities;
 using Mapsui.Styles;
 using Mapsui.Tiling.Layers;

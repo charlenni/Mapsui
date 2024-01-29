@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Mapsui.Providers.Wms;
+namespace Mapsui.Extensions.Providers.Wms;
 
 public class FeatureInfo
 {
