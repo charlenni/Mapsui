@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Xml;
-using Mapsui.Providers.Wms;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Tests.Utilities;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;

@@ -10,7 +10,7 @@ using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Providers.Wfs;
-using Mapsui.Providers.Wms;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
 using Mapsui.Samples.Common.Maps.Animations;
