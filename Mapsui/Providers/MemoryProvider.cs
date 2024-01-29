@@ -1,6 +1,7 @@
 using Mapsui.Features;
 using Mapsui.Layers;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,15 +9,16 @@ namespace Mapsui.Providers;
 
 public class MemoryProvider : IProvider
 {
-    private readonly MRect? _boundingBox;
+    private readonly object _sync = new object();
+    private MRect? _extent;
 
     /// <summary>
     /// Initializes a new instance of the MemoryProvider
     /// </summary>
     public MemoryProvider()
     {
-        Features = new List<IFeature>();
-        _boundingBox = GetExtent(Features);
+        _features = new List<IFeature>();
+        _extent = null;
     }
 
     /// <summary>
@@ -25,8 +27,8 @@ public class MemoryProvider : IProvider
     /// <param name="feature">Feature to be in this dataSource</param>
     public MemoryProvider(IFeature feature)
     {
-        Features = new List<IFeature> { feature };
-        _boundingBox = GetExtent(Features);
+        _features = new List<IFeature> { feature };
+        _extent = GetExtent(Features);
     }
 
     /// <summary>
@@ -35,14 +37,16 @@ public class MemoryProvider : IProvider
     /// <param name="features">Features to be included in this dataSource</param>
     public MemoryProvider(IEnumerable<IFeature> features)
     {
-        Features = features.ToList();
-        _boundingBox = GetExtent(Features);
+        _features = features.ToList();
+        _extent = GetExtent(Features);
     }
+
+    private List<IFeature> _features = new List<IFeature>();
 
     /// <summary>
     /// Gets or sets the geometries this data source contains
     /// </summary>
-    public IReadOnlyList<IFeature> Features { get; private set; }
+    public IReadOnlyList<IFeature> Features { get => _features.ToImmutableList(); }
 
     public double SymbolSize { get; set; } = 64;
 
@@ -61,7 +65,7 @@ public class MemoryProvider : IProvider
         if (fetchInfo == null || fetchInfo.Extent == null)
             return Task.FromResult(Enumerable.Empty<IFeature>()); 
 
-        var features = Features.ToArray(); // An Array is faster than a List
+        var features = _features.ToImmutableArray();
 
         fetchInfo = new FetchInfo(fetchInfo);
 
@@ -80,7 +84,17 @@ public class MemoryProvider : IProvider
     /// <returns></returns>
     public IFeature? Find(object? value, string fieldName)
     {
-        return Features.FirstOrDefault(f => value != null && f[fieldName] == value);
+        IFeature? result = null;
+
+        if (value == null)
+            return result;
+
+        lock (_sync)
+        {
+            result = _features.FirstOrDefault(f => f[fieldName] == value);
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -89,7 +103,7 @@ public class MemoryProvider : IProvider
     /// <returns>Extent of all features</returns>
     public MRect? GetExtent()
     {
-        return _boundingBox;
+        return _extent;
     }
 
     /// <summary>
@@ -97,19 +111,84 @@ public class MemoryProvider : IProvider
     /// </summary>
     public void Clear()
     {
-        Features = new List<IFeature>();
+        lock (_sync)
+        {
+            _features = new List<IFeature>();
+        }
+    }
+
+    /// <summary>
+    /// Add a feature to list
+    /// </summary>
+    /// <param name="feature">Feature to add</param>
+    public void Add(IFeature feature)
+    {
+        lock (_sync)
+        {
+            _features.Add(feature);
+
+            _extent = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Add features to list
+    /// </summary>
+    /// <param name="features">Features to add</param>
+    public void Add(IEnumerable<IFeature> features)
+    {
+        lock (_sync)
+        {
+            _features.AddRange(features);
+
+            _extent = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Remove feature from list
+    /// </summary>
+    /// <param name="feature">Feature to remove</param>
+    public void Remove(IFeature feature)
+    {
+        lock (_sync)
+        {
+            _features.Remove(feature);
+
+            _extent = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Remove feature from list
+    /// </summary>
+    /// <param name="feature">Feature to remove</param>
+    public void Remove(IEnumerable<IFeature> features)
+    {
+        lock (_sync)
+        {
+            foreach (var feature in features)
+                _features.Remove(feature);
+
+            _extent = GetExtent(_features);
+        }
+
     }
 
     internal static MRect? GetExtent(IReadOnlyList<IFeature> features)
     {
-        MRect? box = null;
+        MRect? extent = null;
+
         foreach (var feature in features)
         {
-            if (feature.Extent == null) continue;
-            box = box == null
+            if (feature.Extent == null) 
+                continue;
+
+            extent = extent == null
                 ? feature.Extent
-                : box.Join(feature.Extent);
+                : extent.Join(feature.Extent);
         }
-        return box;
+
+        return extent;
     }
 }
