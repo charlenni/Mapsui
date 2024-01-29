@@ -1,7 +1,3 @@
-// Copyright (c) The Mapsui authors.
-// The Mapsui authors licensed this file under the MIT license.
-// See the LICENSE file in the project root for full license information.
-
 // This file was originally created by Morten Nielsen (www.iter.dk) as part of SharpMap
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,10 +17,15 @@ public interface IProvider
     string? CRS { get; set; }
 
     /// <summary>
-    /// <see cref="MRect"/> of data set
+    /// Get extend of all features provided by this provider
     /// </summary>
-    /// <returns>BoundingBox</returns>
+    /// <returns>Extent of all features</returns>
     MRect? GetExtent();
 
+    /// <summary>
+    /// Get all features contained in FetchInfos extend
+    /// </summary>
+    /// <param name="fetchInfo">FetchInfo to use</param>
+    /// <returns>Task to get list of features</returns>
     Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo);
 }

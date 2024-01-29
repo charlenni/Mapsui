@@ -7,6 +7,9 @@ using Mapsui.Layers;
 
 namespace Mapsui.Providers;
 
+/// <summary>
+/// Provider, that filters results of another provider by a given function
+/// </summary>
 public class FilteringProvider : IProvider
 {
     private readonly IProvider _provider;
@@ -29,6 +32,11 @@ public class FilteringProvider : IProvider
         return _provider.GetExtent();
     }
 
+    /// <summary>
+    /// Get all features contained in FetchInfos extend selected by a filter
+    /// </summary>
+    /// <param name="fetchInfo">FetchInfo to use</param>
+    /// <returns>Task to get list of features</returns>
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         var features = await _provider.GetFeaturesAsync(fetchInfo);

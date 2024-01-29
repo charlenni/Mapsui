@@ -1,19 +1,18 @@
-using System;
+using Mapsui.Features;
+using Mapsui.Layers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mapsui.Features;
-using Mapsui.Layers;
 
 namespace Mapsui.Providers;
 
 public class MemoryProvider : IProvider
 {
     private readonly MRect? _boundingBox;
-    /// <summary>
-    /// Gets or sets the geometries this data source contains
-    /// </summary>
 
+    /// <summary>
+    /// Initializes a new instance of the MemoryProvider
+    /// </summary>
     public MemoryProvider()
     {
         Features = new List<IFeature>();
@@ -30,15 +29,6 @@ public class MemoryProvider : IProvider
         _boundingBox = GetExtent(Features);
     }
 
-    public IReadOnlyList<IFeature> Features { get; private set; }
-    public double SymbolSize { get; set; } = 64;
-
-    /// <summary>
-    /// The spatial reference ID (CRS)
-    /// </summary>
-    public string? CRS { get; set; }
-
-
     /// <summary>
     /// Initializes a new instance of the MemoryProvider
     /// </summary>
@@ -49,18 +39,36 @@ public class MemoryProvider : IProvider
         _boundingBox = GetExtent(Features);
     }
 
+    /// <summary>
+    /// Gets or sets the geometries this data source contains
+    /// </summary>
+    public IReadOnlyList<IFeature> Features { get; private set; }
 
+    public double SymbolSize { get; set; } = 64;
+
+    /// <summary>
+    /// Spatial reference ID (CRS)
+    /// </summary>
+    public string? CRS { get; set; }
+
+    /// <summary>
+    /// Get all features contained in FetchInfos extend
+    /// </summary>
+    /// <param name="fetchInfo">FetchInfo to use</param>
+    /// <returns>Task to get list of features</returns>
     public virtual Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
-        if (fetchInfo == null) throw new ArgumentNullException(nameof(fetchInfo));
-        if (fetchInfo.Extent == null) throw new ArgumentNullException(nameof(fetchInfo.Extent));
+        if (fetchInfo == null || fetchInfo.Extent == null)
+            return Task.FromResult(Enumerable.Empty<IFeature>()); 
 
         var features = Features.ToArray(); // An Array is faster than a List
 
         fetchInfo = new FetchInfo(fetchInfo);
+
         // Use a larger extent so that symbols partially outside of the extent are included
         var biggerBox = fetchInfo.Extent?.Grow(fetchInfo.Resolution * SymbolSize * 0.5);
         var result = features.Where(f => f != null && (f.Extent?.Intersects(biggerBox) ?? false)).ToList();
+
         return Task.FromResult((IEnumerable<IFeature>)result);
     }
 
@@ -76,12 +84,20 @@ public class MemoryProvider : IProvider
     }
 
     /// <summary>
-    /// BoundingBox of data set
+    /// Get extend of all features provided by this provider
     /// </summary>
-    /// <returns>BoundingBox</returns>
+    /// <returns>Extent of all features</returns>
     public MRect? GetExtent()
     {
         return _boundingBox;
+    }
+
+    /// <summary>
+    /// Clear list of features
+    /// </summary>
+    public void Clear()
+    {
+        Features = new List<IFeature>();
     }
 
     internal static MRect? GetExtent(IReadOnlyList<IFeature> features)
@@ -95,10 +111,5 @@ public class MemoryProvider : IProvider
                 : box.Join(feature.Extent);
         }
         return box;
-    }
-
-    public void Clear()
-    {
-        Features = new List<IFeature>();
     }
 }
