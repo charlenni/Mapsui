@@ -1,4 +1,4 @@
-﻿using Mapsui.Nts.Editing;
+﻿using Mapsui.NTS.Editing;
 using Mapsui.UI;
 
 namespace Mapsui.Samples.Common.Maps.Editing;

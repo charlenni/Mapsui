@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Mapsui.Nts.Providers;
+namespace Mapsui.NTS.Providers;
 
 public class GeometrySimplifyProvider : IProvider, IProviderExtended
 {

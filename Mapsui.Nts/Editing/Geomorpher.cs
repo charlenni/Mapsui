@@ -1,7 +1,7 @@
 ﻿using Mapsui.Utilities;
 using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Editing;
+namespace Mapsui.NTS.Editing;
 
 public static class Geomorpher
 {

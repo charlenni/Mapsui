@@ -1,12 +1,12 @@
 ﻿using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.NTS.Features;
 using Mapsui.Providers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Mapsui.Nts.Providers;
+namespace Mapsui.NTS.Providers;
 
 public class GeometryIntersectionProvider : IProvider, IProviderExtended
 {

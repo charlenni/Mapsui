@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 using Mapsui.Extensions.Projections;
-using Mapsui.Nts;
-using Mapsui.Nts.Providers.Shapefile;
+using Mapsui.NTS;
+using Mapsui.NTS.Providers.Shapefile;
 using Mapsui.Projections;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;

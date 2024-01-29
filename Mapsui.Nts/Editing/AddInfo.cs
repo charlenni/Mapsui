@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Editing;
+namespace Mapsui.NTS.Editing;
 
 public class AddInfo
 {

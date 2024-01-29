@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Mapsui.Nts.Providers.Shapefile.Indexing;
+namespace Mapsui.NTS.Providers.Shapefile.Indexing;
 
 [Serializable]
 internal class Node<T, TU> where T : IComparable<T?>

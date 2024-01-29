@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Logging;
-using Mapsui.Nts.Extensions;
-using Mapsui.Nts.Providers.Shapefile.Indexing;
+using Mapsui.NTS.Extensions;
+using Mapsui.NTS.Providers.Shapefile.Indexing;
 using Mapsui.Projections;
 using Mapsui.Providers;
 using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Providers.Shapefile;
+namespace Mapsui.NTS.Providers.Shapefile;
 
 /// <summary>
 /// Shapefile geometry type.

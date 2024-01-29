@@ -1,7 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tiling;

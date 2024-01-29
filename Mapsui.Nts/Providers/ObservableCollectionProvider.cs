@@ -10,7 +10,7 @@ using Mapsui.Providers;
 using Mapsui.UI.Objects;
 using Mapsui.Utilities;
 
-namespace Mapsui.Nts.Providers;
+namespace Mapsui.NTS.Providers;
 
 public class ObservableCollectionProvider<T> : IProvider where T : IFeatureProvider
 {

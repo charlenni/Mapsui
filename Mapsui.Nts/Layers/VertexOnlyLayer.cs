@@ -1,13 +1,13 @@
 ﻿using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.NTS.Features;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mapsui.Nts.Layers;
+namespace Mapsui.NTS.Layers;
 
 public class VertexOnlyLayer : BaseLayer
 {

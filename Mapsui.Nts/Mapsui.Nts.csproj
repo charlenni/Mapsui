@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net6.0</TargetFrameworks>
 		<Description>Mapsui - Library for mapping</Description>
-		<PackageTags>$(PackageTags) nts</PackageTags>
+		<PackageTags>$(PackageTags) NTS</PackageTags>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 

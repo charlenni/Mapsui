@@ -1,7 +1,7 @@
 ﻿using System;
 using DotSpatial.Projections;
 
-namespace Mapsui.Nts.Projections;
+namespace Mapsui.NTS.Projections;
 
 public sealed class GeometryTransform : NetTopologySuite.Geometries.ICoordinateSequenceFilter
 {

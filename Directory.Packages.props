@@ -45,7 +45,7 @@
     <PackageVersion Include="Mapsui.Extensions" Version="4.0.0-beta.8" />
     <PackageVersion Include="Mapsui.iOS" Version="4.0.0-beta.8" />
     <PackageVersion Include="Mapsui.Maui" Version="4.0.0-beta.8" />
-    <PackageVersion Include="Mapsui.Nts" Version="4.0.0-beta.8" />
+    <PackageVersion Include="Mapsui.NTS" Version="4.0.0-beta.8" />
     <PackageVersion Include="Mapsui" Version="4.0.0-beta.8" />
     <PackageVersion Include="Mapsui.Rendering.Skia" Version="4.0.0-beta.8" />
     <PackageVersion Include="Mapsui.Tiling" Version="4.0.0-beta.8" />

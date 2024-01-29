@@ -8,7 +8,7 @@
             "Mapsui/*.csproj",
             "Mapsui.ArcGis/*.csproj",
             "Mapsui.Extensions/*.csproj",
-            "Mapsui.Nts/*.csproj",
+            "Mapsui.NTS/*.csproj",
             "Mapsui.Rendering.Skia/*.csproj",
             "Mapsui.Tiling/*.csproj",
             "Mapsui.UI.*/*.csproj"

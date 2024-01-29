@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
-using Mapsui.Nts.Providers;
+using Mapsui.NTS.Extensions;
+using Mapsui.NTS.Providers;
 using Mapsui.Projections;
 using Mapsui.Providers;
 using Mapsui.Rendering;

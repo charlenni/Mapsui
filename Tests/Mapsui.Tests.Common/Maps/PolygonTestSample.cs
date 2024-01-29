@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;

@@ -29,7 +29,7 @@ public partial class MapControl : SkiaDrawable, IMapControl
     {
         _invalidate = () => RunOnUIThread(Invalidate);
 
-        // Mapsui.Rendering.Skia use Mapsui.Nts where GetDbaseLanguageDriver need encoding providers
+        // Mapsui.Rendering.Skia use Mapsui.NTS where GetDbaseLanguageDriver need encoding providers
         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
         RefreshGraphics();

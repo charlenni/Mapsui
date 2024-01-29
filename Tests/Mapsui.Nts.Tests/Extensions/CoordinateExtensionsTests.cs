@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using NetTopologySuite.Geometries;
 using NUnit.Framework;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using System;
 
-namespace Mapsui.Nts.Tests;
+namespace Mapsui.NTS.Tests;
 
 [TestFixture]
 public class CoordinateExtensionsTests

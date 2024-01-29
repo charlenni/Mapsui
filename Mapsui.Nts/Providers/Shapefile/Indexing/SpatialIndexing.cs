@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace Mapsui.Nts.Providers.Shapefile.Indexing;
+namespace Mapsui.NTS.Providers.Shapefile.Indexing;
 
 /// <summary>
 /// Heuristics used for tree generation

@@ -10,8 +10,8 @@ using System.Reflection;
 using DotSpatial.Projections;
 using DotSpatial.Projections.AuthorityCodes;
 using Mapsui.Features;
-using Mapsui.Nts;
-using Mapsui.Nts.Projections;
+using Mapsui.NTS;
+using Mapsui.NTS.Projections;
 using Mapsui.Projections;
 using NetTopologySuite.Geometries;
 

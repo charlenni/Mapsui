@@ -12,12 +12,12 @@ using System.IO;
 using System.Text;
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts.Providers.Shapefile.Indexing;
+using Mapsui.NTS.Providers.Shapefile.Indexing;
 using Mapsui.NTS.Features;
 
 #pragma warning disable SYSLIB0001
 
-namespace Mapsui.Nts.Providers.Shapefile;
+namespace Mapsui.NTS.Providers.Shapefile;
 
 internal sealed class DbaseReader : IDisposable
 {

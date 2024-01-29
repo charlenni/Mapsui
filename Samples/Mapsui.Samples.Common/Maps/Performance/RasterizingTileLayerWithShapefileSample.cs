@@ -1,7 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Extensions.Cache;
 using Mapsui.Layers;
-using Mapsui.Nts.Providers.Shapefile;
+using Mapsui.NTS.Providers.Shapefile;
 using Mapsui.Projections;
 using Mapsui.Providers;
 using Mapsui.Samples.Common.Utilities;

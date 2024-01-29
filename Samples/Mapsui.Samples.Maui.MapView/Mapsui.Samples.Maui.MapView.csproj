@@ -72,7 +72,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Mapsui.Nts\Mapsui.Nts.csproj" />
+		<ProjectReference Include="..\..\Mapsui.NTS\Mapsui.NTS.csproj" />
 		<ProjectReference Include="..\..\Mapsui.Rendering.Skia\Mapsui.Rendering.Skia.csproj" />
 		<ProjectReference Include="..\..\Mapsui.UI.Maui\Mapsui.UI.Maui.csproj" />
 		<ProjectReference Include="..\..\Mapsui\Mapsui.csproj" />

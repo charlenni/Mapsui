@@ -1,9 +1,9 @@
 ﻿using System;
 using Mapsui.Extensions;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.UI;
 
-namespace Mapsui.Nts.Editing;
+namespace Mapsui.NTS.Editing;
 
 public enum PointerState
 {

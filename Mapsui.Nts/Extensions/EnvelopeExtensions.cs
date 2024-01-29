@@ -1,6 +1,6 @@
 ﻿using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Extensions;
+namespace Mapsui.NTS.Extensions;
 
 public static class EnvelopeExtensions
 {

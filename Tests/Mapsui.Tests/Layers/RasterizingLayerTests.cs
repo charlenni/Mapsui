@@ -5,7 +5,7 @@ using System.Threading;
 using BruTile.Predefined;
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Providers;
 using Mapsui.Rendering;
 using Mapsui.Rendering.Skia;

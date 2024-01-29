@@ -1,4 +1,4 @@
-﻿using Mapsui.Nts;
+﻿using Mapsui.NTS;
 
 namespace Mapsui.UI.Objects;
 

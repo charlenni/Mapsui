@@ -2,11 +2,11 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Styles;
 using Mapsui.UI.Objects;
 using NetTopologySuite.Geometries;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.Utilities;
 using Mapsui.UI.Maui.Extensions;
 using Mapsui.UI.Maui.Utils;

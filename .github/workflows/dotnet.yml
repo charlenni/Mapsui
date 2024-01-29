@@ -140,8 +140,8 @@ jobs:
       run: dotnet pack --no-restore --configuration Release Mapsui.Rendering.Skia/Mapsui.Rendering.Skia.csproj -o Artifacts -p:PackageVersion=$(git describe --tags)
     - name: Build Mapsui.Tiling
       run: dotnet pack --no-restore --configuration Release Mapsui.Tiling/Mapsui.Tiling.csproj -o Artifacts -p:PackageVersion=$(git describe --tags)
-    - name: Build Mapsui.Nts
-      run: dotnet pack --no-restore --configuration Release Mapsui.Nts/Mapsui.Nts.csproj -o Artifacts -p:PackageVersion=$(git describe --tags)
+    - name: Build Mapsui.NTS
+      run: dotnet pack --no-restore --configuration Release Mapsui.NTS/Mapsui.NTS.csproj -o Artifacts -p:PackageVersion=$(git describe --tags)
     - name: Build Mapsui.ArcGIS
       run: dotnet pack --no-restore --configuration Release Mapsui.ArcGIS/Mapsui.ArcGIS.csproj -o Artifacts -p:PackageVersion=$(git describe --tags)
     - name: Build Mapsui.Extensions
@@ -206,8 +206,8 @@ jobs:
         # The analyzers still have errors be we are close to fixing all of them
         # dotnet format  analyzers  Mapsui.sln --verbosity normal --verify-no-changes
     # Test Build
-    - name: Mapsui.Nts.Tests
-      run: dotnet build --no-restore --configuration Debug Tests/Mapsui.Nts.Tests/Mapsui.Nts.Tests.csproj
+    - name: Mapsui.NTS.Tests
+      run: dotnet build --no-restore --configuration Debug Tests/Mapsui.NTS.Tests/Mapsui.NTS.Tests.csproj
     - name: Mapsui.Rendering.Skia.Tests
       run: dotnet build --no-restore --configuration Debug Tests/Mapsui.Rendering.Skia.Tests/Mapsui.Rendering.Skia.Tests.csproj
     - name: Mapsui.Tests
@@ -215,8 +215,8 @@ jobs:
     - name: Mapsui.UI.Maui.Tests
       run: dotnet build --no-restore --configuration Debug Tests/Mapsui.UI.Maui.Tests/Mapsui.UI.Maui.Tests.csproj
     # Test Run
-    - name: Run Mapsui.Nts.Tests
-      run: dotnet test Tests/Mapsui.Nts.Tests/bin/Debug/net8.0/Mapsui.Nts.Tests.dll
+    - name: Run Mapsui.NTS.Tests
+      run: dotnet test Tests/Mapsui.NTS.Tests/bin/Debug/net8.0/Mapsui.NTS.Tests.dll
     - name: Run Mapsui.Rendering.Skia.Tests
       uses: nick-fields/retry@v2
       with:

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.Providers;
 using NetTopologySuite.Index.Strtree;
 
-namespace Mapsui.Nts.Providers;
+namespace Mapsui.NTS.Providers;
 
 public class IndexedMemoryProvider : IProvider
 {

@@ -1,8 +1,8 @@
-﻿using Mapsui.Nts.Editing;
+﻿using Mapsui.NTS.Editing;
 using Mapsui.UI;
 using Mapsui.Widgets;
 
-namespace Mapsui.Nts.Widgets;
+namespace Mapsui.NTS.Widgets;
 public class EditingWidget : Widget, ITouchableWidget
 {
     public IMapControl MapControl { get; }

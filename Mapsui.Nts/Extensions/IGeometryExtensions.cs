@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Extensions;
+namespace Mapsui.NTS.Extensions;
 
 public static partial class GeometryExtensions
 {

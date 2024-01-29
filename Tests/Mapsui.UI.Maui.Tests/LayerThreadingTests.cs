@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Mapsui.Layers;
-using Mapsui.Nts.Providers;
+using Mapsui.NTS.Providers;
 using Mapsui.UI.Maui;
 using Mapsui.UI.Objects;
 using NUnit.Framework;

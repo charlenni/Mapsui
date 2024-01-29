@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using BenchmarkDotNet.Attributes;
-using Mapsui.Nts.Providers.Shapefile;
+using Mapsui.NTS.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Rendering.Skia;
 using Mapsui.Styles;
@@ -11,7 +11,7 @@ using Mapsui.Extensions.Cache;
 using Mapsui.Layers;
 using Mapsui.Rendering.Skia.Tests;
 using Mapsui.Styles.Thematics;
-using Mapsui.Nts.Providers;
+using Mapsui.NTS.Providers;
 using SkiaSharp;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;

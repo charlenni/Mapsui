@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using NetTopologySuite.Geometries;
 
-namespace Mapsui.Nts.Editing;
+namespace Mapsui.NTS.Editing;
 
 public enum EditMode
 {

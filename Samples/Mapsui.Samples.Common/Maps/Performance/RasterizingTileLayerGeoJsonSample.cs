@@ -6,7 +6,7 @@ using Mapsui.Styles;
 using Mapsui.UI;
 using System.IO;
 using Mapsui.Extensions;
-using Mapsui.Nts.Providers;
+using Mapsui.NTS.Providers;
 using Mapsui.Styles.Thematics;
 using Mapsui.Tiling.Layers;
 

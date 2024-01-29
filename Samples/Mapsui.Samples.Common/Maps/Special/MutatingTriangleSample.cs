@@ -1,5 +1,5 @@
 ﻿using Mapsui.Layers;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Tiling;
 using NetTopologySuite.Geometries;
 using System;

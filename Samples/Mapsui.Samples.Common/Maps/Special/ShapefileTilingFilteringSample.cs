@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Mapsui.Extensions;
 using Mapsui.Layers;
-using Mapsui.Nts;
-using Mapsui.Nts.Providers.Shapefile;
+using Mapsui.NTS;
+using Mapsui.NTS.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Samples.Common.Maps.Performance;
 using Mapsui.Samples.Common.Utilities;

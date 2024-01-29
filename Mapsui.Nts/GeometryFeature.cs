@@ -1,10 +1,10 @@
 using Mapsui.Features;
 using Mapsui.Layers;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using NetTopologySuite.Geometries;
 using System;
 
-namespace Mapsui.Nts;
+namespace Mapsui.NTS;
 
 /// <summary>
 /// Feature representing a NTS geometry on the <cref="Map"/>

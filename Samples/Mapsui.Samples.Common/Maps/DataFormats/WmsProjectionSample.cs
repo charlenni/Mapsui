@@ -2,7 +2,7 @@
 using Mapsui.Layers;
 using Mapsui.Providers.Wms;
 using System.Threading.Tasks;
-using Mapsui.Nts.Extensions;
+using Mapsui.NTS.Extensions;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;

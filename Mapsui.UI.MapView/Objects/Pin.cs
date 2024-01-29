@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Mapsui.Nts;
+using Mapsui.NTS;
 using Mapsui.Styles;
 using Mapsui.UI.Objects;
 using Mapsui.Utilities;

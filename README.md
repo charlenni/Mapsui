@@ -30,7 +30,7 @@ The documentation can be found at [mapsui.com](https://mapsui.com).
 | Package | Version  | Downloads |
 | ---------------|:-------------:|:-------------:|
 | Mapsui         | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.svg?style=flat)](https://www.nuget.org/packages/Mapsui/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.svg)](https://www.nuget.org/packages/Mapsui) |
-| Mapsui.Nts | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.Nts.svg?style=flat)](https://www.nuget.org/packages/Mapsui.Nts/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.Nts.svg)](https://www.nuget.org/packages/Mapsui.Nts) |
+| Mapsui.NTS | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.NTS.svg?style=flat)](https://www.nuget.org/packages/Mapsui.NTS/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.NTS.svg)](https://www.nuget.org/packages/Mapsui.NTS) |
 | Mapsui.Tiling | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.Tiling.svg?style=flat)](https://www.nuget.org/packages/Mapsui.Tiling/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.Tiling.svg)](https://www.nuget.org/packages/Mapsui.Tiling) |
 | Mapsui.Rendering.Skia | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.Rendering.Skia.svg?style=flat)](https://www.nuget.org/packages/Mapsui.Rendering.Skia/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.Rendering.Skia.svg)](https://www.nuget.org/packages/Mapsui.Rendering.Skia) |
 | Mapsui.ArcGIS | [![NuGet Status](https://img.shields.io/nuget/v/Mapsui.ArcGIS.svg?style=flat)](https://www.nuget.org/packages/Mapsui.ArcGIS/) | [![NuGet](https://img.shields.io/nuget/dt/Mapsui.ArcGIS.svg)](https://www.nuget.org/packages/Mapsui.ArcGIS) |
