@@ -27,7 +27,7 @@ public static class CrsHelper
         if (crsType == CrsType.EsriString) return EsriStringPrefix + crs.Substring(EsriStringPrefix.Length);
         if (crsType == CrsType.Proj4String) return Proj4StringPrefix + crs.Substring(Proj4StringPrefix.Length);
 
-        throw new Exception($"crs is not recognized as a projection string: '{crs}'");
+        throw new Exception($"CRS is not recognized as a projection string: '{crs}'");
     }
 
     public static int ToEpsgCode(string crs)
@@ -42,7 +42,7 @@ public static class CrsHelper
         if (crs.StartsWith(EpsgPrefix)) return CrsType.Epgs;
         if (crs.StartsWith(EsriStringPrefix)) return CrsType.EsriString;
         if (crs.StartsWith(Proj4StringPrefix)) return CrsType.Proj4String;
-        throw new Exception($"crs not recognized: '{crs}'");
+        throw new Exception($"CRS not recognized: '{crs}'");
     }
 
     public static bool IsCrsProvided([NotNullWhen(true)] string? fromCRS, [NotNullWhen(true)] string? toCRS)

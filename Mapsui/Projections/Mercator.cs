@@ -24,7 +24,7 @@ public class Mercator
         //y=a×ln[tan(π/4+φ/2)×((1-e×sinφ)/(1+e×sinφ))^(e/2)]
         var y = Radius * Math.Log(Math.Tan(PiDiv4 + latRadians * 0.5) / Math.Pow(Math.Tan(PiDiv4 + Math.Asin(E * Math.Sin(latRadians)) / 2), E));
 
-        return new MPoint((float)x, (float)y);
+        return new MPoint(x, y);
     }
 
     public static MPoint ToLonLat(double x, double y)
@@ -37,6 +37,6 @@ public class Mercator
         var lon = lonRadians / D2R;
         var lat = latRadians / D2R;
 
-        return new MPoint((float)lon, (float)lat);
+        return new MPoint(lon, lat);
     }
 }
