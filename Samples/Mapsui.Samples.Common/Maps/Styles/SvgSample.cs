@@ -1,6 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tiling;
@@ -31,10 +32,10 @@ public class SvgSample : ISample
 
     private static ILayer CreateSvgLayer(MRect? envelope)
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateSvgFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 2000))),
             Name = "Svg Layer",
-            Features = CreateSvgFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 2000)),
             Style = null,
             IsMapInfoLayer = true
         };

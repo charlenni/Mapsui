@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mapsui.UI;
 using Mapsui.Features;
+using Mapsui.Providers;
 
 namespace Mapsui.Samples.Common.Maps.Special;
 
@@ -32,13 +33,13 @@ public sealed class MutatingTriangleSample : ISample, ISampleTest, IDisposable
         return Task.FromResult(map);
     }
 
-    private static MemoryLayer CreateMutatingTriangleLayer(MRect? envelope)
+    private static ILayer CreateMutatingTriangleLayer(MRect? envelope)
     {
-        var layer = new MemoryLayer();
+        var layer = new Layer();
 
         var polygon = new Polygon(new LinearRing(GenerateRandomPoints(envelope, 3).ToArray()));
         var feature = new GeometryFeature(polygon);
-        layer.Features = new List<IFeature> { feature };
+        layer.DataSource = new MemoryProvider(feature);
 
         _ = PeriodicTask.RunAsync(() =>
         {

@@ -1,5 +1,7 @@
 using Mapsui.Features;
+using Mapsui.Fetcher;
 using Mapsui.Layers;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mapsui.Providers;
 
-public class MemoryProvider : IProvider
+public class MemoryProvider : IProvider, IDynamicProvider
 {
     private readonly object _sync = new object();
     private MRect? _extent;
@@ -40,6 +42,8 @@ public class MemoryProvider : IProvider
         _features = features.ToList();
         _extent = GetExtent(Features);
     }
+
+    public event DataChangedEventHandler? DataChanged;
 
     private List<IFeature> _features = new List<IFeature>();
 
@@ -107,6 +111,14 @@ public class MemoryProvider : IProvider
     }
 
     /// <summary>
+    /// Function for handling when data of provider has changed
+    /// </summary>
+    public void DataHasChanged()
+    {
+        DataChanged?.Invoke(this, new DataChangedEventArgs());
+    }
+
+    /// <summary>
     /// Clear list of features
     /// </summary>
     public void Clear()
@@ -115,56 +127,76 @@ public class MemoryProvider : IProvider
         {
             _features = new List<IFeature>();
         }
+
+        DataHasChanged();
     }
 
     /// <summary>
     /// Add a feature to list
     /// </summary>
     /// <param name="feature">Feature to add</param>
-    public void Add(IFeature feature)
+    public void Add(IFeature? feature)
     {
+        if (feature == null)
+            return;
+
         lock (_sync)
         {
             _features.Add(feature);
 
             _extent = GetExtent(_features);
         }
+
+        DataHasChanged();
     }
 
     /// <summary>
     /// Add features to list
     /// </summary>
     /// <param name="features">Features to add</param>
-    public void Add(IEnumerable<IFeature> features)
+    public void AddRange(IEnumerable<IFeature>? features)
     {
+        if (features == null)
+            return;
+
         lock (_sync)
         {
             _features.AddRange(features);
 
             _extent = GetExtent(_features);
         }
+
+        DataHasChanged();
     }
 
     /// <summary>
     /// Remove feature from list
     /// </summary>
     /// <param name="feature">Feature to remove</param>
-    public void Remove(IFeature feature)
+    public void Remove(IFeature? feature)
     {
+        if (feature == null)
+            return;
+
         lock (_sync)
         {
             _features.Remove(feature);
 
             _extent = GetExtent(_features);
         }
+
+        DataHasChanged();
     }
 
     /// <summary>
     /// Remove feature from list
     /// </summary>
     /// <param name="feature">Feature to remove</param>
-    public void Remove(IEnumerable<IFeature> features)
+    public void RemoveRange(IEnumerable<IFeature>? features)
     {
+        if (features == null)
+            return;
+
         lock (_sync)
         {
             foreach (var feature in features)
@@ -173,6 +205,7 @@ public class MemoryProvider : IProvider
             _extent = GetExtent(_features);
         }
 
+        DataHasChanged();
     }
 
     internal static MRect? GetExtent(IReadOnlyList<IFeature> features)

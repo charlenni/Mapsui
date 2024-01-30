@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BruTile;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 using Mapsui.Tiling.Extensions;
@@ -29,7 +30,7 @@ public class TilesSample : ISample
         return map;
     }
 
-    private static async Task<MemoryLayer> CreateLayerAsync()
+    private static async Task<ILayer> CreateLayerAsync()
     {
         var tileIndexes = new[]
         {
@@ -39,9 +40,9 @@ public class TilesSample : ISample
             new TileIndex(1, 1, 1)
         };
 
-        return new MemoryLayer
+        return new Layer
         {
-            Features = await TileIndexToFeaturesAsync(tileIndexes, new SampleTileSource()),
+            DataSource = new MemoryProvider(await TileIndexToFeaturesAsync(tileIndexes, new SampleTileSource())),
             Name = "Tiles",
             Style = new RasterStyle()
         };

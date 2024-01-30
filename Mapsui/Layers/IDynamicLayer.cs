@@ -1,12 +1,8 @@
-﻿// Copyright (c) The Mapsui authors.
-// The Mapsui authors licensed this file under the MIT license.
-// See the LICENSE file in the project root for full license information.
-
-using Mapsui.Fetcher;
+﻿using Mapsui.Fetcher;
 
 namespace Mapsui.Layers;
 
-public interface IDynamic
+public interface IDynamicLayer
 {
     /// <summary>
     /// Event called when the data within the layer has changed allowing

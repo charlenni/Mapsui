@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.NTS;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 using NetTopologySuite.IO;
@@ -31,13 +32,13 @@ public class LineSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateLineFeatures()),
+            Name = "Line",
             Style = null,
-            Features = CreateLineFeatures(),
-            Name = "Line"
         };
     }
 

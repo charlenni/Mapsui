@@ -8,6 +8,7 @@ using Mapsui.NTS;
 using Mapsui.NTS.Editing;
 using Mapsui.NTS.Layers;
 using Mapsui.NTS.Widgets;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using Mapsui.Tiling;
@@ -25,7 +26,7 @@ namespace Mapsui.Samples.Common.Maps.Editing;
 public class EditingSample : IMapControlSample
 {
     private EditManager _editManager = new();
-    private WritableLayer? _targetLayer;
+    private Layer? _targetLayer;
     private IMapControl? _mapControl;
     private List<IFeature>? _tempFeatures;
 
@@ -43,21 +44,21 @@ public class EditingSample : IMapControlSample
         var map = CreateMap();
         var editManager = new EditManager
         {
-            Layer = (WritableLayer)map.Layers.First(l => l.Name == "EditLayer")
+            Provider = ((Layer)map.Layers.First(l => l.Name == "EditLayer")).DataSource as MemoryProvider
         };
-        var targetLayer = (WritableLayer)map.Layers.First(l => l.Name == "Layer 3");
+        var targetLayer = (Layer)map.Layers.First(l => l.Name == "Layer 3");
 
         // Load the polygon layer on startup so you can start modifying right away
-        editManager.Layer.AddRange(targetLayer.GetFeatures().Copy());
-        targetLayer.Clear();
+        editManager.Provider?.AddRange(((MemoryProvider?)targetLayer?.DataSource)?.Features.Copy());
+        ((MemoryProvider?)targetLayer?.DataSource)?.Clear();
 
         editManager.EditMode = editMode;
 
         var editManipulation = new EditManipulation();
 
-        if (editManager.Layer.Extent != null)
+        if (editManager.Provider?.GetExtent() != null)
         {
-            var extent = editManager.Layer.Extent!.Grow(editManager.Layer.Extent.Width * 0.2);
+            var extent = editManager.Provider.GetExtent()!.Grow(editManager.Provider.GetExtent()!.Width * 0.2);
             map.Navigator.ZoomToBox(extent);
         }
 
@@ -68,7 +69,7 @@ public class EditingSample : IMapControlSample
 
     private void InitEditWidgets(Map map)
     {
-        _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 3") as WritableLayer;
+        _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 3") as Layer;
 
         map.Widgets.Add(new BoxWidget
         {
@@ -104,7 +105,7 @@ public class EditingSample : IMapControlSample
         };
         layer1.Touched += (_, e) =>
         {
-            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 1") as WritableLayer;
+            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 1") as Layer;
             e.Handled = true;
         };
 
@@ -122,7 +123,7 @@ public class EditingSample : IMapControlSample
         };
         layer2.Touched += (_, e) =>
         {
-            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 2") as WritableLayer;
+            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 2") as Layer;
             e.Handled = true;
         };
         map.Widgets.Add(layer2);
@@ -139,7 +140,7 @@ public class EditingSample : IMapControlSample
         };
         layer3.Touched += (_, e) =>
         {
-            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 3") as WritableLayer;
+            _targetLayer = map.Layers.FirstOrDefault(f => f.Name == "Layer 3") as Layer;
             e.Handled = true;
         };
         map.Widgets.Add(layer3);
@@ -157,8 +158,8 @@ public class EditingSample : IMapControlSample
         };
         save.Touched += (_, e) =>
         {
-            _targetLayer?.AddRange(_editManager.Layer?.GetFeatures().Copy() ?? new List<IFeature>());
-            _editManager.Layer?.Clear();
+            ((MemoryProvider?)_targetLayer?.DataSource)?.AddRange(_editManager.Provider?.Features.Copy() ?? new List<IFeature>());
+            _editManager.Provider?.Clear();
 
             _mapControl?.RefreshGraphics();
             e.Handled = true;
@@ -177,7 +178,7 @@ public class EditingSample : IMapControlSample
         };
         load.Touched += (_, e) =>
         {
-            var features = _targetLayer?.GetFeatures().Copy() ?? Array.Empty<IFeature>();
+            var features = ((MemoryProvider?)_targetLayer?.DataSource)?.Features.Copy() ?? Array.Empty<IFeature>();
 
             foreach (var feature in features)
             {
@@ -186,8 +187,8 @@ public class EditingSample : IMapControlSample
 
             _tempFeatures = new List<IFeature>(features);
 
-            _editManager.Layer?.AddRange(features);
-            _targetLayer?.Clear();
+            _editManager.Provider?.AddRange(features);
+            ((MemoryProvider?)_targetLayer?.DataSource)?.Clear();
 
             _mapControl?.RefreshGraphics();
             e.Handled = true;
@@ -208,12 +209,12 @@ public class EditingSample : IMapControlSample
         {
             if (_targetLayer != null && _tempFeatures != null)
             {
-                _targetLayer.Clear();
-                _targetLayer.AddRange(_tempFeatures.Copy());
+                ((MemoryProvider?)_targetLayer?.DataSource)?.Clear();
+                ((MemoryProvider?)_targetLayer?.DataSource)?.AddRange(_tempFeatures.Copy());
                 _mapControl?.RefreshGraphics();
             }
 
-            _editManager.Layer?.Clear();
+            _editManager.Provider?.Clear();
 
             _mapControl?.RefreshGraphics();
 
@@ -246,7 +247,7 @@ public class EditingSample : IMapControlSample
         };
         addPoint.Touched += (_, e) =>
         {
-            var features = _targetLayer?.GetFeatures().Copy() ?? Array.Empty<IFeature>();
+            var features = ((MemoryProvider?)_targetLayer?.DataSource)?.Features.Copy() ?? Array.Empty<IFeature>();
 
             foreach (var feature in features)
             {
@@ -272,7 +273,7 @@ public class EditingSample : IMapControlSample
         };
         addLine.Touched += (_, e) =>
         {
-            var features = _targetLayer?.GetFeatures().Copy() ?? Array.Empty<IFeature>();
+            var features = ((MemoryProvider?)_targetLayer?.DataSource)?.Features.Copy() ?? Array.Empty<IFeature>();
 
             foreach (var feature in features)
             {
@@ -298,7 +299,7 @@ public class EditingSample : IMapControlSample
         };
         addPolygon.Touched += (_, e) =>
         {
-            var features = _targetLayer?.GetFeatures().Copy() ?? Array.Empty<IFeature>();
+            var features = ((MemoryProvider?)_targetLayer?.DataSource)?.Features.Copy() ?? Array.Empty<IFeature>();
 
             foreach (var feature in features)
             {
@@ -414,12 +415,12 @@ public class EditingSample : IMapControlSample
         {
             if (_editManager.SelectMode)
             {
-                var selectedFeatures = _editManager.Layer?.GetFeatures().Where(f => (bool?)f["Selected"] == true) ??
+                var selectedFeatures = _editManager.Provider?.Features.Where(f => (bool?)f["Selected"] == true) ??
                                        Array.Empty<IFeature>();
 
                 foreach (var selectedFeature in selectedFeatures)
                 {
-                    _editManager.Layer?.TryRemove(selectedFeature);
+                    _editManager.Provider?.Remove(selectedFeature);
                 }
 
                 _mapControl?.RefreshGraphics();
@@ -448,10 +449,11 @@ public class EditingSample : IMapControlSample
         return map;
     }
 
-    private static WritableLayer CreateEditLayer()
+    private static Layer CreateEditLayer()
     {
-        return new WritableLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(),
             Name = "EditLayer",
             Style = CreateEditLayerStyle(),
             IsMapInfoLayer = true
@@ -506,19 +508,21 @@ public class EditingSample : IMapControlSample
         return new ThemeStyle(f => (bool?)f["Selected"] == true ? _selectedStyle : _disableStyle);
     }
 
-    private static WritableLayer CreatePointLayer()
+    private static Layer CreatePointLayer()
     {
-        return new WritableLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(),
             Name = "Layer 1",
             Style = CreatePointStyle()
         };
     }
 
-    private static WritableLayer CreateLineLayer()
+    private static Layer CreateLineLayer()
     {
-        var lineLayer = new WritableLayer
+        var lineLayer = new Layer
         {
+            DataSource = new MemoryProvider(),
             Name = "Layer 2",
             Style = CreateLineStyle()
         };
@@ -528,10 +532,11 @@ public class EditingSample : IMapControlSample
         return lineLayer;
     }
 
-    private static WritableLayer CreatePolygonLayer()
+    private static Layer CreatePolygonLayer()
     {
-        var polygonLayer = new WritableLayer
+        var polygonLayer = new Layer
         {
+            DataSource = new MemoryProvider(),
             Name = "Layer 3",
             Style = CreatePolygonStyle()
         };
@@ -539,7 +544,7 @@ public class EditingSample : IMapControlSample
         var wkt = "POLYGON ((1261416.17275404 5360656.05714234, 1261367.50386493 5360614.2556425, 1261353.47050427 5360599.62511755, 1261338.83997932 5360576.03712836, 1261337.34706862 5360570.6626498, 1261375.8641649 5360511.2448036, 1261383.92588273 5360483.17808227, 1261391.98760055 5360485.56673941, 1261393.48051126 5360480.490843, 1261411.99260405 5360487.6568144, 1261430.50469684 5360496.9128608, 1261450.21111819 5360507.06465361, 1261472.00761454 5360525.5767464, 1261488.13105019 5360544.98458561, 1261488.1310502 5360545.28316775, 1261481.26366093 5360549.76189988, 1261489.6239609 5360560.21227484, 1261495.59560374 5360555.13637843, 1261512.91336796 5360573.05130694, 1261535.00844645 5360598.43078898, 1261540.08434286 5360619.03295677, 1261535.90419287 5360621.12303176, 1261526.64814648 5360623.21310675, 1261489.32537876 5360644.41243881, 1261458.27283602 5360661.73020303, 1261438.26783253 5360662.02878517, 1261427.22029328 5360660.23729232, 1261416.17275404 5360656.05714234))";
         var polygon = new WKTReader().Read(wkt);
         IFeature feature = new GeometryFeature { Geometry = polygon };
-        polygonLayer.Add(feature);
+        ((MemoryProvider)polygonLayer.DataSource).Add(feature);
 
         return polygonLayer;
     }

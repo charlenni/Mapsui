@@ -1,4 +1,5 @@
 ﻿using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Samples.Common.Maps.Styles;
 using Mapsui.Styles;
@@ -27,9 +28,9 @@ public class DynamicSvgStyleSample : ISample
 
         var map = new Map();
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        map.Layers.Add(new MemoryLayer("Dynamic Svg Style")
+        map.Layers.Add(new Layer("Dynamic Svg Style")
         {
-            Features = RandomPointsBuilder.CreateRandomFeatures(map.Extent, 1000),
+            DataSource = new MemoryProvider(RandomPointsBuilder.CreateRandomFeatures(map.Extent, 1000)),
             Style = CreateDynamicSvgStyle(() => infoPosition)
         });
 

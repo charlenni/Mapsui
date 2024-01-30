@@ -16,7 +16,7 @@ using Mapsui.Styles;
 
 namespace Mapsui.Layers;
 
-public class Layer : BaseLayer, IAsyncDataFetcher, ILayerDataSource<IProvider>
+public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
 {
     private IProvider? _dataSource;
     private readonly object _syncRoot = new();
@@ -65,7 +65,14 @@ public class Layer : BaseLayer, IAsyncDataFetcher, ILayerDataSource<IProvider>
         {
             if (_dataSource == value) return;
 
+            if (_dataSource is IDynamicProvider oldProvider)
+                oldProvider.DataChanged -= HandleDataChanged;
+
             _dataSource = value;
+
+            if (_dataSource is IDynamicProvider newProvider)
+                newProvider.DataChanged += HandleDataChanged;
+
             ClearCache();
 
             if (_dataSource != null)
@@ -151,5 +158,10 @@ public class Layer : BaseLayer, IAsyncDataFetcher, ILayerDataSource<IProvider>
                 areAnimationsRunning = true;
         }
         return areAnimationsRunning;
+    }
+
+    private void HandleDataChanged(object sender, DataChangedEventArgs e)
+    {
+        DataHasChanged();
     }
 }

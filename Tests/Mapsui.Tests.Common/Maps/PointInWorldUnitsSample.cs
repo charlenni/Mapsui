@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 
@@ -31,7 +32,7 @@ public class PointInWorldUnitsSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
         var features = new List<IFeature>
         {
@@ -41,11 +42,11 @@ public class PointInWorldUnitsSample : ISample
             CreateFeature(20, 20, UnitType.WorldUnit)
         };
 
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
+            DataSource = new MemoryProvider(features),
+            Name = "Points in world units",
             Style = null,
-            Features = features,
-            Name = "Points in world units"
         };
         return layer;
     }

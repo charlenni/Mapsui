@@ -2,6 +2,7 @@
 using Mapsui.NTS;
 using Mapsui.NTS.Extensions;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using System.Threading.Tasks;
@@ -41,12 +42,12 @@ public class KeepCenterInMapSample : ISample
         return new MRect(minX, minY, maxX, maxY);
     }
 
-    public static MemoryLayer CreatePanBoundsLayer(MRect panBounds)
+    public static ILayer CreatePanBoundsLayer(MRect panBounds)
     {
         // This layer is only for visualizing the pan bounds. It is not needed for the limiter.
-        return new MemoryLayer("PanBounds")
+        return new Layer("PanBounds")
         {
-            Features = new[] { new GeometryFeature(panBounds.ToPolygon()) },
+            DataSource = new MemoryProvider(new[] { new GeometryFeature(panBounds.ToPolygon()) }),
             Style = new VectorStyle() { Fill = null, Outline = new Pen(Color.Red, 3) { PenStyle = PenStyle.Dot } }
         };
     }

@@ -11,7 +11,7 @@ using Mapsui.Providers;
 
 namespace Mapsui.Layers.AnimatedLayers;
 
-public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, ILayerDataSource<IProvider>
+public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
 {
     private readonly IProvider _dataSource;
     private FetchInfo? _fetchInfo;
@@ -20,8 +20,8 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, ILayerDataSource
     public AnimatedPointLayer(IProvider dataSource)
     {
         _dataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
-        if (_dataSource is IDynamic dynamic)
-            dynamic.DataChanged += (s, e) =>
+        if (_dataSource is IDynamicProvider dynamicProvider)
+            dynamicProvider.DataChanged += (s, e) =>
             {
                 Catch.Exceptions(async () =>
                 {

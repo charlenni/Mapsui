@@ -11,10 +11,8 @@ using Mapsui.Providers;
 
 namespace Mapsui.Samples.Common.Maps.Animations;
 
-internal sealed class BusPointProvider : MemoryProvider, IDynamic, IDisposable
+internal sealed class BusPointProvider : MemoryProvider, IDisposable
 {
-    public event DataChangedEventHandler? DataChanged;
-
     private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
 
     public BusPointProvider()
@@ -31,18 +29,8 @@ internal sealed class BusPointProvider : MemoryProvider, IDynamic, IDisposable
 
             _previousCoordinates = (_previousCoordinates.Lon + 0.00005, _previousCoordinates.Lat + 0.00005);
 
-            OnDataChanged();
+            DataHasChanged();
         }
-    }
-
-    void IDynamic.DataHasChanged()
-    {
-        OnDataChanged();
-    }
-
-    private void OnDataChanged()
-    {
-        DataChanged?.Invoke(this, new DataChangedEventArgs(null, false, null));
     }
 
     public override Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)

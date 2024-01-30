@@ -19,7 +19,7 @@ using Mapsui.Styles;
 
 namespace Mapsui.Layers;
 
-public class ImageLayer : BaseLayer, IAsyncDataFetcher, ILayerDataSource<IProvider>, IDisposable, ILayer, ILayerFeatureInfo
+public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>, IDisposable, ILayer, ILayerFeatureInfo
 {
     private class FeatureSets
     {

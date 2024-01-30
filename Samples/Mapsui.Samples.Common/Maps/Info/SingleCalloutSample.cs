@@ -48,13 +48,13 @@ public class SingleCalloutSample : ISample
         }
     }
 
-    private static MemoryLayer CreatePointLayer()
+    private static ILayer CreatePointLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(new MemoryProvider(GetCitiesFromEmbeddedResource()).Features),
             Name = "Cities with callouts",
             IsMapInfoLayer = true,
-            Features = new MemoryProvider(GetCitiesFromEmbeddedResource()).Features,
             Style = SymbolStyles.CreatePinStyle(symbolScale: 0.7),
         };
     }

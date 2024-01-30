@@ -2,6 +2,7 @@
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Widgets.InfoWidgets;
@@ -35,15 +36,16 @@ public class PointsSample : ISample
         return Task.FromResult(map);
     }
 
-    private static MemoryLayer CreatePointLayer()
+    private static ILayer CreatePointLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(GetCitiesFromEmbeddedResource()),
             Name = "Points",
             IsMapInfoLayer = true,
-            Features = GetCitiesFromEmbeddedResource(),
-            Style = CreateBitmapStyle()
-        };
+            Style = CreateBitmapStyle(),
+            SortFeatures = (features) => features.OrderBy(f => f.ZOrder).ThenBy(f => f.Id),
+    };
     }
 
     private static IEnumerable<IFeature> GetCitiesFromEmbeddedResource()

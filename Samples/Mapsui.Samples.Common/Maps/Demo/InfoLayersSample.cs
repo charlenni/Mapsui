@@ -2,6 +2,7 @@
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.NTS;
+using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tiling;
@@ -33,7 +34,7 @@ public class InfoLayersSample : ISample, ISampleTest
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
         map.Layers.Add(CreateInfoLayer(map.Extent));
         map.Layers.Add(CreatePolygonLayer());
-        map.Layers.Add(new WritableLayer());
+        map.Layers.Add(new Layer { DataSource = new MemoryProvider(), });
         map.Layers.Add(CreateLineLayer());
 
         map.Widgets.Add(new MapInfoWidget(map));
@@ -51,10 +52,10 @@ public class InfoLayersSample : ISample, ISampleTest
     {
         var features = new List<IFeature> { CreatePolygonFeature(), CreateMultiPolygonFeature() };
 
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
+            DataSource = new MemoryProvider(features),
             Name = PolygonLayerName,
-            Features = features,
             Style = null,
             IsMapInfoLayer = true
         };
@@ -64,10 +65,10 @@ public class InfoLayersSample : ISample, ISampleTest
 
     private static ILayer CreateLineLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(new[] { CreateLineFeature() }),
             Name = LineLayerName,
-            Features = new[] { CreateLineFeature() },
             Style = null,
             IsMapInfoLayer = true
         };

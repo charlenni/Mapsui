@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 
@@ -18,11 +19,11 @@ public class VectorStyleSample : ISample
 
     public static Map CreateMap()
     {
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
+            DataSource = new MemoryProvider(CreateFeaturesWithMPointsWithVectorStyle()),
+            Name = "MPoints with VectorStyle",
             Style = null,
-            Features = CreateFeaturesWithMPointsWithVectorStyle(),
-            Name = "MPoints with VectorStyle"
         };
 
         var map = new Map

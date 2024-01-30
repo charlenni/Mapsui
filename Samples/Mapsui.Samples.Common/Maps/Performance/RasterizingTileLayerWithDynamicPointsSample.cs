@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Mapsui.Tiling.Layers;
+using Mapsui.Providers;
 
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
 
@@ -32,27 +33,28 @@ public class RasterizingTileLayerWithDynamicPointsSample : IMapControlSample
         return map;
     }
 
-    private static MemoryLayer CreateRandomPointLayer()
+    private static ILayer CreateRandomPointLayer()
     {
         var rnd = new Random(3462); // Fix the random seed so the features don't move after a refresh
-        var observableCollection = new ObservableCollection<MPoint>();
 
-        var layer = new ObservableMemoryLayer<MPoint>(f => new PointFeature(f))
+        var layer = new Layer()
         {
+            DataSource = new MemoryProvider(),
             Name = "Points",
             Style = new SymbolStyle
             {
                 SymbolType = SymbolType.Triangle,
                 Fill = new Brush(Color.Red)
             },
-            ObservableCollection = observableCollection,
         };
+
+        ((MemoryProvider)layer.DataSource).DataChanged += (s, e) => layer.DataHasChanged();
 
         _ = Task.Run(async () =>
         {
             for (var i = 0; i < 100; i++)
             {
-                observableCollection.Add(new MPoint(rnd.Next(0, 5000000), rnd.Next(0, 5000000)));
+                ((MemoryProvider)layer.DataSource).Add(new PointFeature(new MPoint(rnd.Next(0, 5000000), rnd.Next(0, 5000000))));
                 await Task.Delay(100);
             }
         });

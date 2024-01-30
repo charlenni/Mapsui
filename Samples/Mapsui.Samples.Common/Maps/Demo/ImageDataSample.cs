@@ -1,6 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Widgets;
@@ -62,11 +63,11 @@ public class ImageDataSample : ISample
 
         rasterFeature.Styles = new List<IStyle> { new RasterStyle() };
 
-        var memoryLayer = new MemoryLayer("ImageData");
-        var features = new List<RasterFeature> { rasterFeature };
-
-        memoryLayer.Features = features;
-        memoryLayer.Style = null;
+        var memoryLayer = new Layer("ImageData")
+        {
+            DataSource = new MemoryProvider(rasterFeature),
+            Style = null,
+        };
 
         return memoryLayer;
     }

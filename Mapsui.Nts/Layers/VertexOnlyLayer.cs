@@ -13,9 +13,9 @@ public class VertexOnlyLayer : BaseLayer
 {
     private FeatureKeyCreator<(long, int)>? _featureKeyCreator;
     public override MRect? Extent => Source.Extent;
-    public WritableLayer Source { get; }
+    public Layer Source { get; }
 
-    public VertexOnlyLayer(WritableLayer source)
+    public VertexOnlyLayer(Layer source)
     {
         Source = source;
         Source.DataChanged += (_, args) => OnDataChanged(args);

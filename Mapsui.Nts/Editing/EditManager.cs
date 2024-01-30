@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mapsui.Layers;
 using Mapsui.NTS.Extensions;
+using Mapsui.Providers;
 using NetTopologySuite.Geometries;
 
 namespace Mapsui.NTS.Editing;
@@ -22,7 +23,7 @@ public enum EditMode
 
 public class EditManager
 {
-    public WritableLayer? Layer { get; set; }
+    public MemoryProvider? Provider { get; set; }
 
     private readonly DragInfo _dragInfo = new();
     private readonly AddInfo _addInfo = new();
@@ -60,7 +61,7 @@ public class EditManager
             _addInfo.Feature = null;
             _addInfo.Vertex = null;
             EditMode = EditMode.AddPolygon;
-            Layer?.DataHasChanged();
+            Provider?.DataHasChanged();
         }
 
         return false;
@@ -72,7 +73,7 @@ public class EditManager
         {
             _addInfo.Vertex.SetXY(mapInfo?.WorldPosition);
             _addInfo.Feature?.Modified();
-            Layer?.DataHasChanged();
+            Provider?.DataHasChanged();
         }
     }
 
@@ -80,8 +81,7 @@ public class EditManager
     {
         if (EditMode == EditMode.AddPoint)
         {
-            Layer?.Add(new GeometryFeature { Geometry = worldPosition.ToMPoint().ToPoint() });
-            Layer?.DataHasChanged();
+            Provider?.Add(new GeometryFeature { Geometry = worldPosition.ToMPoint().ToPoint() });
         }
         else if (EditMode == EditMode.AddLine)
         {
@@ -91,8 +91,7 @@ public class EditManager
             _addInfo.Vertex = secondPoint;
             _addInfo.Feature = new GeometryFeature { Geometry = new LineString(new[] { firstPoint, secondPoint }) };
             _addInfo.Vertices = _addInfo.Feature.Geometry.MainCoordinates();
-            Layer?.Add(_addInfo.Feature);
-            Layer?.DataHasChanged();
+            Provider?.Add(_addInfo.Feature);
             EditMode = EditMode.DrawingLine;
         }
         else if (EditMode == EditMode.DrawingLine)
@@ -106,7 +105,7 @@ public class EditManager
             _addInfo.Vertices.Add(_addInfo.Vertex);
             _addInfo.Feature.Geometry = new LineString(_addInfo.Vertices.ToArray());
             _addInfo.Feature?.Modified();
-            Layer?.DataHasChanged();
+            Provider?.DataHasChanged();
         }
         else if (EditMode == EditMode.AddPolygon)
         {
@@ -120,8 +119,7 @@ public class EditManager
             {
                 Geometry = new Polygon(new LinearRing(new[] { firstPoint, secondPoint, firstPoint })) // A LinearRing needs at least three coordinates
             };
-            Layer?.Add(_addInfo.Feature);
-            Layer?.DataHasChanged();
+            Provider?.Add(_addInfo.Feature);
             EditMode = EditMode.DrawingPolygon;
         }
         else if (EditMode == EditMode.DrawingPolygon)
@@ -139,7 +137,7 @@ public class EditManager
             _addInfo.Feature.Geometry = new Polygon(new LinearRing(linearRing.ToArray()));
 
             _addInfo.Feature?.Modified();
-            Layer?.DataHasChanged();
+            Provider?.DataHasChanged();
         }
         return false;
     }
@@ -244,7 +242,7 @@ public class EditManager
         }
 
         _dragInfo.Feature.Modified();
-        Layer?.DataHasChanged();
+        Provider?.DataHasChanged();
         return true;
     }
 
@@ -270,7 +268,7 @@ public class EditManager
                 {
                     geometryFeature.Geometry = geometryFeature.Geometry.DeleteCoordinate(index);
                     geometryFeature.Modified();
-                    Layer?.DataHasChanged();
+                    Provider?.DataHasChanged();
                 }
             }
         }
@@ -291,7 +289,7 @@ public class EditManager
             {
                 geometryFeature.Geometry = geometryFeature.Geometry.InsertCoordinate(mapInfo.WorldPosition.ToCoordinate(), segment);
                 geometryFeature.Modified();
-                Layer?.DataHasChanged();
+                Provider?.DataHasChanged();
             }
         }
         return false;
@@ -328,7 +326,7 @@ public class EditManager
         _rotateInfo.PreviousPosition = worldPosition;
 
         _rotateInfo.Feature.Modified();
-        Layer?.DataHasChanged();
+        Provider?.DataHasChanged();
 
         return true; // to signal pan lock
     }
@@ -379,7 +377,7 @@ public class EditManager
         _scaleInfo.PreviousPosition = worldPosition;
 
         _scaleInfo.Feature.Modified();
-        Layer?.DataHasChanged();
+        Provider?.DataHasChanged();
 
         return true; // to signal pan lock
     }

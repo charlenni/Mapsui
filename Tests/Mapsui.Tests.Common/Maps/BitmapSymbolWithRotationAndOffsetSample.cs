@@ -22,9 +22,9 @@ public class BitmapSymbolWithRotationAndOffsetSample : ISample
 
     public static Map CreateMap()
     {
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
-            Features = CreateProviderWithRotatedBitmapSymbols(),
+            DataSource = new MemoryProvider(CreateProviderWithRotatedBitmapSymbols()),
             Name = "Points with rotated bitmaps",
             Style = null
         };

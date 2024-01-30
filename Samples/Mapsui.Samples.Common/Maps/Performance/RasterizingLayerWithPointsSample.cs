@@ -1,5 +1,6 @@
 ﻿using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.UI;
@@ -30,7 +31,7 @@ public class RasterizingLayerWithPointsSample : IMapControlSample
         return map;
     }
 
-    private static MemoryLayer CreateRandomPointLayer()
+    private static ILayer CreateRandomPointLayer()
     {
         var rnd = new Random(3462); // Fix the random seed so the features don't move after a refresh
         var features = new List<IFeature>();
@@ -39,10 +40,10 @@ public class RasterizingLayerWithPointsSample : IMapControlSample
             features.Add(new PointFeature(new MPoint(rnd.Next(0, 5000000), rnd.Next(0, 5000000))));
         }
 
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(features),
             Name = "Points",
-            Features = features,
             Style = new SymbolStyle
             {
                 SymbolType = SymbolType.Triangle,

@@ -1,5 +1,7 @@
 ﻿using Mapsui.Layers;
+using Mapsui.NTS;
 using Mapsui.Providers;
+using NetTopologySuite.Geometries;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -109,9 +111,26 @@ public static class MemoryProviderTests
         var feature3 = new PointFeature(new MPoint(3, 3));
         var provider = new MemoryProvider(new[] { feature1, feature2, feature3 });
 
-        provider.Remove(new[] { feature1, feature2 });
+        provider.RemoveRange(new[] { feature1, feature2 });
 
         ClassicAssert.True(provider.Features.Count == 1);
         ClassicAssert.True(provider.Features[0] == feature3);
+    }
+
+    [Test]
+    public static void DoNotCrashOnNullOrEmptyGeometries()
+    {
+        var provider = new MemoryProvider();
+
+        provider.Add(new GeometryFeature());
+        provider.Add(new GeometryFeature((Point?)null));
+        provider.Add(new GeometryFeature((LineString?)null));
+        provider.Add(new GeometryFeature((Polygon?)null));
+
+        // act
+        var extent = provider.GetExtent();
+
+        // assert
+        ClassicAssert.IsNull(extent);
     }
 }

@@ -1,12 +1,13 @@
 using Mapsui.Extensions;
 using Mapsui.Features;
+using Mapsui.Layers;
 using Mapsui.Styles;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mapsui.Layers;
+namespace Mapsui.UI.Objects;
 
 /// <summary>
 /// The MemoryLayer has all features in memory.

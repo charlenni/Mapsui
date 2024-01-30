@@ -4,11 +4,10 @@ using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.NTS;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 using NetTopologySuite.IO;
-
-#pragma warning disable IDISP001 // Dispose created
 
 namespace Mapsui.Tests.Common.Maps;
 
@@ -40,25 +39,25 @@ public class ProjectionTestSample : ISample
         return map;
     }
 
-    public static MemoryLayer CreateCenterOfAmsterdamLayer() // Needs no projection
+    public static ILayer CreateCenterOfAmsterdamLayer() // Needs no projection
     {
-        return new MemoryLayer("Center of Amsterdam")
+        return new Layer("Center of Amsterdam")
         {
-            Features = new List<IFeature> { new PointFeature(new MPoint(545465.50488704059, 6866697.0250906311)) },
+            DataSource = new MemoryProvider(new List<IFeature> { new PointFeature(new MPoint(545465.50488704059, 6866697.0250906311)) }),
             Style = new SymbolStyle { Fill = new Brush { Color = Color.Black }, SymbolScale = 0.5 }
         };
     }
 
-    public static MemoryLayer CreateAmsterdamLayer() // Needs projection
+    public static ILayer CreateAmsterdamLayer() // Needs projection
     {
         var features = new List<GeometryFeature>
         {
             new() {Geometry = new WKTReader().Read(WktOfAmsterdam)}
         };
 
-        return new MemoryLayer
+        return new Layer
         {
-            Features = features.Project("EPSG:4326", "EPSG:3857"),
+            DataSource = new MemoryProvider(features.Project("EPSG:4326", "EPSG:3857")),
             Name = "WGS84 Geometries",
             Opacity = 0.5
         };

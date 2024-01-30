@@ -49,11 +49,11 @@ public class StackedLabelsTestSample : ISample
         };
     }
 
-    private static MemoryLayer CreateLayer(IEnumerable<IFeature> features)
+    private static ILayer CreateLayer(IEnumerable<IFeature> features)
     {
-        return new MemoryLayer
+        return new Layer
         {
-            Features = features,
+            DataSource = new MemoryProvider(features),
             Style = new SymbolStyle { SymbolScale = 1, Fill = new Brush(new Color { A = 128, R = 8, G = 20, B = 192 }) }
         };
     }

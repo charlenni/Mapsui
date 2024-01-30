@@ -22,11 +22,11 @@ public class SvgSymbolSample : ISample
 
     public static Map CreateMap()
     {
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
+            DataSource = new MemoryProvider(CreateFeatures()),
+            Name = "Points with Svg",
             Style = null,
-            Features = CreateFeatures(),
-            Name = "Points with Svg"
         };
 
         var map = new Map

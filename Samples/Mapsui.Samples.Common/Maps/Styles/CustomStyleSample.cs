@@ -1,6 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Rendering;
 using Mapsui.Rendering.Skia.SkiaStyles;
 using Mapsui.Samples.Common.DataBuilders;
@@ -78,10 +79,10 @@ public class CustomStyleSample : IMapControlSample
 
     private static ILayer CreateStylesLayer(MRect? envelope)
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateDiverseFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 25))),
             Name = "Custome Style Layer",
-            Features = CreateDiverseFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 25)),
             Style = null,
             IsMapInfoLayer = true
         };

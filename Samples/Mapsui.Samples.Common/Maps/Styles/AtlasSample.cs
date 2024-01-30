@@ -1,6 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tiling;
@@ -37,12 +38,13 @@ public class AtlasSample : ISample
 
     private static ILayer CreateAtlasLayer(MRect? envelope)
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateAtlasFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 1000))),
             Name = AtlasLayerName,
-            Features = CreateAtlasFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 1000)),
             Style = null,
-            IsMapInfoLayer = true
+            IsMapInfoLayer = true,
+            SortFeatures = (features) => features.OrderBy(f => f.ZOrder).ThenBy(f => f.Id),
         };
     }
 

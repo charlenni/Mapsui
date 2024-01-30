@@ -7,6 +7,7 @@ using Mapsui.Styles;
 using Mapsui.UI;
 using Mapsui.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mapsui.Tests.Common.Maps;
@@ -35,13 +36,14 @@ public class BitmapAtlasSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateFeatures()),
+            Name = "Points with bitmaps",
             Style = null,
-            Features = CreateFeatures(),
-            Name = "Points with bitmaps"
+            SortFeatures = (features) => features.OrderBy(f => f.ZOrder).ThenBy(f => f.Id),
         };
     }
 

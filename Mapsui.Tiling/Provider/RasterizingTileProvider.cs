@@ -47,7 +47,7 @@ public class RasterizingTileProvider : ITileSource, ILayerFeatureInfo
         _pixelDensity = pixelDensity;
         PersistentCache = persistentCache ?? new NullCache();
 
-        if (_layer is ILayerDataSource<IProvider> { DataSource: { } } dataSourceLayer)
+        if (_layer is IDataSourceLayer<IProvider> { DataSource: { } } dataSourceLayer)
         {
             _dataSource = dataSourceLayer.DataSource;
 

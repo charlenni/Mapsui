@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Mapsui.Samples.Common.Utilities;
+using Mapsui.Providers;
 
 namespace Mapsui.Samples.Common.Maps.Demo;
 
@@ -45,9 +46,9 @@ public class SingleImageSample : ISample
         var bytes = fileStream.ToBytes();
         // Note that currently a RasterStyle is necessary for the feature to show up.
         var rasterFeature = new RasterFeature(new MRaster(bytes, extent)) { Styles = { new RasterStyle() } };
-        return new MemoryLayer()
+        return new Layer()
         {
-            Features = new List<RasterFeature> { rasterFeature },
+            DataSource = new MemoryProvider(new List<RasterFeature> { rasterFeature }),
             Name = "Raster Image",
             Opacity = 0.9,
             Style = null,

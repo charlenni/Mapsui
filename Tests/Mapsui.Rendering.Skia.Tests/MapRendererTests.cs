@@ -2,6 +2,8 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using BruTile.Wmts.Generated;
+using Mapsui.Layers;
 using Mapsui.Rendering.Skia.Tests.Extensions;
 using Mapsui.Tests.Common.Maps;
 using NUnit.Framework;
@@ -97,6 +99,9 @@ internal class MapRendererTests
         var viewport = new Viewport(256, 200, 1, 0, 512, 400);
         const string fileName = "bitmap_atlas.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor);
@@ -115,6 +120,9 @@ internal class MapRendererTests
         using var map = BitmapSymbolWithRotationAndOffsetSample.CreateMap();
         var viewport = map.Extent!.Multiply(4).ToViewport(200);
         const string fileName = "bitmap_symbol.png";
+
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
 
         // act
         using var mapRenderer = new MapRenderer();
@@ -135,6 +143,9 @@ internal class MapRendererTests
         var viewport = map.Extent!.Multiply(3).ToViewport(200);
         const string fileName = "vector_symbol_symboltype.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor, 2);
@@ -153,6 +164,9 @@ internal class MapRendererTests
         using var map = PointInWorldUnitsSample.CreateMap();
         var viewport = map.Extent!.Multiply(3).ToViewport(200);
         const string fileName = "vector_symbol_unittype.png";
+
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
 
         // act
         using var mapRenderer = new MapRenderer();
@@ -173,6 +187,9 @@ internal class MapRendererTests
         var viewport = map.Extent!.Multiply(1.1).ToViewport(600);
         const string fileName = "polygon.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor);
@@ -191,6 +208,9 @@ internal class MapRendererTests
         using var map = LineSample.CreateMap();
         var viewport = map.Extent!.Multiply(1.1).ToViewport(600);
         const string fileName = "line.png";
+
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
 
         // act
         using var mapRenderer = new MapRenderer();
@@ -211,6 +231,9 @@ internal class MapRendererTests
         var viewport = map.Extent!.Multiply(1.1).ToViewport(600);
         const string fileName = "tilelayer.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor);
@@ -229,6 +252,9 @@ internal class MapRendererTests
         using var map = LabelSample.CreateMap();
         var viewport = map.Extent!.Multiply(2).ToViewport(300);
         const string fileName = "labels.png";
+
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
 
         // act
         using var mapRenderer = new MapRenderer();
@@ -249,6 +275,9 @@ internal class MapRendererTests
         var viewport = map.Extent!.Multiply(1.1).ToViewport(600);
         const string fileName = "projection.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act 
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor);
@@ -268,6 +297,9 @@ internal class MapRendererTests
         var viewport = map.Extent!.Multiply(1.2).ToViewport(600);
         const string fileName = "stacked_labels.png";
 
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
+
         // act 
         using var mapRenderer = new MapRenderer();
         using var bitmap = mapRenderer.RenderToBitmapStream(viewport, map.Layers, map.BackColor);
@@ -286,6 +318,9 @@ internal class MapRendererTests
         using var map = WidgetsSample.CreateMap();
         var viewport = new Viewport(0, 0, 1, 0, 600, 600);
         const string fileName = "widgets.png";
+
+        // Set viewport, because it is the first time provider is started
+        map.Navigator.SetViewport(viewport);
 
         // act
         using var mapRenderer = new MapRenderer();

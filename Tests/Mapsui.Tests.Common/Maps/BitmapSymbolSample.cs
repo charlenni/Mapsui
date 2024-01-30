@@ -22,11 +22,11 @@ public class BitmapSymbolSample : ISample
 
     public static Map CreateMap()
     {
-        var layer = new MemoryLayer
+        var layer = new Layer
         {
+            DataSource = new MemoryProvider(CreateFeatures()),
+            Name = "Points with bitmaps",
             Style = null,
-            Features = CreateFeatures(),
-            Name = "Points with bitmaps"
         };
 
         var map = new Map

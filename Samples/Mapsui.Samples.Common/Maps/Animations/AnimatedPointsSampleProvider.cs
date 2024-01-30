@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Mapsui.Samples.Common.Maps.Animations;
 
-internal class AnimatedPointsSampleProvider : MemoryProvider, IDynamic, IDisposable
+internal class AnimatedPointsSampleProvider : MemoryProvider, IDisposable
 {
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     // ReSharper disable once NotAccessedField.Local
@@ -29,8 +29,6 @@ internal class AnimatedPointsSampleProvider : MemoryProvider, IDynamic, IDisposa
     {
         _timer = new Timer(_ => DataHasChanged(), this, 0, 2000);
     }
-
-    public event DataChangedEventHandler? DataChanged;
 
     public override Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
@@ -66,16 +64,6 @@ internal class AnimatedPointsSampleProvider : MemoryProvider, IDynamic, IDisposa
         if (point2 == null) return 0;
         double result = Algorithms.RadiansToDegrees(Math.Atan2(point1.Y - point2.Y, point2.X - point1.X));
         return (result < 0) ? (360.0 + result) : result;
-    }
-
-    public void DataHasChanged()
-    {
-        OnDataChanged();
-    }
-
-    private void OnDataChanged()
-    {
-        DataChanged?.Invoke(this, new DataChangedEventArgs(null, false, null));
     }
 
     public virtual void Dispose()

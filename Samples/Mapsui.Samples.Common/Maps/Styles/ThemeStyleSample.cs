@@ -94,11 +94,11 @@ public class ThemeStyleSample : ISample
     {
         var features = WorldCitiesFeaturesBuilder.CreateTop100Cities();
 
-        return new MemoryLayer
+        return new Layer
         {
-            Features = features,
-            Style = CreateCityStyle(),
+            DataSource = new MemoryProvider(features),
             Name = "Points",
+            Style = CreateCityStyle(),
             IsMapInfoLayer = true
         };
     }

@@ -1,6 +1,7 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tiling;
@@ -31,10 +32,10 @@ public class SymbolsSample : ISample
 
     private static ILayer CreateStylesLayer(MRect? envelope)
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateDiverseFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 25))),
             Name = "Styles Layer",
-            Features = CreateDiverseFeatures(RandomPointsBuilder.GenerateRandomPoints(envelope, 25)),
             Style = null,
             IsMapInfoLayer = true
         };

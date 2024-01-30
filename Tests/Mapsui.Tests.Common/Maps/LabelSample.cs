@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 
@@ -30,13 +31,13 @@ public class LabelSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(CreateFeaturesWithLabels()),
+            Name = "Labels",
             Style = null,
-            Features = CreateFeaturesWithLabels(),
-            Name = "Labels"
         };
     }
 

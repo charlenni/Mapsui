@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using NUnit.Framework.Legacy;
 using Mapsui.Features;
+using Mapsui.Providers;
 
 namespace Mapsui.Tests.Rendering;
 
@@ -19,13 +20,13 @@ internal class VisibleFeatureIteratorTests
         var viewport = new Viewport(0, 0, 1, 0, 100, 100);
         var vectorStyle1 = new VectorStyle();
         var vectorStyle2 = new VectorStyle();
-        using var memoryLayer = new MemoryLayer { Style = new ThemeStyle(f => new StyleCollection { Styles = { vectorStyle1, vectorStyle2 } }) };
+        using var layer = new Layer { Style = new ThemeStyle(f => new StyleCollection { Styles = { vectorStyle1, vectorStyle2 } }) };
         var feature = new PointFeature(0, 0);
-        memoryLayer.Features = new List<IFeature> { feature };
+        layer.DataSource = new MemoryProvider(feature);
         var result = new Dictionary<IFeature, List<IStyle>>();
 
         // Act
-        VisibleFeatureIterator.IterateLayers(viewport, new[] { memoryLayer }, 0, (v, l, s, f, o, i) =>
+        VisibleFeatureIterator.IterateLayers(viewport, new[] { layer }, 0, (v, l, s, f, o, i) =>
         {
             if (result.ContainsKey(f))
                 result[f].Add(s);
@@ -44,13 +45,13 @@ internal class VisibleFeatureIteratorTests
     {
         // Arrange
         var viewport = new Viewport(0, 0, 1, 0, 100, 100);
-        using var memoryLayer = new MemoryLayer { Style = style };
+        using var layer = new Layer { Style = style };
         var feature = new PointFeature(0, 0);
-        memoryLayer.Features = new List<IFeature> { feature };
+        layer.DataSource = new MemoryProvider(feature);
         var isApplied = false;
 
         // Act
-        VisibleFeatureIterator.IterateLayers(viewport, new[] { memoryLayer }, 0, (v, l, s, f, o, i) => isApplied = true);
+        VisibleFeatureIterator.IterateLayers(viewport, new[] { layer }, 0, (v, l, s, f, o, i) => isApplied = true);
 
         // Assert
         ClassicAssert.AreEqual(isAppliedExpected, isApplied, assertMessage);
@@ -61,14 +62,14 @@ internal class VisibleFeatureIteratorTests
     {
         // Arrange
         var viewport = new Viewport(0, 0, 1, 0, 100, 100);
-        using var memoryLayer = new MemoryLayer { Style = null };
+        using var layer = new Layer { Style = null };
         var feature = new PointFeature(0, 0);
         feature.Styles.Add(style);
-        memoryLayer.Features = new List<IFeature> { feature };
+        layer.DataSource = new MemoryProvider(feature);
         var isApplied = false;
 
         // Act
-        VisibleFeatureIterator.IterateLayers(viewport, new[] { memoryLayer }, 0, (v, l, s, f, o, i) => isApplied = true);
+        VisibleFeatureIterator.IterateLayers(viewport, new[] { layer }, 0, (v, l, s, f, o, i) => isApplied = true);
 
         // Assert
         ClassicAssert.AreEqual(isAppliedExpected, isApplied, assertMessage);

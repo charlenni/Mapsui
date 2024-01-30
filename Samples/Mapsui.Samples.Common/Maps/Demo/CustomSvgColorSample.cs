@@ -15,6 +15,7 @@ using SkiaSharp;
 using Mapsui.Styles;
 using System.Diagnostics.CodeAnalysis;
 using Mapsui.Samples.Common.Maps.Styles;
+using Mapsui.Providers;
 
 namespace Mapsui.Samples.Common.Maps.Demo;
 
@@ -32,14 +33,14 @@ public class CustomSvgStyleSample : ISample
     {
         var map = new Map();
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        map.Layers.Add(new MemoryLayer("Custom Svg Style")
+        map.Layers.Add(new Layer("Custom Svg Style")
         {
-            Features = RandomPointsBuilder.CreateRandomFeatures(map.Extent, 100).Select(f =>
+            DataSource = new MemoryProvider(RandomPointsBuilder.CreateRandomFeatures(map.Extent, 100).Select(f =>
                 {
                     // Add four random types to use in the style
                     f["type"] = _random.Next(4);
                     return f;
-                }).ToList(),
+                }).ToList()),
 
             Style = CreateDynamicSvgStyle()
         });

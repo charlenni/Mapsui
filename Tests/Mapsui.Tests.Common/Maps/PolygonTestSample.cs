@@ -40,11 +40,11 @@ public class PolygonTestSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
-            Features = CreatePolygonProvider(),
+            DataSource = new MemoryProvider(CreatePolygonProvider()),
             Name = "Polygon"
         };
     }

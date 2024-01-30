@@ -1,12 +1,12 @@
+using Mapsui.Features;
+using Mapsui.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using Mapsui.Features;
-using Mapsui.Utilities;
 
-namespace Mapsui.Layers;
+namespace Mapsui.UI.Objects;
 
 public class ObservableMemoryLayer<T> : MemoryLayer
     where T : class

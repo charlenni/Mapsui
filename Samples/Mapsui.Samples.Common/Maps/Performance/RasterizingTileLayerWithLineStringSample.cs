@@ -2,6 +2,7 @@
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.NTS;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Tiling.Layers;
@@ -43,11 +44,11 @@ public class RasterizingTileLayerWithLineStringSample : IMapControlSample
 
     private static ILayer CreateLineStringLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
+            DataSource = new MemoryProvider(new List<IFeature>() { GetFeature() }),
             Name = "LineString",
             IsMapInfoLayer = true,
-            Features = new List<IFeature>() { GetFeature() }
         };
     }
 

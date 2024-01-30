@@ -18,7 +18,7 @@ public class ILayerSourceTests
     {
         using var memoryLayer = new Layer() { DataSource = new MemoryProvider() };
 
-        if (memoryLayer is ILayerDataSource<IProvider> source)
+        if (memoryLayer is IDataSourceLayer<IProvider> source)
         {
             ClassicAssert.IsTrue(true, "should be true");
         }

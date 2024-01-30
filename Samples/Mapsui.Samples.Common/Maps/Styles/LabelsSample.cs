@@ -1,6 +1,7 @@
 ﻿using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.NTS;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using NetTopologySuite.IO;
@@ -41,7 +42,7 @@ public class LabelsSample : ISample
             CreateFeatureWithCharacterWrap(),
         };
 
-        return new MemoryLayer { Name = "Points with labels", Features = features };
+        return new Layer { Name = "Points with labels", DataSource = new MemoryProvider(features) };
     }
 
     private static IFeature CreateFeatureWithDefaultStyle()

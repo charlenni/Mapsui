@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mapsui.Features;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
 
@@ -32,11 +33,11 @@ public class CalloutSample : ISample
         return map;
     }
 
-    private static MemoryLayer CreateLayer()
+    private static ILayer CreateLayer()
     {
-        return new MemoryLayer
+        return new Layer
         {
-            Features = CreateFeatures(),
+            DataSource = new MemoryProvider(CreateFeatures()),
             Name = "Callouts",
             Style = null
         };

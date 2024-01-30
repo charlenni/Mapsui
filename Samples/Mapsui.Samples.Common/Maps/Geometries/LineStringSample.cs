@@ -2,6 +2,7 @@
 using Mapsui.NTS;
 using Mapsui.NTS.Extensions;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using NetTopologySuite.Geometries;
@@ -33,9 +34,9 @@ public class LineStringSample : ISample
         var lineString = (LineString)new WKTReader().Read(WKTGr5);
         lineString = new LineString(lineString.Coordinates.Select(v => SphericalMercator.FromLonLat(v.Y, v.X).ToCoordinate()).ToArray());
 
-        return new MemoryLayer
+        return new Layer
         {
-            Features = new[] { new GeometryFeature { Geometry = lineString } },
+            DataSource = new MemoryProvider(new[] { new GeometryFeature { Geometry = lineString } }),
             Name = "LineStringLayer",
             Style = style
 
