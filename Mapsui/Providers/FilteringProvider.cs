@@ -10,12 +10,12 @@ namespace Mapsui.Providers;
 /// <summary>
 /// Provider, that filters results of another provider by a given function
 /// </summary>
-public class FilteringProvider : IProvider
+public class FilteringProvider : IAsyncProvider
 {
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private readonly Func<IFeature, bool> _filter;
 
-    public FilteringProvider(IProvider provider, Func<IFeature, bool> filter)
+    public FilteringProvider(IAsyncProvider provider, Func<IFeature, bool> filter)
     {
         _provider = provider;
         _filter = filter;

@@ -11,7 +11,7 @@ using NetTopologySuite.Index.Strtree;
 
 namespace Mapsui.NTS.Providers;
 
-public class IndexedMemoryProvider : IProvider
+public class IndexedMemoryProvider : IAsyncProvider
 {
     private readonly MRect? _boundingBox;
 

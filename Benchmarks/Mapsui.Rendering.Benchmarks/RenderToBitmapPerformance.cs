@@ -81,7 +81,7 @@ public class RenderToBitmapPerformance
             CRS = "EPSG:3857",
         };
 
-        IProvider source = projectedCountrySource;
+        IAsyncProvider source = projectedCountrySource;
 
         if (renderFormat == RenderFormat.Skp)
         {
@@ -111,7 +111,7 @@ public class RenderToBitmapPerformance
         return path;
     }
 
-    private static ILayer CreateCountryLayer(IProvider countrySource)
+    private static ILayer CreateCountryLayer(IAsyncProvider countrySource)
     {
         return new Layer
         {

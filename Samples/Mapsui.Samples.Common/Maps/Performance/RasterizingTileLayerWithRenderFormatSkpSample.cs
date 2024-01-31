@@ -56,7 +56,7 @@ public class RasterizingTileLayerWithRenderFormatSkpSample : ISample
         return map;
     }
 
-    private static ILayer CreateCountryLayer(IProvider countrySource)
+    private static ILayer CreateCountryLayer(IAsyncProvider countrySource)
     {
         return new Layer
         {

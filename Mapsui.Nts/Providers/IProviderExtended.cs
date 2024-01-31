@@ -2,7 +2,7 @@
 
 namespace Mapsui.NTS.Providers;
 
-public interface IProviderExtended : IProvider
+public interface IProviderExtended : IAsyncProvider
 {
     int Id { get; }
 }

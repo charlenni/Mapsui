@@ -11,13 +11,13 @@ using Mapsui.Providers;
 
 namespace Mapsui.Layers.AnimatedLayers;
 
-public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
+public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>
 {
-    private readonly IProvider _dataSource;
+    private readonly IAsyncProvider _dataSource;
     private FetchInfo? _fetchInfo;
     private readonly List<AnimatedPointFeature> _features = [];
 
-    public AnimatedPointLayer(IProvider dataSource)
+    public AnimatedPointLayer(IAsyncProvider dataSource)
     {
         _dataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
         if (_dataSource is IDataChangedProvider dataChangedProvider)
@@ -122,5 +122,5 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
     {
     }
 
-    public IProvider? DataSource => _dataSource;
+    public IAsyncProvider? DataSource => _dataSource;
 }

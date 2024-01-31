@@ -9,9 +9,9 @@ using Mapsui.Projections;
 
 namespace Mapsui.Providers;
 
-public class ProjectingProvider : IProvider
+public class ProjectingProvider : IAsyncProvider
 {
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private readonly IProjection _projection;
 
     /// <summary>
@@ -19,7 +19,7 @@ public class ProjectingProvider : IProvider
     /// </summary>
     /// <param name="provider">Provider providing features</param>
     /// <param name="projection">Projection to use</param>
-    public ProjectingProvider(IProvider provider, IProjection? projection = null)
+    public ProjectingProvider(IAsyncProvider provider, IProjection? projection = null)
     {
         _provider = provider;
         _projection = projection ?? ProjectionDefaults.Projection;

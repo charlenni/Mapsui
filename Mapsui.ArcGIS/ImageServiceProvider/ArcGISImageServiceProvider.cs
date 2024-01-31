@@ -17,7 +17,7 @@ using Mapsui.Rendering;
 
 namespace Mapsui.ArcGIS.ImageServiceProvider;
 
-public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
+public class ArcGISImageServiceProvider : IAsyncProvider, IProjectingProvider
 {
     private int _timeOut;
     private string _url = string.Empty;

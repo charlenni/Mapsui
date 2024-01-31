@@ -12,7 +12,7 @@ using Mapsui.Utilities;
 
 namespace Mapsui.NTS.Providers;
 
-public class ObservableCollectionProvider<T> : IProvider where T : IFeatureProvider
+public class ObservableCollectionProvider<T> : IAsyncProvider where T : IFeatureProvider
 {
     public ObservableCollection<T> Collection { get; }
     private readonly ConcurrentHashSet<T> _shadowCollection = new();

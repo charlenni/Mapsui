@@ -43,7 +43,7 @@ public class MemoryProvider : IProvider, IDataChangedProvider
         _extent = GetExtent(Features);
     }
 
-    public event DataChangedEventHandler? DataChanged;
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
 
     private List<IFeature> _features = new List<IFeature>();
 
@@ -64,10 +64,10 @@ public class MemoryProvider : IProvider, IDataChangedProvider
     /// </summary>
     /// <param name="fetchInfo">FetchInfo to use</param>
     /// <returns>Task to get list of features</returns>
-    public virtual Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         if (fetchInfo == null || fetchInfo.Extent == null)
-            return Task.FromResult(Enumerable.Empty<IFeature>()); 
+            return Enumerable.Empty<IFeature>(); 
 
         var features = _features.ToImmutableArray();
 
@@ -75,9 +75,8 @@ public class MemoryProvider : IProvider, IDataChangedProvider
 
         // Use a larger extent so that symbols partially outside of the extent are included
         var biggerBox = fetchInfo.Extent?.Grow(fetchInfo.Resolution * SymbolSize * 0.5);
-        var result = features.Where(f => f != null && (f.Extent?.Intersects(biggerBox) ?? false)).ToList();
-
-        return Task.FromResult((IEnumerable<IFeature>)result);
+        
+        return features.Where(f => f != null && (f.Extent?.Intersects(biggerBox) ?? false)).ToList();
     }
 
     /// <summary>

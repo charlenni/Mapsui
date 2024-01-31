@@ -11,12 +11,12 @@ internal class FeatureFetcher
 {
     private readonly FetchInfo _fetchInfo;
     private readonly DataArrivedDelegate _dataArrived;
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private readonly long _timeOfRequest;
 
     public delegate void DataArrivedDelegate(IEnumerable<IFeature> features, object? state = null);
 
-    public FeatureFetcher(FetchInfo fetchInfo, IProvider provider, DataArrivedDelegate dataArrived, long timeOfRequest = default)
+    public FeatureFetcher(FetchInfo fetchInfo, IAsyncProvider provider, DataArrivedDelegate dataArrived, long timeOfRequest = default)
     {
         _dataArrived = dataArrived;
         _fetchInfo = fetchInfo.Grow(SymbolStyle.DefaultWidth);

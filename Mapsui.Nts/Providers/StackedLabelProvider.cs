@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace Mapsui.Providers;
 
-public class StackedLabelProvider : IProvider
+public class StackedLabelProvider : IAsyncProvider
 {
     private const int SymbolSize = 32; // todo: determine margin by symbol size
     private const int BoxMargin = SymbolSize / 2;
 
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private readonly LabelStyle _labelStyle;
 
-    public StackedLabelProvider(IProvider provider, LabelStyle labelStyle, Pen? rectangleLine = null,
+    public StackedLabelProvider(IAsyncProvider provider, LabelStyle labelStyle, Pen? rectangleLine = null,
         Brush? rectangleFill = null)
     {
         _provider = provider;

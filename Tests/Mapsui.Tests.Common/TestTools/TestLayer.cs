@@ -19,7 +19,7 @@ namespace Mapsui.Tests.Common.TestTools;
 /// </summary>
 public class TestLayer : BaseLayer
 {
-    public IProvider? DataSource { get; set; }
+    public IAsyncProvider? DataSource { get; set; }
     public string? CRS { get; set; }
     public override IEnumerable<IFeature> GetFeatures(MRect box, double resolution)
     {

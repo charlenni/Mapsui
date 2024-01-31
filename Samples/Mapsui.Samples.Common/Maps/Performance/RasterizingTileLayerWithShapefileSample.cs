@@ -65,7 +65,7 @@ public class ShapefileTileSample : ISample
         return map;
     }
 
-    private static ILayer CreateCityLayer(IProvider citySource)
+    private static ILayer CreateCityLayer(IAsyncProvider citySource)
     {
         return new Layer
         {
@@ -75,7 +75,7 @@ public class ShapefileTileSample : ISample
         };
     }
 
-    private static ILayer CreateCountryLabelLayer(IProvider countryProvider)
+    private static ILayer CreateCountryLabelLayer(IAsyncProvider countryProvider)
     {
         return new Layer("Country labels")
         {
@@ -136,7 +136,7 @@ public class ShapefileTileSample : ISample
         return new GradientTheme("POPDENS", 0, 400, lblMin, lblMax);
     }
 
-    private static ILayer CreateCountryLayer(IProvider countrySource)
+    private static ILayer CreateCountryLayer(IAsyncProvider countrySource)
     {
         return new Layer
         {
@@ -162,7 +162,7 @@ public class ShapefileTileSample : ISample
         };
     }
 
-    private static ILayer CreateCityLabelLayer(IProvider citiesProvider)
+    private static ILayer CreateCityLabelLayer(IAsyncProvider citiesProvider)
     {
         return new Layer("City labels")
         {

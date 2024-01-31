@@ -15,7 +15,7 @@ using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Extensions.Provider;
 
-public class GeoTiffProvider : IProvider, IDisposable
+public class GeoTiffProvider : IAsyncProvider, IDisposable
 {
     private struct TiffProperties
     {

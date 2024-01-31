@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Mapsui.NTS.Providers;
 
-public class GeometryIntersectionProvider : IProvider, IProviderExtended
+public class GeometryIntersectionProvider : IAsyncProvider, IProviderExtended
 {
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private FeatureKeyCreator<(long, MRect)>? _featureKeyCreator;
 
-    public GeometryIntersectionProvider(IProvider provider)
+    public GeometryIntersectionProvider(IAsyncProvider provider)
     {
         _provider = provider;
     }

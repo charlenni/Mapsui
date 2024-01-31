@@ -59,7 +59,7 @@ public class ShapefileProjectionSample : ISample
         return map;
     }
 
-    private static ILayer CreateCountryLayer(IProvider countrySource)
+    private static ILayer CreateCountryLayer(IAsyncProvider countrySource)
     {
         return new Layer
         {
@@ -69,7 +69,7 @@ public class ShapefileProjectionSample : ISample
         };
     }
 
-    private static ILayer CreateCityLayer(IProvider citySource)
+    private static ILayer CreateCityLayer(IAsyncProvider citySource)
     {
         return new Layer
         {
@@ -79,7 +79,7 @@ public class ShapefileProjectionSample : ISample
         };
     }
 
-    private static ILayer CreateCountryLabelLayer(IProvider countryProvider)
+    private static ILayer CreateCountryLabelLayer(IAsyncProvider countryProvider)
     {
         return new Layer("Country labels")
         {
@@ -91,7 +91,7 @@ public class ShapefileProjectionSample : ISample
         };
     }
 
-    private static ILayer CreateCityLabelLayer(IProvider citiesProvider)
+    private static ILayer CreateCityLabelLayer(IAsyncProvider citiesProvider)
     {
         return new Layer("City labels")
         {

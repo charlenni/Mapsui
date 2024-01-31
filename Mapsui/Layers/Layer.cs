@@ -1,9 +1,3 @@
-// Copyright (c) The Mapsui authors.
-// The Mapsui authors licensed this file under the MIT license.
-// See the LICENSE file in the project root for full license information.
-
-// This file was originally created by Morten Nielsen (www.iter.dk) as part of SharpMap
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,9 +10,9 @@ using Mapsui.Styles;
 
 namespace Mapsui.Layers;
 
-public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
+public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>
 {
-    private IProvider? _dataSource;
+    private IAsyncProvider? _dataSource;
     private readonly object _syncRoot = new();
     private readonly ConcurrentStack<IFeature> _cache = new();
     private readonly FeatureFetchDispatcher<IFeature> _fetchDispatcher;
@@ -58,7 +52,7 @@ public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
     /// <summary>
     /// Data source for this layer
     /// </summary>
-    public IProvider? DataSource
+    public IAsyncProvider? DataSource
     {
         get => _dataSource;
         set
@@ -160,7 +154,7 @@ public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
         return areAnimationsRunning;
     }
 
-    private void HandleDataChanged(object sender, DataChangedEventArgs e)
+    private void HandleDataChanged(object? sender, DataChangedEventArgs e)
     {
         DataHasChanged();
     }

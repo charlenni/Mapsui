@@ -54,7 +54,7 @@ public class RasterizingTileLayerGeoJsonSample : IMapControlSample
         return map;
     }
 
-    private static ILayer CreateCityVectorLayer(IProvider citiesProvider)
+    private static ILayer CreateCityVectorLayer(IAsyncProvider citiesProvider)
     {
         return new Layer("City labels")
         {

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Mapsui.NTS.Providers;
 
-public class GeometrySimplifyProvider : IProvider, IProviderExtended
+public class GeometrySimplifyProvider : IAsyncProvider, IProviderExtended
 {
-    private readonly IProvider _provider;
+    private readonly IAsyncProvider _provider;
     private readonly Func<Geometry, double, Geometry> _simplify;
     private readonly double? _distanceTolerance;
     private FeatureKeyCreator<(long, double)>? _featureKeyCreator;
 
-    public GeometrySimplifyProvider(IProvider provider, Func<Geometry, double, Geometry>? simplify = null, double? distanceTolerance = null)
+    public GeometrySimplifyProvider(IAsyncProvider provider, Func<Geometry, double, Geometry>? simplify = null, double? distanceTolerance = null)
     {
         _provider = provider;
         _simplify = simplify ?? TopologyPreservingSimplifier.Simplify;

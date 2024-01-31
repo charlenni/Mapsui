@@ -34,7 +34,7 @@ public class GeoTiffSample : ISample
         return map;
     }
 
-    private static ILayer CreateGifLayer(IProvider gifSource)
+    private static ILayer CreateGifLayer(IAsyncProvider gifSource)
     {
         return new Layer
         {

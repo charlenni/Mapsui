@@ -1,4 +1,5 @@
 ﻿using Mapsui.Fetcher;
+using System;
 
 namespace Mapsui.Providers;
 
@@ -8,7 +9,7 @@ public interface IDataChangedProvider
     /// Event called when the data of provider has changed allowing
     /// listeners to react to this.
     /// </summary>
-    event DataChangedEventHandler DataChanged;
+    event EventHandler<DataChangedEventArgs> DataChanged;
 
     /// <summary>
     /// To indicate the data withing the class has changed. This triggers a DataChanged event.

@@ -27,7 +27,7 @@ public class RasterizingTileProvider : ITileSource, ILayerFeatureInfo
     private readonly ILayer _layer;
     private ITileSchema? _tileSchema;
     private Attribution? _attribution;
-    private readonly IProvider? _dataSource;
+    private readonly IAsyncProvider? _dataSource;
     private readonly RenderFormat _renderFormat;
     private readonly IDictionary<TileIndex, double> _searchSizeCache = new ConcurrentDictionary<TileIndex, double>();
     private IRenderCache? _renderCache;
@@ -47,7 +47,7 @@ public class RasterizingTileProvider : ITileSource, ILayerFeatureInfo
         _pixelDensity = pixelDensity;
         PersistentCache = persistentCache ?? new NullCache();
 
-        if (_layer is IDataSourceLayer<IProvider> { DataSource: { } } dataSourceLayer)
+        if (_layer is IDataSourceLayer<IAsyncProvider> { DataSource: { } } dataSourceLayer)
         {
             _dataSource = dataSourceLayer.DataSource;
 

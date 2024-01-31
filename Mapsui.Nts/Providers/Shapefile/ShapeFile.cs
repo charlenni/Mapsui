@@ -132,7 +132,7 @@ public enum ShapeType
 /// M and Z values in a shapefile is ignored by Mapsui.
 /// </para>
 /// </remarks>
-public class ShapeFile : IProvider, IDisposable, IProviderExtended
+public class ShapeFile : IAsyncProvider, IDisposable, IProviderExtended
 {
 
     static ShapeFile()

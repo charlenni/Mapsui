@@ -78,7 +78,7 @@ public class ShapefileTilingFilteringSample : ISample
         return map;
     }
 
-    private static ILayer CreateCityLayer(IProvider citySource)
+    private static ILayer CreateCityLayer(IAsyncProvider citySource)
     {
         return new Layer
         {
@@ -88,7 +88,7 @@ public class ShapefileTilingFilteringSample : ISample
         };
     }
 
-    private static ILayer CreateCityLabelLayer(IProvider citiesProvider)
+    private static ILayer CreateCityLabelLayer(IAsyncProvider citiesProvider)
     {
         return new Layer("City labels")
         {
@@ -138,7 +138,7 @@ public class ShapefileTilingFilteringSample : ISample
             LabelColumn = "NAME"
         };
     }
-    private static ILayer CreateCountryLayer(IProvider countrySource)
+    private static ILayer CreateCountryLayer(IAsyncProvider countrySource)
     {
         return new Layer
         {

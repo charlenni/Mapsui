@@ -16,7 +16,7 @@ public class ImageLayerTests
 {
     private const string ExceptionMessage = "This exception should return on OnDataChange";
 
-    private class FakeProvider : IProvider
+    private class FakeProvider : IAsyncProvider
     {
         public string? CRS { get; set; }
         public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)

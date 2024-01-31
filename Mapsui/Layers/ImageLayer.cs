@@ -19,7 +19,7 @@ using Mapsui.Styles;
 
 namespace Mapsui.Layers;
 
-public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>, IDisposable, ILayer, ILayerFeatureInfo
+public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>, IDisposable, ILayer, ILayerFeatureInfo
 {
     private class FeatureSets
     {
@@ -32,7 +32,7 @@ public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvid
     private FetchInfo? _fetchInfo;
     private List<FeatureSets> _sets = new();
     private readonly Timer? _startFetchTimer;
-    private IProvider? _dataSource;
+    private IAsyncProvider? _dataSource;
     private readonly int _numberOfFeaturesReturned;
 
     public ImageLayer()
@@ -53,7 +53,7 @@ public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvid
     /// </summary>
     public int FetchDelay { get; set; } = 1000;
 
-    public IProvider? DataSource
+    public IAsyncProvider? DataSource
     {
         get => _dataSource;
         set

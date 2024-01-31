@@ -48,7 +48,7 @@ public class GeoJsonSample : ISample
         return map;
     }
 
-    private static ILayer CreateCityLabelLayer(IProvider citiesProvider)
+    private static ILayer CreateCityLabelLayer(IAsyncProvider citiesProvider)
         => new Layer("City labels")
         {
             DataSource = citiesProvider,

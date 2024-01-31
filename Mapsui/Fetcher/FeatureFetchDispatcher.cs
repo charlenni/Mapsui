@@ -78,7 +78,7 @@ internal class FeatureFetchDispatcher<T> : IFetchDispatcher where T : IFeature
         Busy = true;
     }
 
-    public IProvider? DataSource { get; set; }
+    public IAsyncProvider? DataSource { get; set; }
 
     public bool Busy
     {

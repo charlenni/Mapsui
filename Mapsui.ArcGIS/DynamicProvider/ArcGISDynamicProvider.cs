@@ -18,7 +18,7 @@ using Mapsui.Providers;
 
 namespace Mapsui.ArcGIS.DynamicProvider;
 
-public class ArcGISDynamicProvider : IProvider, IProjectingProvider
+public class ArcGISDynamicProvider : IAsyncProvider, IProjectingProvider
 {
     private int _timeOut;
     private string _url = string.Empty;

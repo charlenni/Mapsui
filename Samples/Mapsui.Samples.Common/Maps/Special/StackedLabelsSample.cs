@@ -24,7 +24,7 @@ public class StackedLabelsSample : ISample
         return Task.FromResult(map);
     }
 
-    private static ILayer CreateStackedLabelLayer(IProvider provider, string labelColumn)
+    private static ILayer CreateStackedLabelLayer(IAsyncProvider provider, string labelColumn)
     {
         return new Layer
         {
@@ -40,7 +40,7 @@ public class StackedLabelsSample : ISample
         };
     }
 
-    private static ILayer CreateLayer(IProvider dataSource)
+    private static ILayer CreateLayer(IAsyncProvider dataSource)
     {
         return new Layer("Point Layer")
         {
