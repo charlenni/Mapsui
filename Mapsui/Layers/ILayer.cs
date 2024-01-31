@@ -10,6 +10,7 @@ using System.ComponentModel;
 using Mapsui.Animations;
 using Mapsui.Features;
 using Mapsui.Fetcher;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Widgets.ButtonWidgets;
 
@@ -102,7 +103,7 @@ public interface ILayer : IAnimatable, INotifyPropertyChanged, IDisposable
     /// Event called when the data within the layer has changed allowing
     /// listeners to react to this.
     /// </summary>
-    event DataChangedEventHandler DataChanged;
+    event EventHandler<DataChangedEventArgs> DataChanged;
 
     /// <summary>
     /// To indicate the data withing the layer has changed. This triggers a DataChanged event.

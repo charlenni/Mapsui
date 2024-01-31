@@ -5,6 +5,7 @@ using System.Linq;
 using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Logging;
+using Mapsui.Providers;
 using Mapsui.Rendering;
 using Mapsui.Styles;
 
@@ -61,7 +62,7 @@ public class RasterizingLayer : BaseLayer, IAsyncDataFetcher, ISourceLayer
 
     public ILayer SourceLayer => _layer;
 
-    private void LayerOnDataChanged(object sender, DataChangedEventArgs dataChangedEventArgs)
+    private void LayerOnDataChanged(object? sender, DataChangedEventArgs dataChangedEventArgs)
     {
         if (!Enabled) return;
         if (_fetchInfo == null) return;

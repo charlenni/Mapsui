@@ -14,6 +14,7 @@ using BruTile.Cache;
 using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Tiling.Extensions;
 using Mapsui.Tiling.Fetcher;

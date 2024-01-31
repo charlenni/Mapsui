@@ -11,6 +11,7 @@ using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Logging;
+using Mapsui.Providers;
 using Mapsui.Tiling.Extensions;
 using Mapsui.Utilities;
 
@@ -43,7 +44,7 @@ public class TileFetchDispatcher : IFetchDispatcher, INotifyPropertyChanged
         _fetchMachine = new FetchMachine(this);
     }
 
-    public event DataChangedEventHandler? DataChanged;
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
     public int NumberTilesNeeded { get; private set; }
 

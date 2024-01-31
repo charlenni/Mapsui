@@ -1,13 +1,8 @@
-// Copyright (c) The Mapsui authors.
-// The Mapsui authors licensed this file under the MIT license.
-// See the LICENSE file in the project root for full license information.
-
-// This file was originally created by Morten Nielsen (www.iter.dk) as part of SharpMap
-
 using Mapsui.Extensions;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Logging;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Widgets;
 using Mapsui.Widgets.InfoWidgets;
@@ -151,7 +146,7 @@ public class Map : INotifyPropertyChanged, IDisposable
     /// <summary>
     /// DataChanged should be triggered by any data changes of any of the child layers
     /// </summary>
-    public event DataChangedEventHandler? DataChanged;
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
 
     public event EventHandler? RefreshGraphicsRequest;
 
@@ -334,12 +329,12 @@ public class Map : INotifyPropertyChanged, IDisposable
         OnPropertyChanged(this, name);
     }
 
-    private void LayerDataChanged(object sender, DataChangedEventArgs e)
+    private void LayerDataChanged(object? sender, DataChangedEventArgs e)
     {
         OnDataChanged(sender, e);
     }
 
-    private void OnDataChanged(object sender, DataChangedEventArgs e)
+    private void OnDataChanged(object? sender, DataChangedEventArgs e)
     {
         DataChanged?.Invoke(sender, e);
     }

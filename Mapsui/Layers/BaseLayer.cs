@@ -1,6 +1,7 @@
 using Mapsui.Features;
 using Mapsui.Fetcher;
 using Mapsui.Logging;
+using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Widgets.ButtonWidgets;
 using System;
@@ -59,7 +60,7 @@ public abstract class BaseLayer : ILayer
     public event PropertyChangedEventHandler? PropertyChanged;
 
     /// <inheritdoc />
-    public event DataChangedEventHandler? DataChanged;
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
 
     /// <inheritdoc />
     public int Id { get; }
