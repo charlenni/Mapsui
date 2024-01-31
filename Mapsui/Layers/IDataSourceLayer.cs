@@ -6,7 +6,7 @@ namespace Mapsui.Layers;
 /// Interface for layers, that have a provider as DataSource
 /// </summary>
 /// <typeparam name="T">Object implementing IProvider</typeparam>
-public interface IDataSourceLayer<out T> where T : IAsyncProvider
+public interface IDataSourceLayer<out T> where T : IProvider
 {
     /// <summary>
     /// Provider used as data source
