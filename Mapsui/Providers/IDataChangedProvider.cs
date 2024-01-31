@@ -2,7 +2,7 @@
 
 namespace Mapsui.Providers;
 
-public interface IDynamicProvider
+public interface IDataChangedProvider
 {
     /// <summary>
     /// Event called when the data of provider has changed allowing
