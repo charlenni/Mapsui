@@ -65,12 +65,12 @@ public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
         {
             if (_dataSource == value) return;
 
-            if (_dataSource is IDynamicProvider oldProvider)
+            if (_dataSource is IDataChangedProvider oldProvider)
                 oldProvider.DataChanged -= HandleDataChanged;
 
             _dataSource = value;
 
-            if (_dataSource is IDynamicProvider newProvider)
+            if (_dataSource is IDataChangedProvider newProvider)
                 newProvider.DataChanged += HandleDataChanged;
 
             ClearCache();

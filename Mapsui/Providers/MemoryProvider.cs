@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mapsui.Providers;
 
-public class MemoryProvider : IProvider, IDynamicProvider
+public class MemoryProvider : IProvider, IDataChangedProvider
 {
     private readonly object _sync = new object();
     private MRect? _extent;
