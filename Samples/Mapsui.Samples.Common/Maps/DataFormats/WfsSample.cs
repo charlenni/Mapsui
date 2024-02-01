@@ -48,7 +48,7 @@ public class WfsSample : ISample
 
     private static ILayer CreateWfsLayer(WFSProvider provider)
     {
-        return new Layer(layerName)
+        return new AsyncLayer(layerName)
         {
             Style = new VectorStyle { Fill = new Brush { Color = Color.FromArgb(192, 255, 0, 0) } },
             DataSource = provider,
@@ -81,7 +81,7 @@ public class WfsSample : ISample
         // If a label property is set, the quick geometry option is automatically set to 'false'.
         provider.Labels.Add(labelField);
 
-        return new Layer("labels")
+        return new AsyncLayer("labels")
         {
             DataSource = provider,
             MaxVisible = 350,

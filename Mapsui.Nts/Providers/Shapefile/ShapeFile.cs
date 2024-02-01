@@ -132,7 +132,7 @@ public enum ShapeType
 /// M and Z values in a shapefile is ignored by Mapsui.
 /// </para>
 /// </remarks>
-public class ShapeFile : IAsyncProvider, IDisposable, IProviderExtended
+public class ShapeFile : IProvider, IDisposable, IProviderExtended
 {
 
     static ShapeFile()
@@ -892,7 +892,7 @@ public class ShapeFile : IAsyncProvider, IDisposable, IProviderExtended
         throw new ApplicationException("An attempt was made to read DBase data from a shapefile without a valid .DBF file");
     }
 
-    public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         lock (_syncRoot)
         {
@@ -915,7 +915,7 @@ public class ShapeFile : IAsyncProvider, IDisposable, IProviderExtended
                         features.Add(feature);
                     }
                 }
-                return Task.FromResult((IEnumerable<IFeature>)features);
+                return features;
             }
             finally
             {

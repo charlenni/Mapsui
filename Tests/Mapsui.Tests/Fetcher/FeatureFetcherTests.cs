@@ -26,7 +26,7 @@ public class FeatureFetcherTests
         var notifications = new List<bool>();
         layer.PropertyChanged += (_, args) =>
         {
-            if (args.PropertyName == nameof(Layer.Busy))
+            if (args.PropertyName == nameof(AsyncLayer.Busy))
             {
                 notifications.Add(layer.Busy);
             }

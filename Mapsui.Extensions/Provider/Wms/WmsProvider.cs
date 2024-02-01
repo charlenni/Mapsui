@@ -568,6 +568,13 @@ public class WmsProvider : IAsyncProvider, IProjectingProvider, ILayerFeatureInf
         return _wmsClient.Layer.CRS.FirstOrDefault(item => string.Equals(item.Trim(), crs.Trim(), StringComparison.CurrentCultureIgnoreCase)) != null;
     }
 
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+        return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         var (success, raster) = await TryGetMapAsync(fetchInfo.Section);

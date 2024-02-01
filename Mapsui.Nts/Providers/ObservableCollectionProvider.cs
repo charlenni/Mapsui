@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading.Tasks;
-using Mapsui.Features;
+﻿using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
 using Mapsui.UI.Objects;
 using Mapsui.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace Mapsui.NTS.Providers;
 
-public class ObservableCollectionProvider<T> : IAsyncProvider where T : IFeatureProvider
+public class ObservableCollectionProvider<T> : IProvider where T : IFeatureProvider
 {
     public ObservableCollection<T> Collection { get; }
     private readonly ConcurrentHashSet<T> _shadowCollection = new();
@@ -66,10 +65,10 @@ public class ObservableCollectionProvider<T> : IAsyncProvider where T : IFeature
         }
     }
 
-    public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         if (_shadowCollection.Count == 0)
-            return Task.FromResult(Enumerable.Empty<IFeature>());
+            return Enumerable.Empty<IFeature>();
 
         var list = new List<IFeature>();
         foreach (var item in _shadowCollection)
@@ -81,7 +80,7 @@ public class ObservableCollectionProvider<T> : IAsyncProvider where T : IFeature
             }
         }
 
-        return Task.FromResult((IEnumerable<IFeature>)list);
+        return list;
     }
 
     public MRect? GetExtent()

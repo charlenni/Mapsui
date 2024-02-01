@@ -1102,6 +1102,16 @@ public class WFSProvider : IAsyncProvider, IDisposable
     /// <summary>
     /// Gets the features within the specified <see cref="FetchInfo"/>."/>
     /// </summary>
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+        return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
+    /// <summary>
+    /// Gets the features within the specified <see cref="FetchInfo"/> async"/>
+    /// </summary>
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         return await ExecuteIntersectionQueryAsync(fetchInfo.Extent);

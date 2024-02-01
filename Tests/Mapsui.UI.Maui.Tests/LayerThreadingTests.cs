@@ -86,7 +86,7 @@ public class LayerThreadingTests
         }
     }
 
-    private void GetFeatures(Layer layer)
+    private void GetFeatures(AsyncLayer layer)
     {
         for (int i = 0; i < 5000; i++)
         {

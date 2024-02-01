@@ -1,26 +1,18 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using Mapsui.Features;
-using Mapsui.Fetcher;
 using Mapsui.Providers;
 using Mapsui.Styles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mapsui.Layers;
 
-public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>
+/// <summary>
+/// Layer getting data from a data source
+/// </summary>
+public class Layer : BaseLayer, IDataSourceLayer<IProvider>
 {
-    private IAsyncProvider? _dataSource;
-    private readonly object _syncRoot = new();
-    private readonly ConcurrentStack<IFeature> _cache = new();
-    private readonly FeatureFetchDispatcher<IFeature> _fetchDispatcher;
-    private readonly FetchMachine _fetchMachine;
-
-    public SymbolStyle? SymbolStyle { get; set; }
-    public List<Func<bool>> Animations { get; } = [];
-    public Delayer Delayer { get; } = new();
+    private IProvider? _dataSource;
 
     /// <summary>
     /// Create a new layer
@@ -31,28 +23,22 @@ public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvid
     /// Create layer with name
     /// </summary>
     /// <param name="layerName">Name to use for layer</param>
-    public Layer(string layerName) : base(layerName)
-    {
-        _fetchDispatcher = new FeatureFetchDispatcher<IFeature>(_cache);
-        _fetchDispatcher.DataChanged += FetchDispatcherOnDataChanged;
-        _fetchDispatcher.PropertyChanged += FetchDispatcherOnPropertyChanged;
-
-        _fetchMachine = new FetchMachine(_fetchDispatcher);
-    }
+    public Layer(string layerName) : base(layerName) { }
 
     /// <summary>
-    /// Time to wait before fetching data
+    /// TODO: Not clear, what this property is used for
     /// </summary>
-    // ReSharper disable once UnusedMember.Global // todo: Create a sample for this field
-    public int FetchingPostponedInMilliseconds
-    {
-        get => Delayer.MillisecondsToWait;
-        set => Delayer.MillisecondsToWait = value;
-    }
+    public SymbolStyle? SymbolStyle { get; set; }
+
+    /// <summary>
+    /// Animations belonging to this layer
+    /// </summary>
+    public List<Func<bool>> Animations { get; } = [];
+
     /// <summary>
     /// Data source for this layer
     /// </summary>
-    public IAsyncProvider? DataSource
+    public virtual IProvider? DataSource
     {
         get => _dataSource;
         set
@@ -67,80 +53,21 @@ public class Layer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvid
             if (_dataSource is IDataChangedProvider newProvider)
                 newProvider.DataChanged += HandleDataChanged;
 
-            ClearCache();
-
-            if (_dataSource != null)
-            {
-                _fetchDispatcher.DataSource = _dataSource;
-            }
-
             OnPropertyChanged(nameof(DataSource));
             OnPropertyChanged(nameof(Extent));
         }
-    }
-
-    private void FetchDispatcherOnPropertyChanged(object? sender, PropertyChangedEventArgs propertyChangedEventArgs)
-    {
-        if (propertyChangedEventArgs.PropertyName == nameof(Busy))
-        {
-            if (_fetchDispatcher != null) Busy = _fetchDispatcher.Busy;
-        }
-    }
-
-    private void FetchDispatcherOnDataChanged(object sender, DataChangedEventArgs args)
-    {
-        OnDataChanged(args);
-    }
-
-    private void DelayedFetch(FetchInfo fetchInfo)
-    {
-        _fetchDispatcher.SetViewport(fetchInfo);
-        _fetchMachine.Start();
     }
 
     /// <summary>
     /// Returns the extent of the layer
     /// </summary>
     /// <returns>Bounding box corresponding to the extent of the features in the layer</returns>
-    public override MRect? Extent
-    {
-        get
-        {
-            lock (_syncRoot)
-            {
-                return DataSource?.GetExtent();
-            }
-        }
-    }
+    public override MRect? Extent => DataSource?.GetExtent();
 
     /// <inheritdoc />
     public override IEnumerable<IFeature> GetFeatures(MRect extent, double resolution)
     {
-        return _cache.ToList();
-    }
-
-    /// <inheritdoc />
-    public void AbortFetch()
-    {
-        _fetchMachine.Stop();
-    }
-
-    /// <inheritdoc />
-    public void ClearCache()
-    {
-        _cache.Clear();
-    }
-
-    /// <inheritdoc />
-    public void RefreshData(FetchInfo fetchInfo)
-    {
-        if (!Enabled) return;
-        if (MinVisible > fetchInfo.Resolution) return;
-        if (MaxVisible < fetchInfo.Resolution) return;
-        if (DataSource == null) return;
-        if (fetchInfo.ChangeType == ChangeType.Continuous) return;
-
-        Delayer.ExecuteDelayed(() => DelayedFetch(fetchInfo));
+        return _dataSource?.GetFeatures(new FetchInfo(new MSection(extent, resolution))) ?? Enumerable.Empty<IFeature>();
     }
 
     public override bool UpdateAnimations()

@@ -97,6 +97,13 @@ public class ArcGISDynamicProvider : IAsyncProvider, IProjectingProvider
         set => _crs = value;
     }
 
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+        return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         //If there are no layers (probably not initialised) return nothing

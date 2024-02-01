@@ -1,9 +1,4 @@
-﻿// Copyright (c) The Mapsui authors.
-// The Mapsui authors licensed this file under the MIT license.
-// See the LICENSE file in the project root for full license information.
-
-using Mapsui.Features;
-using Mapsui.Fetcher;
+﻿using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
 using Mapsui.Samples.Common.DataBuilders;
@@ -13,11 +8,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Mapsui.Samples.Common.Maps.Animations;
 
-internal class AnimatedPointsSampleProvider : MemoryProvider, IDisposable
+internal class AnimatedPointsSampleProvider : IProvider, IDataChangedProvider, IDisposable
 {
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     // ReSharper disable once NotAccessedField.Local
@@ -25,12 +19,16 @@ internal class AnimatedPointsSampleProvider : MemoryProvider, IDisposable
     private readonly Random _random = new(0);
     private IEnumerable<PointFeature> _previousFeatures = new List<PointFeature>();
 
+    public string? CRS { get; set; }
+
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
+
     public AnimatedPointsSampleProvider()
     {
         _timer = new Timer(_ => DataHasChanged(), this, 0, 2000);
     }
 
-    public override Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         var features = new List<PointFeature>();
         var points = RandomPointsBuilder.GenerateRandomPoints(fetchInfo.Extent, 10, _random).ToList();
@@ -51,7 +49,8 @@ internal class AnimatedPointsSampleProvider : MemoryProvider, IDisposable
         }
 
         _previousFeatures = features;
-        return Task.FromResult((IEnumerable<IFeature>)features);
+
+        return features;
     }
 
     private MPoint? FindPreviousPosition(string countAsString)
@@ -78,5 +77,27 @@ internal class AnimatedPointsSampleProvider : MemoryProvider, IDisposable
         {
             _timer.Dispose();
         }
+    }
+
+    public void DataHasChanged()
+    {
+        DataChanged?.Invoke(this, new DataChangedEventArgs());
+    }
+
+    public MRect? GetExtent()
+    {
+        MRect? extent = null;
+
+        foreach (var feature in _previousFeatures)
+        {
+            if (feature.Extent == null)
+                continue;
+
+            extent = extent == null
+                ? feature.Extent
+                : extent.Join(feature.Extent);
+        }
+
+        return extent;
     }
 }

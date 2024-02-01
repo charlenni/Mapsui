@@ -97,6 +97,6 @@ internal class FeatureFetchDispatcher<T> : IFetchDispatcher where T : IFeature
         handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public event DataChangedEventHandler? DataChanged;
+    public event EventHandler<DataChangedEventArgs>? DataChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
 }

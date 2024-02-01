@@ -6,19 +6,18 @@ using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mapsui.Providers;
 
-public class StackedLabelProvider : IAsyncProvider
+public class StackedLabelProvider : IProvider
 {
     private const int SymbolSize = 32; // todo: determine margin by symbol size
     private const int BoxMargin = SymbolSize / 2;
 
-    private readonly IAsyncProvider _provider;
+    private readonly IProvider _provider;
     private readonly LabelStyle _labelStyle;
 
-    public StackedLabelProvider(IAsyncProvider provider, LabelStyle labelStyle, Pen? rectangleLine = null,
+    public StackedLabelProvider(IProvider provider, LabelStyle labelStyle, Pen? rectangleLine = null,
         Brush? rectangleFill = null)
     {
         _provider = provider;
@@ -33,9 +32,9 @@ public class StackedLabelProvider : IAsyncProvider
 
     private readonly Pen _rectangleLine;
 
-    public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
-        var features = await _provider.GetFeaturesAsync(fetchInfo);
+        var features = _provider.GetFeatures(fetchInfo);
         return GetFeaturesInView(fetchInfo.Resolution, _labelStyle, features, _rectangleLine, _rectangleFill);
     }
 

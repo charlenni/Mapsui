@@ -11,21 +11,21 @@ using Mapsui.Providers;
 
 namespace Mapsui.Layers.AnimatedLayers;
 
-public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>
+public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
 {
-    private readonly IAsyncProvider _dataSource;
+    private readonly IProvider _dataSource;
     private FetchInfo? _fetchInfo;
     private readonly List<AnimatedPointFeature> _features = [];
 
-    public AnimatedPointLayer(IAsyncProvider dataSource)
+    public AnimatedPointLayer(IProvider dataSource)
     {
         _dataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
         if (_dataSource is IDataChangedProvider dataChangedProvider)
             dataChangedProvider.DataChanged += (s, e) =>
             {
-                Catch.Exceptions(async () =>
+                Catch.Exceptions(() =>
                 {
-                    await UpdateDataAsync();
+                    UpdateData();
                     DataHasChanged();
                 });
             };
@@ -54,11 +54,11 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
     public Easing Easing { get; set; } = Easing.CubicOut;
 
 
-    public async Task UpdateDataAsync()
+    public void UpdateData()
     {
         if (_fetchInfo is null) return;
 
-        var features = await _dataSource.GetFeaturesAsync(_fetchInfo);
+        var features = _dataSource.GetFeatures(_fetchInfo);
         SetAnimationTarget(features.Cast<PointFeature>());
         OnDataChanged(new DataChangedEventArgs());
     }
@@ -122,5 +122,5 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
     {
     }
 
-    public IAsyncProvider? DataSource => _dataSource;
+    public IProvider? DataSource => _dataSource;
 }

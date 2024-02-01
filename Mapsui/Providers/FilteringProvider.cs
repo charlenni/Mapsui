@@ -33,7 +33,19 @@ public class FilteringProvider : IAsyncProvider
     }
 
     /// <summary>
-    /// Get all features contained in FetchInfos extend selected by a filter
+    /// Get all features contained in FetchInfos extent selected by a filter
+    /// </summary>
+    /// <param name="fetchInfo"></param>
+    /// <returns></returns>
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+        return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
+    /// <summary>
+    /// Get all features contained in FetchInfos extent selected by a filter
     /// </summary>
     /// <param name="fetchInfo">FetchInfo to use</param>
     /// <returns>Task to get list of features</returns>

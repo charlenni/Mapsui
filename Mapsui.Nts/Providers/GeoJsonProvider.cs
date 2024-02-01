@@ -17,7 +17,7 @@ using IFeature = Mapsui.Features.IFeature;
 
 namespace Mapsui.NTS.Providers;
 
-public class GeoJsonProvider : IAsyncProvider, IProviderExtended
+public class GeoJsonProvider : IProvider, IProviderExtended
 {
     private static ReadOnlySpan<byte> Utf8Bom => new byte[] { 0xEF, 0xBB, 0xBF };
     private readonly string _geoJson;
@@ -170,11 +170,10 @@ public class GeoJsonProvider : IAsyncProvider, IProviderExtended
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         var fetchExtent = fetchInfo.Extent.ToEnvelope();
-        IEnumerable<IFeature> result = (IEnumerable<IFeature>)FeatureCollection.Query(fetchExtent);
-        return Task.FromResult(result);
+        return (IEnumerable<IFeature>)FeatureCollection.Query(fetchExtent);
     }
 
     private static void FillFields(GeometryFeature geometryFeature, IAttributesTable featureAttributes)

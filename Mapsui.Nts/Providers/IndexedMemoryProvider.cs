@@ -11,7 +11,7 @@ using NetTopologySuite.Index.Strtree;
 
 namespace Mapsui.NTS.Providers;
 
-public class IndexedMemoryProvider : IAsyncProvider
+public class IndexedMemoryProvider : IProvider
 {
     private readonly MRect? _boundingBox;
 
@@ -92,7 +92,7 @@ public class IndexedMemoryProvider : IAsyncProvider
         _boundingBox = MemoryProvider.GetExtent(Features);
     }
 
-    public virtual Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public virtual IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         if (fetchInfo == null) throw new ArgumentNullException(nameof(fetchInfo));
         if (fetchInfo.Extent == null) throw new ArgumentNullException(nameof(fetchInfo.Extent));
@@ -104,8 +104,7 @@ public class IndexedMemoryProvider : IAsyncProvider
         var biggerBox = fetchInfo.Extent?.Grow(fetchInfo.Resolution * SymbolSize * 0.5);
 
         var fetchExtent = biggerBox?.ToEnvelope();
-        IEnumerable<IFeature> result = index.Query(fetchExtent);
-        return Task.FromResult(result);
+        return index.Query(fetchExtent);
     }
 
     /// <summary>

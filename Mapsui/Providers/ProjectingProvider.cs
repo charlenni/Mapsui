@@ -11,7 +11,7 @@ namespace Mapsui.Providers;
 
 public class ProjectingProvider : IAsyncProvider
 {
-    private readonly IAsyncProvider _provider;
+    private readonly IProvider _provider;
     private readonly IProjection _projection;
 
     /// <summary>
@@ -19,7 +19,7 @@ public class ProjectingProvider : IAsyncProvider
     /// </summary>
     /// <param name="provider">Provider providing features</param>
     /// <param name="projection">Projection to use</param>
-    public ProjectingProvider(IAsyncProvider provider, IProjection? projection = null)
+    public ProjectingProvider(IProvider provider, IProjection? projection = null)
     {
         _provider = provider;
         _projection = projection ?? ProjectionDefaults.Projection;
@@ -31,6 +31,13 @@ public class ProjectingProvider : IAsyncProvider
     /// </summary>
     public string? CRS { get; set; }
 
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+            return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
     /// <summary>
     /// Get all features contained in FetchInfos extend
     /// </summary>
@@ -41,7 +48,9 @@ public class ProjectingProvider : IAsyncProvider
         if (!GetFetchInfo(ref fetchInfo))
             return Enumerable.Empty<IFeature>();
 
-        var features = await _provider.GetFeaturesAsync(fetchInfo);
+        var features = _provider is IAsyncProvider asyncProvider
+            ? await asyncProvider.GetFeaturesAsync(fetchInfo) 
+            : _provider.GetFeatures(fetchInfo);
 
         return features.Project(_provider.CRS, CRS, _projection);
     }

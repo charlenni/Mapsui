@@ -32,6 +32,18 @@ public class GeometryIntersectionProvider : IAsyncProvider, IProviderExtended
         set => _featureKeyCreator = value;
     }
 
+    /// <summary>
+    /// Get all features contained in FetchInfos extent
+    /// </summary>
+    /// <param name="fetchInfo"></param>
+    /// <returns></returns>
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    {
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+        return GetFeaturesAsync(fetchInfo).Result;
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+    }
+
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         return IterateFeatures(fetchInfo, await _provider.GetFeaturesAsync(fetchInfo));

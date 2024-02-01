@@ -64,7 +64,7 @@ public class MemoryProvider : IProvider, IDataChangedProvider
     /// </summary>
     /// <param name="fetchInfo">FetchInfo to use</param>
     /// <returns>Task to get list of features</returns>
-    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+    public virtual IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         if (fetchInfo == null || fetchInfo.Extent == null)
             return Enumerable.Empty<IFeature>(); 
@@ -104,7 +104,7 @@ public class MemoryProvider : IProvider, IDataChangedProvider
     /// Get extend of all features provided by this provider
     /// </summary>
     /// <returns>Extent of all features</returns>
-    public MRect? GetExtent()
+    public virtual MRect? GetExtent()
     {
         return _extent;
     }

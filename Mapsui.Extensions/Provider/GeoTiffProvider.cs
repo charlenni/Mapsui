@@ -1,21 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using BitMiracle.LibTiff.Classic;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Color = Mapsui.Styles.Color;
 
 namespace Mapsui.Extensions.Provider;
 
-public class GeoTiffProvider : IAsyncProvider, IDisposable
+public class GeoTiffProvider : IProvider, IDisposable
 {
     private struct TiffProperties
     {
@@ -253,13 +252,14 @@ public class GeoTiffProvider : IAsyncProvider, IDisposable
 
     public string? CRS { get; set; } = "";
 
-    public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
+    public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
     {
         if (_extent.Intersects(fetchInfo.Extent))
         {
-            return Task.FromResult((IEnumerable<IFeature>)new[] { _feature });
+            return (IEnumerable<IFeature>)new[] { _feature };
         }
-        return Task.FromResult(Enumerable.Empty<IFeature>());
+
+        return Enumerable.Empty<IFeature>();
     }
 
     public MRect? GetExtent()

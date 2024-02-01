@@ -51,10 +51,10 @@ public class WfsPointsSample : ISample
 
     private static ILayer CreateWfsLayer(WFSProvider provider)
     {
-        return new Layer("Laser Points")
+        return new AsyncLayer("Laser Points")
         {
-            Style = new SymbolStyle { Fill = new Brush(Color.Red), SymbolScale = 1 },
             DataSource = provider,
+            Style = new SymbolStyle { Fill = new Brush(Color.Red), SymbolScale = 1 },
             IsMapInfoLayer = true,
         };
     }

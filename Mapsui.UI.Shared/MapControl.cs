@@ -382,11 +382,11 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
 
     private void Map_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(Layers.Layer.Enabled))
+        if (e.PropertyName == nameof(Layers.AsyncLayer.Enabled))
         {
             RefreshGraphics();
         }
-        else if (e.PropertyName == nameof(Layers.Layer.Opacity))
+        else if (e.PropertyName == nameof(Layers.AsyncLayer.Opacity))
         {
             RefreshGraphics();
         }
@@ -394,7 +394,7 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
         {
             RefreshGraphics();
         }
-        else if (e.PropertyName == nameof(Layers.Layer.DataSource))
+        else if (e.PropertyName == nameof(Layers.AsyncLayer.DataSource))
         {
             Refresh(); // There is a new DataSource so let's fetch the new data.
         }
