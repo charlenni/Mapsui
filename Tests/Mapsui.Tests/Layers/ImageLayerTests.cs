@@ -19,6 +19,12 @@ public class ImageLayerTests
     private class FakeProvider : IAsyncProvider
     {
         public string? CRS { get; set; }
+
+        public IEnumerable<IFeature> GetFeatures(FetchInfo fetchInfo)
+        {
+            return GetFeaturesAsync(fetchInfo).Result;
+        }
+
         public Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
         {
             throw new Exception(ExceptionMessage);

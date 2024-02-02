@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mapsui.Features;
+﻿using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tests.Common.TestTools;
-using Mapsui.UI;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mapsui.Tests.Common.Maps;
 
@@ -40,11 +39,11 @@ public class StackedLabelsTestSample : ISample
         return map;
     }
 
-    private static TestLayer CreateStackedLabelLayer(IEnumerable<IFeature> provider, string labelColumn)
+    private static ILayer CreateStackedLabelLayer(IEnumerable<IFeature> features, string labelColumn)
     {
-        return new TestLayer
+        return new Layer
         {
-            DataSource = new StackedLabelProvider(new MemoryProvider(provider), new LabelStyle { LabelColumn = labelColumn }),
+            DataSource = new StackedLabelProvider(new MemoryProvider(features), new LabelStyle { LabelColumn = labelColumn }),
             Style = null
         };
     }

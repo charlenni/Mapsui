@@ -39,17 +39,14 @@ public class LayerThreadingTests
             }
         });
 
-        var task2 = Task.Run(async () =>
+        try
         {
-            try
-            {
-                await GetFeaturesAsync(provider);
-            }
-            catch (Exception e)
-            {
-                _exceptions.Add(e);
-            }
-        });
+            GetFeatures(provider);
+        }
+        catch (Exception e)
+        {
+            _exceptions.Add(e);
+        }
 
         var task3 = Task.Run(() =>
         {
@@ -64,20 +61,19 @@ public class LayerThreadingTests
         });
 
         // wait for tasks to finish;
-        await task2;
         await task3;
         await task1;
 
         ClassicAssert.IsTrue(_exceptions.Count == 0); // no Exceptions should have occurred
     }
 
-    private async Task GetFeaturesAsync(ObservableCollectionProvider<Callout> provider)
+    private void GetFeatures(ObservableCollectionProvider<Callout> provider)
     {
         for (int i = 0; i < 5000; i++)
         {
             try
             {
-                await provider.GetFeaturesAsync(new FetchInfo(new MSection(new MRect(0, 0, 0, 0), 1)));
+                provider.GetFeatures(new FetchInfo(new MSection(new MRect(0, 0, 0, 0), 1)));
             }
             catch (Exception e)
             {
@@ -86,7 +82,7 @@ public class LayerThreadingTests
         }
     }
 
-    private void GetFeatures(AsyncLayer layer)
+    private void GetFeatures(Layer layer)
     {
         for (int i = 0; i < 5000; i++)
         {

@@ -13,9 +13,9 @@ namespace Mapsui.Tests.Common.TestTools;
 /// testing this layer is used to generate an image from the data source without having to wait for 
 /// the asynchronous data fetch call to finish.
 /// </summary>
-public class TestLayer : BaseLayer, IDataSourceLayer<IProvider>
+public class TestLayer : Layer
 {
-    public IProvider? DataSource { get; set; }
+    /*public IProvider? DataSource { get; set; }
     public string? CRS { get; set; }
     public override IEnumerable<IFeature> GetFeatures(MRect box, double resolution)
     {
@@ -33,5 +33,5 @@ public class TestLayer : BaseLayer, IDataSourceLayer<IProvider>
         return DataSource.GetFeatures(fetchInfo);
     }
 
-    public override MRect? Extent => DataSource?.GetExtent();
+    public override MRect? Extent => DataSource?.GetExtent();*/
 }

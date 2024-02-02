@@ -100,8 +100,7 @@ public class StackedLabelProvider : IProvider
         return new MPoint(cluster.Box.Centroid.X, minY);
     }
 
-    private static IFeature CreateLabelFeature(MPoint position, LabelStyle labelStyle, double offsetY,
-        string? text)
+    private static IFeature CreateLabelFeature(MPoint position, LabelStyle labelStyle, double offsetY, string? text)
     {
         return new PointFeature(position)
         {

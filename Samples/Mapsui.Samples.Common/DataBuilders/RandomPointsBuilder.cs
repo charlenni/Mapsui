@@ -25,7 +25,9 @@ public static class RandomPointsBuilder
     private static IEnumerable<PointFeature> CreateFeatures(IEnumerable<MPoint> randomPoints)
     {
         var counter = 0;
-        return randomPoints.Select(p => new PointFeature(p) { ["Label"] = counter++.ToString() });
+        var features = randomPoints.Select(p => new PointFeature(p) { ["Label"] = counter++.ToString() });
+        // Have to do this, because if not, the "Label" is set each time new
+        return features.ToArray();
     }
 
     public static IEnumerable<MPoint> GenerateRandomPoints(MRect? envelope, int count, Random? random = null)
