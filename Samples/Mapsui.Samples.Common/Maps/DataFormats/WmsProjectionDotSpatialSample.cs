@@ -6,6 +6,7 @@ using Mapsui.Styles;
 using Mapsui.Widgets;
 using Mapsui.Widgets.ButtonWidgets;
 using System.Threading.Tasks;
+using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 

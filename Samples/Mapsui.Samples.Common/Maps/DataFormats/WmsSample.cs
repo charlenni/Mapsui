@@ -1,8 +1,8 @@
-﻿using Mapsui.Cache;
-using Mapsui.Layers;
+﻿using Mapsui.Extensions.Layers;
 using Mapsui.Extensions.Providers.Wms;
-using System.Threading.Tasks;
+using Mapsui.Layers;
 using Mapsui.Styles;
+using System.Threading.Tasks;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 

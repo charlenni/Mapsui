@@ -2,6 +2,7 @@
 using Mapsui.ArcGIS.DynamicProvider;
 using Mapsui.ArcGIS.ImageServiceProvider;
 using Mapsui.Cache;
+using Mapsui.Extensions.Layers;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Styles;

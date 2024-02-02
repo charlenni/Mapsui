@@ -6,6 +6,7 @@ using Mapsui.NTS.Extensions;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;
+using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 

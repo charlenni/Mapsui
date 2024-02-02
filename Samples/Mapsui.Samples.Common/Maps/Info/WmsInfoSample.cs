@@ -4,6 +4,7 @@ using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Styles;
 using Mapsui.Widgets.InfoWidgets;
 using System.Threading.Tasks;
+using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.Info;
 

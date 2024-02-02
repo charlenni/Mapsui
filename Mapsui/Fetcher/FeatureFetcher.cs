@@ -7,7 +7,7 @@ using Mapsui.Styles;
 
 namespace Mapsui.Fetcher;
 
-internal class FeatureFetcher
+public class FeatureFetcher
 {
     private readonly FetchInfo _fetchInfo;
     private readonly DataArrivedDelegate _dataArrived;

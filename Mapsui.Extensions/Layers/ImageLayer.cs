@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Fetcher;
+using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Providers;
 using Mapsui.Styles;
 
-namespace Mapsui.Layers;
+namespace Mapsui.Extensions.Layers;
 
 public class ImageLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IAsyncProvider>, IDisposable, ILayer, ILayerFeatureInfo
 {
