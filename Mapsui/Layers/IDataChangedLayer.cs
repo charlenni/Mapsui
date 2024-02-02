@@ -3,7 +3,7 @@ using System;
 
 namespace Mapsui.Layers;
 
-public interface IDynamicLayer
+public interface IDataChangedLayer
 {
     /// <summary>
     /// Event called when the data within the layer has changed allowing
