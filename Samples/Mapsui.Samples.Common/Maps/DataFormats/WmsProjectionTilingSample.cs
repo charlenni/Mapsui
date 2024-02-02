@@ -1,8 +1,8 @@
 ﻿using Mapsui.Extensions.Cache;
 using Mapsui.Extensions.Projections;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Layers;
 using Mapsui.Providers;
-using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Samples.Common.Utilities;
 using Mapsui.Styles;
 using Mapsui.Tiling.Layers;
@@ -10,7 +10,6 @@ using Mapsui.Widgets;
 using Mapsui.Widgets.ButtonWidgets;
 using System.IO;
 using System.Threading.Tasks;
-using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 
@@ -49,7 +48,7 @@ public class WmsProjectionTilingSample : ISample
             CRS = "EPSG:3857"
         };
 
-        var imageLayer = new ImageLayer("mainmap")
+        var imageLayer = new AsyncLayer("mainmap")
         {
             DataSource = dataSource,
             Style = new RasterStyle(),

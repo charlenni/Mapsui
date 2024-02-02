@@ -1,10 +1,9 @@
 ﻿using Mapsui.Extensions;
-using Mapsui.Layers;
 using Mapsui.Extensions.Providers.Wms;
+using Mapsui.Layers;
 using Mapsui.Styles;
 using Mapsui.Widgets.InfoWidgets;
 using System.Threading.Tasks;
-using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.Info;
 
@@ -25,7 +24,7 @@ public class WmsInfoSample : ISample
 
     public static async Task<ILayer> CreateLayerAsync()
     {
-        return new ImageLayer("Windsnelheden (PDOK)")
+        return new AsyncLayer("Windsnelheden (PDOK)")
         {
             DataSource = await CreateWmsProviderAsync(),
             Style = new RasterStyle(),

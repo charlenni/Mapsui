@@ -1,5 +1,4 @@
-﻿using Mapsui.Extensions.Layers;
-using Mapsui.Extensions.Providers.Wms;
+﻿using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Layers;
 using Mapsui.Limiting;
 using Mapsui.Samples.Common;
@@ -29,7 +28,7 @@ public class WmsOpenSeaSample : ISample
 
     public static async Task<ILayer> CreateLayerAsync()
     {
-        return new ImageLayer("Opensea")
+        return new AsyncLayer("Opensea")
         {
             DataSource = await CreateWmsProviderAsync(),
             Style = new RasterStyle()

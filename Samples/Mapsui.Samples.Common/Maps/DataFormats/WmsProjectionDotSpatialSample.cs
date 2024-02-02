@@ -1,12 +1,11 @@
 ﻿using Mapsui.Extensions.Projections;
+using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Layers;
 using Mapsui.Providers;
-using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Styles;
 using Mapsui.Widgets;
 using Mapsui.Widgets.ButtonWidgets;
 using System.Threading.Tasks;
-using Mapsui.Extensions.Layers;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 
@@ -40,7 +39,7 @@ public class WmsProjectionDotSpatialSample : ISample
             CRS = "EPSG:3857"
         };
 
-        return new ImageLayer("mainmap")
+        return new AsyncLayer("mainmap")
         {
             DataSource = dataSource,
             Style = new RasterStyle(),

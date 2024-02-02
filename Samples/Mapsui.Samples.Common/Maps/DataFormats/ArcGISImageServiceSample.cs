@@ -2,7 +2,6 @@
 using Mapsui.ArcGIS.DynamicProvider;
 using Mapsui.ArcGIS.ImageServiceProvider;
 using Mapsui.Cache;
-using Mapsui.Extensions.Layers;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Styles;
@@ -22,9 +21,10 @@ public class ArcGISImageServiceSample : ISample
 
     public async Task<ILayer> CreateLayerAsync()
     {
-        var layer = new ImageLayer("ArcGISImageServiceLayer")
+        var layer = new AsyncLayer("ArcGISImageServiceLayer")
         {
-            DataSource = await CreateProviderAsync()
+            DataSource = await CreateProviderAsync(),
+            Style = new RasterStyle()
         };
 
         var arcGisLegend = new ArcGisLegend(DefaultCache);

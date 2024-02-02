@@ -1,12 +1,8 @@
-﻿using Mapsui.Cache;
+﻿using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Layers;
-using Mapsui.Extensions.Providers.Wms;
-using System.Threading.Tasks;
-using Mapsui.NTS.Extensions;
 using Mapsui.Providers;
 using Mapsui.Styles;
-using NetTopologySuite.Geometries;
-using Mapsui.Extensions.Layers;
+using System.Threading.Tasks;
 
 namespace Mapsui.Samples.Common.Maps.DataFormats;
 
@@ -34,7 +30,7 @@ public class WmsProjectionSample : ISample
             CRS = "EPSG:3857"
         };
 
-        return new ImageLayer("mainmap")
+        return new AsyncLayer("mainmap")
         {
             DataSource = dataSource,
             Style = new RasterStyle()

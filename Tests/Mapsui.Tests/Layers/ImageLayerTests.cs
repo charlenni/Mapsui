@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Mapsui.Extensions;
-using Mapsui.Extensions.Layers;
+﻿using Mapsui.Extensions;
 using Mapsui.Features;
 using Mapsui.Layers;
 using Mapsui.Providers;
+using Mapsui.Styles;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mapsui.Tests.Layers;
 
@@ -42,13 +42,13 @@ public class ImageLayerTests
     {
         // arrange
         var provider = new FakeProvider();
-        using var imageLayer = new ImageLayer("imageLayer") { DataSource = provider };
+        using var layer = new AsyncLayer("imageLayer") { DataSource = provider, Style = new RasterStyle() };
         using var map = new Map();
-        map.Layers.Add(imageLayer);
+        map.Layers.Add(layer);
         using var waitHandle = new AutoResetEvent(false);
         Exception? exception = null;
 
-        imageLayer.DataChanged += (_, args) =>
+        layer.DataChanged += (_, args) =>
         {
             exception = args.Error;
             waitHandle.Go();

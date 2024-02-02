@@ -1,5 +1,4 @@
-﻿using Mapsui.Extensions.Layers;
-using Mapsui.Extensions.Providers.Wms;
+﻿using Mapsui.Extensions.Providers.Wms;
 using Mapsui.Layers;
 using Mapsui.Limiting;
 using Mapsui.Samples.Common;
@@ -29,7 +28,7 @@ public class WmsBasilicataSample : ISample
 
     public static async Task<ILayer> CreateLayerAsync()
     {
-        return new ImageLayer("Basilicata")
+        return new AsyncLayer("Basilicata")
         {
             DataSource = await CreateWmsProviderAsync(),
             Style = new RasterStyle()
