@@ -1,26 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Mapsui.Animations;
 using Mapsui.Extensions;
 using Mapsui.Features;
-using Mapsui.Fetcher;
 using Mapsui.Layers.AnimationLayers;
 using Mapsui.Providers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mapsui.Layers.AnimatedLayers;
 
-public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer<IProvider>
+public class AnimatedPointLayer : Layer
 {
-    private readonly IProvider _dataSource;
     private FetchInfo? _fetchInfo;
     private readonly List<AnimatedPointFeature> _features = [];
 
     public AnimatedPointLayer(IProvider dataSource)
     {
-        _dataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
-        if (_dataSource is IDataChangedProvider dataChangedProvider)
+        DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
+        if (DataSource is IDataChangedProvider dataChangedProvider)
             dataChangedProvider.DataChanged += (s, e) =>
             {
                 Catch.Exceptions(() =>
@@ -58,7 +55,11 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
     {
         if (_fetchInfo is null) return;
 
-        var features = _dataSource.GetFeatures(_fetchInfo);
+        var features = DataSource?.GetFeatures(_fetchInfo);
+
+        if (features == null)
+            return;
+
         SetAnimationTarget(features.Cast<PointFeature>());
         OnDataChanged(new DataChangedEventArgs());
     }
@@ -91,13 +92,6 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
         return features?.FirstOrDefault(f => f[idField]?.Equals(feature[idField]) ?? false);
     }
 
-    public override MRect? Extent => _dataSource.GetExtent();
-
-    public override IEnumerable<IFeature> GetFeatures(MRect extent, double resolution)
-    {
-        return _features;
-    }
-
     public void RefreshData(FetchInfo fetchInfo)
     {
         _fetchInfo = fetchInfo;
@@ -113,14 +107,4 @@ public class AnimatedPointLayer : BaseLayer, IAsyncDataFetcher, IDataSourceLayer
         }
         return animating;
     }
-
-    public void AbortFetch()
-    {
-    }
-
-    public void ClearCache()
-    {
-    }
-
-    public IProvider? DataSource => _dataSource;
 }
