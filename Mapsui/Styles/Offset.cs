@@ -1,12 +1,10 @@
-// ReSharper disable NonReadonlyMemberInGetHashCode // todo: Fix this real issue
 namespace Mapsui.Styles;
 
+/// <summary>
+/// Offset of images/text from the center of the image/text
+/// </summary>
 public class Offset
 {
-    /// <summary>
-    /// Offset of images from the center of the image.
-    /// If IsRelative, than the offset is between -0.5 and +0.5.
-    /// </summary>
     public Offset() { }
 
     public Offset(double x, double y)
@@ -28,6 +26,7 @@ public class Offset
     }
 
     public double X { get; set; }
+
     public double Y { get; set; }
 
     public MPoint ToPoint()
@@ -65,11 +64,6 @@ public class Offset
         return true;
     }
 
-    public override int GetHashCode()
-    {
-        return X.GetHashCode() ^ Y.GetHashCode();
-    }
-
     public static bool operator ==(Offset? offset1, Offset? offset2)
     {
         return Equals(offset1, offset2);
@@ -78,5 +72,10 @@ public class Offset
     public static bool operator !=(Offset? offset1, Offset? offset2)
     {
         return !Equals(offset1, offset2);
+    }
+
+    public override int GetHashCode()
+    {
+        return X.GetHashCode() ^ Y.GetHashCode();
     }
 }
