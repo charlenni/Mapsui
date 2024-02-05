@@ -26,13 +26,13 @@ public sealed class SymbolCache : ISymbolCache
         return _cache[bitmapId] = loadBitmap;
     }
 
-    public Size? GetSize(int bitmapId)
+    public MSize? GetSize(int bitmapId)
     {
         var bitmap = (BitmapInfo?)GetOrCreate(bitmapId);
         if (bitmap == null)
             return null;
 
-        return new Size(bitmap.Width, bitmap.Height);
+        return new MSize(bitmap.Width, bitmap.Height);
     }
 
     public void Dispose()

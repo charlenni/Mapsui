@@ -10,7 +10,6 @@ using System.Xml;
 using Mapsui.Cache;
 using Mapsui.Extensions;
 using Mapsui.Logging;
-using Mapsui.Styles;
 
 namespace Mapsui.Extensions.Providers.Wms;
 
@@ -145,7 +144,7 @@ public class Client
         /// <summary>
         /// Size of legend
         /// </summary>
-        public Size Size;
+        public MSize Size;
     }
 
 
@@ -622,7 +621,7 @@ public class Client
 
                     if (node.Attributes?["width"]?.InnerText != null && node.Attributes["height"]?.InnerText != null)
                     {
-                        wmsServerLayer.Style[i].LegendUrl.Size = new Size { Width = int.Parse(node.Attributes["width"]?.InnerText ?? "0"), Height = int.Parse(node.Attributes["height"]?.InnerText ?? "0") };
+                        wmsServerLayer.Style[i].LegendUrl.Size = new MSize { Width = int.Parse(node.Attributes["width"]?.InnerText ?? "0"), Height = int.Parse(node.Attributes["height"]?.InnerText ?? "0") };
                     }
 
                     wmsServerLayer.Style[i].LegendUrl.OnlineResource.OnlineResource = node.SelectSingleNode("sm:OnlineResource", _nsmgr)?.Attributes?["xlink:href"]?.InnerText;

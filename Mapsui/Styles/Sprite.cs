@@ -20,7 +20,7 @@ public class Sprite
         PixelRatio = pixelRatio;
     }
 
-    public Sprite(int atlas, MPoint p, Size s, float pixelRatio) : this(atlas, (int)p.X, (int)p.Y, (int)s.Width, (int)s.Height, pixelRatio)
+    public Sprite(int atlas, MPoint p, MSize s, float pixelRatio) : this(atlas, (int)p.X, (int)p.Y, (int)s.Width, (int)s.Height, pixelRatio)
     {
     }
 

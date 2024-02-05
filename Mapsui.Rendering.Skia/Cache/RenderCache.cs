@@ -37,7 +37,7 @@ public sealed class RenderCache : IRenderCache<SKPath, SKPaint>
         set => VectorCache = (IVectorCache<SKPath, SKPaint>)value;
     }
 
-    public Size? GetSize(int bitmapId)
+    public MSize? GetSize(int bitmapId)
     {
         return SymbolCache.GetSize(bitmapId);
     }

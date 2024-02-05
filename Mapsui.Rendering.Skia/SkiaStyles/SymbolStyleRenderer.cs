@@ -272,7 +272,7 @@ public class SymbolStyleRenderer : ISkiaStyleRenderer, IFeatureSize
 
     public static double FeatureSize(SymbolStyle symbolStyle, ISymbolCache symbolCache)
     {
-        Size symbolSize = new Size(SymbolStyle.DefaultWidth, SymbolStyle.DefaultHeight);
+        MSize symbolSize = new MSize(SymbolStyle.DefaultWidth, SymbolStyle.DefaultHeight);
 
         switch (symbolStyle.SymbolType)
         {
@@ -291,7 +291,7 @@ public class SymbolStyleRenderer : ISkiaStyleRenderer, IFeatureSize
             case SymbolType.Rectangle:
             case SymbolType.Triangle:
                 var vectorSize = VectorStyleRenderer.FeatureSize(symbolStyle);
-                symbolSize = new Size(vectorSize, vectorSize);
+                symbolSize = new MSize(vectorSize, vectorSize);
                 break;
         }
 
