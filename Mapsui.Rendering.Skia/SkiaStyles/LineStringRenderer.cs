@@ -4,6 +4,7 @@ using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;
 using SkiaSharp;
+using System.Linq;
 
 namespace Mapsui.Rendering.Skia;
 
@@ -55,7 +56,7 @@ public static class LineStringRenderer
             lineColor = pen.Color;
             strokeCap = pen.PenStrokeCap;
             strokeJoin = pen.StrokeJoin;
-            strokeMiterLimit = pen.StrokeMiterLimit;
+            strokeMiterLimit = (float)pen.StrokeMiterLimit;
             strokeStyle = pen.PenStyle;
             dashArray = pen.DashArray;
             dashOffset = pen.DashOffset;

@@ -1,6 +1,8 @@
-// ReSharper disable NonReadonlyMemberInGetHashCode // todo: Fix this real issue
 namespace Mapsui.Styles;
 
+/// <summary>
+/// Brush for filling polygons
+/// </summary>
 public class Brush
 {
     private int _bitmapId = -1;
@@ -22,6 +24,9 @@ public class Brush
         FillStyle = brush.FillStyle;
     }
 
+    /// <summary>
+    /// Color of this brush
+    /// </summary>
     public Color? Color { get; set; }
 
     // todo: 
@@ -37,6 +42,8 @@ public class Brush
         get => _bitmapId;
         set
         {
+            if (_bitmapId == value)
+                return;
             _bitmapId = value;
             if (_bitmapId != -1 && !(FillStyle == FillStyle.Bitmap || FillStyle == FillStyle.BitmapRotated))
                 FillStyle = FillStyle.Bitmap;
@@ -97,6 +104,4 @@ public class Brush
     {
         return !Equals(brush1, brush2);
     }
-
-
 }

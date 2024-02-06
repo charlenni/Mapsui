@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Authentication.ExtendedProtection;
 using System.Threading;
 using Mapsui.Extensions;
@@ -187,7 +188,7 @@ internal static class PolygonRenderer
             lineColor = pen.Color;
             strokeCap = pen.PenStrokeCap;
             strokeJoin = pen.StrokeJoin;
-            strokeMiterLimit = pen.StrokeMiterLimit;
+            strokeMiterLimit = (float)pen.StrokeMiterLimit;
             strokeStyle = pen.PenStyle;
             dashArray = pen.DashArray;
             dashOffset = pen.DashOffset;

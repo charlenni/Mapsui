@@ -1,6 +1,8 @@
-// ReSharper disable NonReadonlyMemberInGetHashCode // todo: Fix this real issue
 namespace Mapsui.Styles;
 
+/// <summary>
+/// Pen for drawing lines and outline of polygons
+/// </summary>
 public class Pen
 {
     public Pen() : this(Color.Transparent) { }
@@ -50,7 +52,7 @@ public class Pen
     /// <summary>
     /// Defines up to which width of line StrokeJoin is used
     /// </summary>
-    public float StrokeMiterLimit { get; set; } = 10f; // Default on Wpf, on Skia, it is 4f
+    public double StrokeMiterLimit { get; set; } = 10f; // Default on Wpf, on Skia, it is 4f
 
     public override bool Equals(object? obj)
     {
@@ -105,6 +107,4 @@ public class Pen
     {
         return !Equals(pen1, pen2);
     }
-
-
 }
