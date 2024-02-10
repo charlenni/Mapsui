@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Samples.Common;
 using Mapsui.UI.Maui;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable IDISP008 // Don't assign member with injected and created disposables.
 
@@ -21,52 +22,57 @@ public partial class MainViewModel : ObservableObject
     {
         var allSamples = AllSamples.GetSamples() ?? new List<ISampleBase>();
         Categories = new ObservableCollection<string>(allSamples.Select(s => s.Category).Distinct().OrderBy(c => c));
-        selectedCategory = Categories.First();
-        PopulateSamples(selectedCategory);
-        selectedSample = Samples.First();
+        _selectedCategory = Categories.First();
+        PopulateSamples();
+        _selectedSample = Samples.First();
         Map = new Map();
+        Map.Layers.Changed += PopulateLayers; 
     }
 
     [ObservableProperty]
-    string selectedCategory;
+    string _selectedCategory;
 
     [ObservableProperty]
-    ISampleBase selectedSample;
+    ISampleBase _selectedSample;
 
     [ObservableProperty]
-    Map? map;
+    Map? _map;
 
     public ObservableCollection<ISampleBase> Samples { get; set; } = new();
+    public ObservableCollection<ILayer> Layers { get; set; } = new();
     public ObservableCollection<string> Categories { get; } = new();
 
     // MapControl is needed in the samples. Mapsui's design should change so this is not needed anymore.
     public MapControl? MapControl { get; set; }
 
-    public void Picker_SelectedIndexChanged(object? sender, EventArgs e)
+    public void PopulateSamples()
     {
-        PopulateSamples(SelectedCategory);
-    }
-
-    private void PopulateSamples(string selectedCategory)
-    {
-        var samples = AllSamples.GetSamples().OfType<ISampleBase>().Where(s => s.Category == selectedCategory);
+        var samples = AllSamples.GetSamples().OfType<ISampleBase>().Where(s => s.Category == SelectedCategory);
+        SelectedSample = samples?.FirstOrDefault();
         Samples.Clear();
         foreach (var sample in samples)
-        {
             Samples.Add(sample);
-        }
+        SelectSample(Samples.First());
     }
 
     [SuppressMessage("Usage", "VSTHRD100:Avoid async void methods")]
-    public async void CollectionView_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    public async void SelectSample(ISampleBase selectedSample)
     {
         try
         {
-            if (SelectedSample is null)
+            if (selectedSample is null)
                 return;
 
+            SelectedSample = selectedSample;
+
             if (SelectedSample is ISample sample)
+            {
+                if (Map != null) 
+                    Map.Layers.Changed -= PopulateLayers;
                 Map = await sample.CreateMapAsync();
+                Map.Layers.Changed += PopulateLayers;
+                PopulateLayers(null, null);
+            }
             else if (SelectedSample is IMapControlSample mapControlSample && MapControl != null)
                 mapControlSample.Setup(MapControl);
         }
@@ -74,5 +80,12 @@ public partial class MainViewModel : ObservableObject
         {
             Logger.Log(LogLevel.Error, ex.Message, ex);
         }
+    }
+
+    private void PopulateLayers(object sender, LayerCollectionChangedEventArgs args)
+    {
+        Layers.Clear();
+        foreach (var layer in Map?.Layers)
+            Layers.Add(layer);
     }
 }
