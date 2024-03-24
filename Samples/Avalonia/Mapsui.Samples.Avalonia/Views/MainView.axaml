@@ -11,30 +11,44 @@
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
+	<vm:MainViewModel />
   </Design.DataContext>
 
     <Grid>
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <avalonia:MapControl Grid.Column="1" x:Name="MapControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-            <Border Grid.Row ="0" Grid.Column="0" BorderBrush="White" Opacity="0.65" BorderThickness="6" MinWidth="140"
-                    MinHeight="30" HorizontalAlignment="Left">
-                <RelativePanel VerticalAlignment="Stretch" >
-                    <ComboBox x:Name="CategoryComboBox" Margin="0,0, 0, 10"/>
-                    <ScrollViewer RelativePanel.Below="CategoryComboBox">
-                        <StackPanel Width="{x:Static sys:Double.NaN}" x:Name="SampleList"/>
-                    </ScrollViewer>
-                    <Slider RelativePanel.AlignBottomWithPanel="True" x:Name="RotationSlider" MinWidth="140"/>
-                </RelativePanel>
-            </Border>
-        </Grid>
+			<avalonia:MapControl Grid.Column="1" x:Name="mapControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+			<Grid Grid.Row="0" Grid.Column="0" Margin="10,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<ComboBox Grid.Row="0" Grid.Column="0" Margin="0,0,0,10" x:Name="CategoryComboBox" ItemsSource="{Binding Categories}" SelectedValue="{Binding SelectedCategory}" SelectionChanged="ComboBox_SelectionChanged" />
+				<ScrollViewer Grid.Row="1" Grid.Column="0">
+					<SelectingItemsControl x:Name="SampleList" ItemsSource="{Binding Samples}" SelectedItem="{Binding SelectedSample}">
+						<SelectingItemsControl.ItemTemplate>
+							<DataTemplate>
+								<RadioButton Content="{Binding Name}" GroupName="Samples"/>
+							</DataTemplate>
+						</SelectingItemsControl.ItemTemplate>
+					</SelectingItemsControl>
+				</ScrollViewer>
+				<Slider Grid.Row ="2" Grid.Column="0" x:Name="slider" Minimum="0" Maximum="360" Margin="4,6"/>
+				<ScrollViewer Grid.Row="3" Grid.Column="0" AllowAutoHide="True">
+					<ItemsControl x:Name="LayerList" ItemsSource="{Binding Layers}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Name}" IsChecked="{Binding Enabled}"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Grid>
+		</Grid>
     </Grid>
 </UserControl>

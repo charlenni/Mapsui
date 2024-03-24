@@ -1,13 +1,11 @@
-using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
+using Avalonia.Controls.Primitives;
+using AvaloniaApplication1.ViewModels;
 using Mapsui.Extensions;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
 using Mapsui.Samples.CustomWidget;
-using Mapsui.Tiling;
 
 namespace Mapsui.Samples.Avalonia.Views;
 
@@ -21,51 +19,43 @@ public partial class MainView : UserControl
 
     public MainView()
     {
-        InitializeComponent();
-    }
-
-    private void InitializeComponent()
-    {
         InitializeComponent(true);
 
-        MapControl.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        MapControl.Map.Navigator.RotationLock = false;
-        MapControl.UnSnapRotationDegrees = 30;
-        MapControl.ReSnapRotationDegrees = 5;
-        MapControl.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
-
-        RotationSlider.PointerMoved += RotationSliderOnPointerMoved;
-
-        CategoryComboBox.SelectionChanged += CategoryComboBoxSelectionChanged;
-
-        FillComboBoxWithCategories();
-        FillListWithSamples();
+        DataContextChanged += MainView_DataContextChanged;
     }
 
-    private void FillComboBoxWithCategories()
+    private void MainView_DataContextChanged(object? sender, System.EventArgs e)
     {
-        Tests.Common.Utilities.LoadAssembly();
+        mapControl.Map.Navigator.RotationLock = false;
+        mapControl.UnSnapRotationDegrees = 30;
+        mapControl.ReSnapRotationDegrees = 5;
 
-        var categories = AllSamples.GetSamples().Select(s => s.Category).Distinct().OrderBy(c => c).ToArray();
+        slider.ValueChanged += Slider_ValueChanged;
 
-        CategoryComboBox.ItemsSource = categories;
+        // Workaround. Samples need the MapControl in the current setup.
+        var mainViewModel = (MainViewModel)DataContext;
+        mainViewModel.MapControl = mapControl;
 
-        CategoryComboBox.SelectedIndex = 1;
+
+        // The CustomWidgetSkiaRenderer needs to be registered to make the CustomWidget sample work.
+        // Perhaps it is possible to let the sample itself do this so we do not have to do this for each platform.
+        mapControl.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
     }
 
-    private void FillListWithSamples()
+    private void ComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        var selectedCategory = CategoryComboBox.SelectedItem?.ToString() ?? "";
-        SampleList.Children.Clear();
-        foreach (var sample in AllSamples.GetSamples().Where(s => s.Category == selectedCategory))
+        if (DataContext is MainViewModel mainViewModel)
         {
-            SampleList.Children.Add(CreateRadioButton(sample));
+            mainViewModel.PopulateSamples();
         }
     }
 
-    private void CategoryComboBoxSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void Slider_ValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
-        FillListWithSamples();
+        if (DataContext is MainViewModel mainViewModel)
+        {
+            mainViewModel.Map?.Navigator.RotateTo(e.NewValue);
+        }
     }
 
     private RadioButton CreateRadioButton(ISampleBase sample)
@@ -81,19 +71,12 @@ public partial class MainView : UserControl
         {
             Catch.Exceptions(async () =>
             {
-                MapControl.Map?.Layers.Clear();
-                await sample.SetupAsync(MapControl);
-                MapControl.Refresh();
+                mapControl.Map?.Layers.Clear();
+                await sample.SetupAsync(mapControl);
+                mapControl.Refresh();
             });
         };
 
         return radioButton;
-    }
-
-    private void RotationSliderOnPointerMoved(object? sender, PointerEventArgs e)
-    {
-        // This is probably not the proper event handler for this but I don't know what is.
-        var percent = RotationSlider.Value / (RotationSlider.Maximum - RotationSlider.Minimum);
-        MapControl.Map.Navigator.RotateTo(percent * 360);
     }
 }
