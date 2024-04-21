@@ -12,7 +12,7 @@ public sealed class AnimatedMyLocationSample : IMapViewSample, IDisposable
 {
     private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
     private Position _newLocation;
-    private MapView? _mapView;
+    private UI.Maui.MapView? _mapView;
 
     public string Name => "Animated MyLocation Sample";
 
@@ -23,7 +23,7 @@ public sealed class AnimatedMyLocationSample : IMapViewSample, IDisposable
         // 54°54′24″N 25°19′12″E Center of Europe
         _newLocation = new Position(54.5424, 25.1912);
 
-        _mapView = (MapView)mapControl;
+        _mapView = (UI.Maui.MapView)mapControl;
         var map = OsmSample.CreateMap();
         map.Navigator.CenterOnAndZoomTo(_newLocation.ToMapsui(), map.Navigator.Resolutions[14]);
         mapControl.Map = map;
@@ -31,7 +31,6 @@ public sealed class AnimatedMyLocationSample : IMapViewSample, IDisposable
         _mapView.MyLocationLayer.IsMoving = true;
         _mapView.MyLocationEnabled = true;
         _mapView.MyLocationFollow = true;
-        _mapView.UseDoubleTap = true;
 
         _mapView.MyLocationLayer.UpdateMyLocation(_newLocation);
         _mapView.Map.Navigator.CenterOn(_newLocation.ToMapsui());
@@ -40,7 +39,7 @@ public sealed class AnimatedMyLocationSample : IMapViewSample, IDisposable
     }
 
     public bool UpdateLocation => false;
-    public bool OnClick(object? sender, EventArgs args)
+    public bool OnTap(object? sender, EventArgs args)
     {
         return true;
     }

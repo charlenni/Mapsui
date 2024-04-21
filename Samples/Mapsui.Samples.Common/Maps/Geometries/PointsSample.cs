@@ -4,12 +4,13 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Widgets.InfoWidgets;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -50,7 +51,7 @@ public class PointsSample : ISample
         var path = "Mapsui.Samples.Common.GeoData.Json.congo.json";
         var assembly = typeof(PointsSample).GetTypeInfo().Assembly;
         using var stream = assembly.GetManifestResourceStream(path) ?? throw new InvalidOperationException($"{path} not found");
-        var cities = DeserializeFromStream<City>(stream);
+        var cities = DeserializeFromStream(stream);
 
         return cities.Select(c =>
         {
@@ -61,7 +62,7 @@ public class PointsSample : ISample
         });
     }
 
-    private class City
+    internal class City
     {
         public string? Country { get; set; }
         public string? Name { get; set; }
@@ -69,13 +70,9 @@ public class PointsSample : ISample
         public double Lng { get; set; }
     }
 
-    public static IEnumerable<T> DeserializeFromStream<T>(Stream stream)
+    private static List<City> DeserializeFromStream(Stream stream)
     {
-        var serializer = new JsonSerializer();
-
-        using var sr = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(sr);
-        return serializer.Deserialize<List<T>>(jsonTextReader) ?? new List<T>();
+        return JsonSerializer.Deserialize(stream, PointsSampleContext.Default.ListCity) ?? [];
     }
 
     private static SymbolStyle CreateBitmapStyle()
@@ -87,4 +84,9 @@ public class PointsSample : ISample
         var bitmapHeight = 176; // To set the offset correct we need to know the bitmap height
         return new SymbolStyle { BitmapId = bitmapId, SymbolScale = 0.20, SymbolOffset = new Offset(0, bitmapHeight * 0.5) };
     }
+}
+
+[JsonSerializable(typeof(List<PointsSample.City>))]
+internal partial class PointsSampleContext : JsonSerializerContext
+{
 }

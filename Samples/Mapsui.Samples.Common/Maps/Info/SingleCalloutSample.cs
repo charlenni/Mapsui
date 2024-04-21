@@ -6,11 +6,12 @@ using Mapsui.Samples.Common.Maps.Geometries;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Widgets.InfoWidgets;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -39,8 +40,8 @@ public class SingleCalloutSample : ISample
 
     private static void MapOnInfo(object? sender, MapInfoEventArgs e)
     {
-        var calloutStyle = e.MapInfo?.Feature?.Styles.Where(s => s is CalloutStyle).Cast<CalloutStyle>().FirstOrDefault();
-        if (calloutStyle != null)
+        var calloutStyle = e.MapInfo?.Feature?.Styles.OfType<CalloutStyle>().FirstOrDefault();
+        if (calloutStyle is not null)
         {
             calloutStyle.Enabled = !calloutStyle.Enabled;
             e.MapInfo?.Layer?.DataHasChanged(); // To trigger a refresh of graphics.
@@ -63,7 +64,7 @@ public class SingleCalloutSample : ISample
         var path = "Mapsui.Samples.Common.GeoData.Json.congo.json";
         var assembly = typeof(PointsSample).GetTypeInfo().Assembly;
         using var stream = assembly.GetManifestResourceStream(path);
-        var cities = DeserializeFromStream<City>(stream!);
+        var cities = DeserializeFromStream(stream!);
 
         return cities.Select(c =>
         {
@@ -92,7 +93,7 @@ public class SingleCalloutSample : ISample
         };
     }
 
-    private class City
+    internal class City
     {
         public string? Country { get; set; }
         public string? Name { get; set; }
@@ -100,11 +101,13 @@ public class SingleCalloutSample : ISample
         public double Lng { get; set; }
     }
 
-    public static IEnumerable<T> DeserializeFromStream<T>(Stream stream)
+    private static List<City> DeserializeFromStream(Stream stream)
     {
-        var serializer = new JsonSerializer();
-        using var streamReader = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(streamReader);
-        return serializer.Deserialize<List<T>>(jsonTextReader) ?? new List<T>();
+        return JsonSerializer.Deserialize(stream, SingleCalloutContext.Default.ListCity) ?? [];
     }
+}
+
+[JsonSerializable(typeof(List<SingleCalloutSample.City>))]
+internal partial class SingleCalloutContext : JsonSerializerContext
+{
 }

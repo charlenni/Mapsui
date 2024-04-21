@@ -1,6 +1,5 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Layers;
-using Mapsui.Rendering.Skia.Cache;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Rendering.Skia.SkiaStyles;
 using Mapsui.Styles;
@@ -12,7 +11,7 @@ namespace Mapsui.Rendering.Skia;
 
 public class CalloutStyleRenderer : ISkiaStyleRenderer
 {
-    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, Styles.IStyle style, IRenderCache renderCache, long iteration)
+    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, Styles.IStyle style, IRenderService renderService, long iteration)
     {
         if (!style.Enabled)
             return false;
@@ -39,7 +38,7 @@ public class CalloutStyleRenderer : ISkiaStyleRenderer
                 UpdateContent(calloutStyle);
             }
 
-            RenderCallout(calloutStyle, renderCache.SymbolCache);
+            RenderCallout(calloutStyle, renderService.SymbolCache);
         }
 
         // Now we have the complete callout rendered, so we could draw it
@@ -417,16 +416,5 @@ public class CalloutStyleRenderer : ISkiaStyleRenderer
         path.LineTo(start);
         path.LineTo(center);
         path.LineTo(end);
-    }
-
-    /// <summary>
-    /// Convert Mapsui color to Skia color
-    /// </summary>
-    /// <param name="color">Color in Mapsui format</param>
-    /// <returns>Color in Skia format</returns>
-    public static SKColor ToSkia(Color? color)
-    {
-        if (color == null) return new SKColor(128, 128, 128, 0);
-        return new SKColor((byte)color.R, (byte)color.G, (byte)color.B, (byte)color.A);
     }
 }

@@ -12,8 +12,9 @@ public partial class MainPage : ContentPage
 {
     static MainPage()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
+        Mapsui.Samples.Maui.MapView.Samples.Register();
     }
 
     readonly IEnumerable<ISampleBase> allSamples;
@@ -57,7 +58,7 @@ public partial class MainPage : ContentPage
 
         clicker = null;
         if (sample is IMapViewSample formsSample)
-            clicker = formsSample.OnClick;
+            clicker = formsSample.OnTap;
 
         if (sample != null)
             (Application.Current?.MainPage as NavigationPage)?.PushAsync(new MapPage(sample, clicker));

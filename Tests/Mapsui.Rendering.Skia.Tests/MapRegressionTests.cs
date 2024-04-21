@@ -15,10 +15,12 @@ using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
 using Mapsui.Samples.Common.Maps.Animations;
 using Mapsui.Samples.Common.Maps.DataFormats;
+using Mapsui.Samples.Common.Maps.Special;
+using Mapsui.Samples.Common.Maps.Widgets;
 using Mapsui.Samples.Common.PersistentCaches;
-using Mapsui.Samples.CustomWidget;
 using Mapsui.Tiling;
 using Mapsui.UI;
+using Mapsui.Widgets.InfoWidgets;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -29,8 +31,8 @@ public class MapRegressionTests
 {
     static MapRegressionTests()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
     }
 
     private static ISampleBase[]? _excludedSamples;
@@ -51,6 +53,7 @@ public class MapRegressionTests
         WmsProvider.DefaultCache ??= File.ReadFromCacheFolder("WmsSample");
         WFSProvider.DefaultCache ??= File.ReadFromCacheFolder("WfsSample");
         ArcGISImageServiceSample.DefaultCache ??= File.ReadFromCacheFolder("ArcGisImageServiceSample");
+        ArcGISDynamicServiceSample.DefaultCache ??= File.ReadFromCacheFolder("ArcGisImageServiceSample");
     }
 
     public static object[] RegressionSamples => _regressionSamples ??=
@@ -59,7 +62,7 @@ public class MapRegressionTests
             .All(e => e.GetType() != f.GetType())).OrderBy(f => f.GetType().FullName),
     ];
 
-    public static object[] ExcludedSamples => _excludedSamples ??= [new AnimatedPointsSample()];
+    public static object[] ExcludedSamples => _excludedSamples ??= [new AnimatedPointsSample(), new MutatingTriangleSample(), new ArcGISDynamicServiceSample()];
 
     [Test]
     [Retry(5)]
@@ -70,6 +73,9 @@ public class MapRegressionTests
         try
         {
             Logger.LogDelegate = ConsoleLog;
+            // At the moment of writing this comment we do not have logging in the map. To compare
+            // images we disable it for now. Perhaps we want logging to be part of the test image in some cases.
+            LoggingWidget.ShowLoggingInMap = ShowLoggingInMap.Never;
             ConsoleLog(LogLevel.Debug, $"Start MapRegressionTest {sample.GetType().Name}", null);
             await TestSampleAsync(sample, true).ConfigureAwait(false);
         }
@@ -127,7 +133,7 @@ public class MapRegressionTests
                     }
                     else
                     {
-                        ClassicAssert.IsTrue(MapRendererTests.CompareBitmaps(originalStream, bitmap, 1, 0.99));
+                        ClassicAssert.IsTrue(MapRendererTests.CompareBitmaps(originalStream, bitmap, 1, 0.995));
                     }
                 }
                 else
@@ -197,15 +203,6 @@ public class MapRegressionTests
         await mapControl.WaitForLoadingAsync();
         var fetchInfo = new FetchInfo(mapControl.Map.Navigator.Viewport.ToSection(), mapControl.Map.CRS);
         mapControl.Map.RefreshData(fetchInfo);
-
-        // TODO: MapView should be available for all Targets
-        ////if (sample is IFormsSample formsSample)
-        ////{
-        ////    var mReadOnlyPoint = mapControl.Viewport.Center;
-        ////    var position = new Position(mReadOnlyPoint.X, mReadOnlyPoint.Y);
-        ////    var eventArgs = new MapClickedEventArgs(position, 1);
-        ////    formsSample.OnClick(mapControl, eventArgs);
-        ////}
 
         return mapControl;
     }

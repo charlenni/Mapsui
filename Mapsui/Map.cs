@@ -38,7 +38,7 @@ public class Map : INotifyPropertyChanged, IDisposable
     {
         BackColor = Color.White;
         Layers = [];
-        CheckForLoggingWidget();
+        Widgets.Add(CreateLoggingWidget());
         Navigator.RefreshDataRequest += Navigator_RefreshDataRequest;
         Navigator.ViewportChanged += Navigator_ViewportChanged;
     }
@@ -244,10 +244,10 @@ public class Map : INotifyPropertyChanged, IDisposable
 
     private void LayersCollectionChanged(object sender, LayerCollectionChangedEventArgs args)
     {
-        foreach (var layer in args.RemovedLayers ?? Enumerable.Empty<ILayer>())
+        foreach (var layer in args.RemovedLayers ?? [])
             LayerRemoved(layer);
 
-        foreach (var layer in args.AddedLayers ?? Enumerable.Empty<ILayer>())
+        foreach (var layer in args.AddedLayers ?? [])
             LayerAdded(layer);
 
         LayersChanged();
@@ -279,7 +279,7 @@ public class Map : INotifyPropertyChanged, IDisposable
     private static MMinMax? GetMinMaxResolution(IEnumerable<double>? resolutions)
     {
         if (resolutions == null || !resolutions.Any()) return null;
-        resolutions = resolutions.OrderByDescending(r => r).ToList();
+        resolutions = [.. resolutions.OrderByDescending(r => r)];
         var mostZoomedOut = resolutions.First();
         var mostZoomedIn = resolutions.Last() * 0.5; // Divide by two to allow one extra level to zoom-in
         return new MMinMax(mostZoomedOut, mostZoomedIn);
@@ -316,7 +316,7 @@ public class Map : INotifyPropertyChanged, IDisposable
             }
         }
 
-        return items.Select(i => i.Value).OrderByDescending(i => i).ToList();
+        return [.. items.Select(i => i.Value).OrderByDescending(i => i)];
     }
 
     private void LayerPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -354,23 +354,25 @@ public class Map : INotifyPropertyChanged, IDisposable
     /// This method is to invoke the Info event from the Map. This method is called
     /// by the MapControl/MapView and should usually not be called from user code.
     /// </summary>
-    public void OnInfo(MapInfoEventArgs? mapInfoEventArgs)
+    public void OnMapInfo(MapInfoEventArgs e)
     {
-        if (mapInfoEventArgs == null) return;
-
-        Info?.Invoke(this, mapInfoEventArgs);
+        Info?.Invoke(this, e);
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
-        foreach (var layer in Layers)
-        {
-            // remove Event so that no memory leaks occur
-            LayerRemoved(layer);
-        }
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        // clear the layers
-        Layers.Clear();
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            foreach (var layer in Layers)
+                LayerRemoved(layer); // Remove Event so that no memory leaks occur
+            Layers.Clear();
+        }
     }
 
     public bool UpdateAnimations()
@@ -386,31 +388,13 @@ public class Map : INotifyPropertyChanged, IDisposable
         return areAnimationsRunning;
     }
 
-    /// <summary>
-    /// Check, if a debugger is attached and, if yes, add a default LoggingWidget
-    /// </summary>
-    /// <param name="map">Map, to which LoggingWidget should add</param>
-    private void CheckForLoggingWidget()
+    private static LoggingWidget CreateLoggingWidget() => new()
     {
-        // If in debug mode ...
-        if (System.Diagnostics.Debugger.IsAttached)
-        {
-            // Is there already a LoggingWidget ...
-            if (Widgets.Where(w => w.GetType() == typeof(LoggingWidget)).Count() > 0)
-                // ... then return;
-                return;
-
-            var loggingWidget = new LoggingWidget()
-            {
-                Margin = new MRect(10),
-                VerticalAlignment = VerticalAlignment.Stretch,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                BackColor = Color.Transparent,
-                Opacity = 0.0f,
-                LogLevelFilter = LogLevel.Trace,
-            };
-
-            Widgets.Add(loggingWidget);
-        }
-    }
+        Margin = new MRect(10),
+        VerticalAlignment = VerticalAlignment.Stretch,
+        HorizontalAlignment = HorizontalAlignment.Stretch,
+        BackColor = Color.Transparent,
+        Opacity = 0.0f,
+        LogLevelFilter = LogLevel.Trace,
+    };
 }

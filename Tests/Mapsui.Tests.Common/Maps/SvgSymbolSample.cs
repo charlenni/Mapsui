@@ -1,8 +1,6 @@
 ﻿using Mapsui.Layers;
-using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
-using Mapsui.UI;
 using Mapsui.Utilities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,7 +28,7 @@ public class SvgSymbolSample : ISample
 
         var map = new Map
         {
-            BackColor = Color.FromString("WhiteSmoke"),
+            BackColor = Color.WhiteSmoke,
         };
 
         map.Navigator.ZoomToBox(layer.Extent!.Grow(layer.Extent.Width * 2));

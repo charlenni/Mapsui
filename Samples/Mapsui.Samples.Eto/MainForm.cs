@@ -1,27 +1,22 @@
-using Mapsui.Samples.Common.Extensions;
-
 #pragma warning disable IDISP001 // Dispose created
 
-namespace Mapsui.Samples.Eto;
-
-using System;
-using System.Text;
-using System.Linq;
-using Mapsui.UI.Eto;
-using Mapsui.Logging;
+using Eto.Drawing;
+using Eto.Forms;
 using Mapsui.Extensions;
 using Mapsui.Samples.Common;
+using Mapsui.Samples.Common.Extensions;
+using Mapsui.UI.Eto;
+using System;
+using System.Linq;
 
-using global::Eto.Forms;
-using global::Eto.Drawing;
-using Mapsui;
+namespace Mapsui.Samples.Eto;
 
 public class MainForm : Form
 {
     static MainForm()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
     }
 
     DropDown CategoryComboBox = new() { Width = 200 };
@@ -40,8 +35,6 @@ public class MainForm : Form
         Title = $"Mapsui SampleApp - {eto_platform} - {os_platform}";
 
         MapControl.Map.Navigator.RotationLock = false;
-        MapControl.UnSnapRotationDegrees = 30;
-        MapControl.ReSnapRotationDegrees = 5;
         RotationSlider.ValueChanged += RotationSliderChanged;
 
         MapControl.ZoomButton = MouseButtons.Alternate;
@@ -90,8 +83,8 @@ public class MainForm : Form
     }
     private void FillComboBoxWithCategories()
     {
-        // todo: find proper way to load assembly
-        Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
 
         var categories = AllSamples.GetSamples().Select(s => s.Category).Distinct().OrderBy(c => c);
         foreach (var category in categories)

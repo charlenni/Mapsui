@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -76,13 +75,13 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
         set
         {
             _url = value;
-            if (!string.IsNullOrEmpty(value) && value[value.Length - 1].Equals('/'))
+            if (!string.IsNullOrEmpty(value) && value[^1].Equals('/'))
                 _url = value.Remove(value.Length - 1);
         }
     }
 
     /// <summary>
-    /// Timeout of webrequest in milliseconds. Default is 10 seconds
+    /// Timeout of web request in milliseconds. Default is 10 seconds
     /// </summary>
     public int TimeOut
     {
@@ -98,25 +97,35 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
 
     public async Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
-        //If there are no layers (probably not initialised) return nothing
+        //If there are no layers (probably not initialized) return nothing
         if (ArcGisDynamicCapabilities.layers == null)
-            return Enumerable.Empty<IFeature>();
+            return [];
 
         var (success, raster) = await TryGetMapAsync(fetchInfo.Section);
         if (success)
         {
-            return new IFeature[] { new RasterFeature(raster) };
+            return [new RasterFeature(raster)];
         }
-        return Enumerable.Empty<IFeature>();
+        return [];
     }
 
     public MRect? GetExtent()
     {
         if (ArcGisDynamicCapabilities.initialExtent == null)
             return null;
+        if (CRS is null)
+            return null;
+        var extent = ArcGisDynamicCapabilities.initialExtent.ToMRect();
+        if (extent is null)
+            return null;
 
-        return ArcGisDynamicCapabilities.initialExtent.ToMRect();
+        ProjectionDefaults.Projection.Project(GetFromCRS(ArcGisDynamicCapabilities.spatialReference), CRS, extent);
+
+        return extent;
     }
+
+    private static string GetFromCRS(SpatialReference? spatialReference) =>
+        spatialReference is not null ? $"EPSG:{spatialReference.wkid}" : "EPSG:4326";
 
     private void CapabilitiesHelperCapabilitiesFailed(object? sender, EventArgs e)
     {
@@ -125,11 +134,8 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
 
     private void CapabilitiesHelperCapabilitiesReceived(object? sender, EventArgs e)
     {
-        var capabilities = sender as ArcGISDynamicCapabilities;
-        if (capabilities == null)
-            return;
-
-        ArcGisDynamicCapabilities = capabilities;
+        if (sender is ArcGISDynamicCapabilities capabilities)
+            ArcGisDynamicCapabilities = capabilities;
     }
 
     /// <summary>
@@ -158,18 +164,8 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
             if (bytes == null)
             {
                 var handler = new HttpClientHandler();
-                try
-                {
-                    // Blazor does not support this,
-                    handler.Credentials = Credentials ?? CredentialCache.DefaultCredentials;
-                }
-                catch (PlatformNotSupportedException e)
-                {
-                    Logger.Log(LogLevel.Error, e.Message, e);
-                };
-
+                handler.SetCredentials(Credentials ?? CredentialCache.DefaultCredentials);
                 using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(_timeOut) };
-
                 using var response = await client.GetAsync(uri).ConfigureAwait(false);
                 using var readAsStreamAsync = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                 bytes = BruTile.Utilities.ReadFully(readAsStreamAsync);
@@ -192,7 +188,7 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
     }
 
     /// <summary>
-    /// Gets the URL for a map export request base on current settings, the image size and boundingbox
+    /// Gets the URL for a map export request base on current settings, the image size and boundingBox
     /// </summary>
     /// <param name="box">Area the request should cover</param>
     /// <param name="width"> </param>
@@ -227,7 +223,7 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
                     continue;
 
                 if (oneAdded)
-                    strReq.Append(",");
+                    strReq.Append(',');
 
                 strReq.AppendFormat("{0}", t.id);
                 oneAdded = true;
@@ -245,7 +241,7 @@ public class ArcGISDynamicProvider : IProvider, IProjectingProvider
         if (crs == null)
             throw new Exception("crs type not supported");
 
-        if (crs.StartsWith(CrsHelper.EsriStringPrefix)) return "{\"wkt\":\"" + crs.Substring(CrsHelper.EsriStringPrefix.Length).Replace("\"", "\\\"") + "\"}";
+        if (crs.StartsWith(CrsHelper.EsriStringPrefix)) return "{\"wkt\":\"" + crs[CrsHelper.EsriStringPrefix.Length..].Replace("\"", "\\\"") + "\"}";
         if (crs.StartsWith(CrsHelper.EpsgPrefix)) return CrsHelper.ToEpsgCode(crs).ToString();
         throw new Exception("crs type not supported");
     }

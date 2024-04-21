@@ -10,6 +10,8 @@ using Mapsui.Utilities;
 using Animation = Mapsui.Animations.Animation;
 using Mapsui.UI.Maui;
 
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+
 namespace Mapsui.UI.Objects;
 
 /// <summary>
@@ -21,7 +23,7 @@ namespace Mapsui.UI.Objects;
 /// </remarks>
 public class MyLocationLayer : BaseLayer
 {
-    private readonly MapView _mapView;
+    private MapView _mapView;
     private readonly GeometryFeature _feature;
     private SymbolStyle _locStyle;  // style for the location indicator
     private SymbolStyle _dirStyle;  // style for the view-direction indicator
@@ -110,6 +112,12 @@ public class MyLocationLayer : BaseLayer
         }
     }
 
+    /// <summary> Sets Map View </summary>
+    internal MapView MapView
+    {
+        set => _mapView = value ?? throw new NullReferenceException();
+    }
+
     /// <summary>
     /// This event is triggered whenever the MyLocation symbol or label is clicked.
     /// </summary>
@@ -130,10 +138,17 @@ public class MyLocationLayer : BaseLayer
     /// Initializes a new instance of the <see cref="T:Mapsui.UI.Objects.MyLocationLayer"/> class.
     /// </summary>
     /// <param name="view">MapView, to which this layer belongs</param>
-    public MyLocationLayer(MapView view)
+    public MyLocationLayer(MapView view) : this()
     {
         _mapView = view ?? throw new ArgumentNullException("MapView shouldn't be null");
+    }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:Mapsui.UI.Objects.MyLocationLayer"/> class.
+    /// </summary>
+    internal MyLocationLayer()
+    {
+        _mapView = default!; // will be set in constructor with MapView
         Enabled = false;
         IsMapInfoLayer = true;
 
@@ -212,6 +227,7 @@ public class MyLocationLayer : BaseLayer
     /// Updates my location
     /// </summary>
     /// <param name="newLocation">New location</param>
+    /// <param name="animated">true if there is an animation from the old to the new location.</param>
     public void UpdateMyLocation(Position newLocation, bool animated = false)
     {
         if (!MyLocation.Equals(newLocation))
@@ -311,6 +327,7 @@ public class MyLocationLayer : BaseLayer
     /// </summary>
     /// <param name="newDirection">New direction</param>
     /// <param name="newViewportRotation">New viewport rotation</param>
+    /// <param name="animated">true if animated</param>
     public void UpdateMyDirection(double newDirection, double newViewportRotation, bool animated = false)
     {
         var newRotation = (int)(newDirection - newViewportRotation);

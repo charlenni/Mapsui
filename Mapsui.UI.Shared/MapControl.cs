@@ -1,23 +1,22 @@
+#pragma warning disable IDE0005 // Disable unused usings. All the #ifs make this hard. Perhaps simplify that first.
+#pragma warning disable IDE0055 // Disable fix formatting but this should not be hard to fix
 using Mapsui.Extensions;
 using Mapsui.Fetcher;
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Rendering;
 using Mapsui.Rendering.Skia;
-using Mapsui.Styles;
 using Mapsui.Utilities;
 using Mapsui.Widgets;
-using Mapsui.Widgets.ButtonWidgets;
-using Mapsui.Widgets.InfoWidgets;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using Mapsui.Disposing;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
-
+using Mapsui.Manipulations;
 #if __MAUI__
 using Microsoft.Maui.Controls;
 namespace Mapsui.UI.Maui;
@@ -25,7 +24,7 @@ namespace Mapsui.UI.Maui;
 namespace Mapsui.UI.Uwp;
 #elif __ANDROID__ && !HAS_UNO_WINUI
 namespace Mapsui.UI.Android;
-#elif __IOS__ && !HAS_UNO_WINUI
+#elif __MAPSUI_IOS__
 namespace Mapsui.UI.iOS;
 #elif __WINUI__
 namespace Mapsui.UI.WinUI;
@@ -35,6 +34,7 @@ namespace Mapsui.UI.Avalonia;
 #elif __ETO_FORMS__
 namespace Mapsui.UI.Eto;
 #elif __BLAZOR__
+using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Mapsui.UI.Blazor;
@@ -42,9 +42,10 @@ namespace Mapsui.UI.Blazor;
 namespace Mapsui.UI.Wpf;
 #endif
 
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+
 public partial class MapControl : INotifyPropertyChanged, IDisposable
 {
-    private double _unSnapRotationDegrees;
     // Flag indicating if a drawing process is running
     private bool _drawing;
     // Flag indicating if the control has to be redrawn
@@ -59,24 +60,31 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
     private int _updateInterval = 16;
     // Stopwatch for measuring drawing times
     private readonly System.Diagnostics.Stopwatch _stopwatch = new();
-    // old widget Collection to compare if widget Collection was changed.
-    private ConcurrentQueue<IWidget>? _widgetCollection;
-    // saving list of touchable Widgets
-    private List<ITouchableWidget>? _touchableWidgets;
-    // keeps track of the widgets count to see if i need to recalculate the extended widgets.
-    private int _updateWidget = 0;
-    // keeps track of the widgets count to see if i need to recalculate the touchable widgets.
-    private int _updateTouchableWidget;
+    private readonly IRenderer _renderer = new MapRenderer();
+    private readonly TapGestureTracker _tapGestureTracker = new();
+    private readonly FlingTracker _flingTracker = new();
 
-    private void CommonInitialize()
+    /// <summary>
+    /// The movement allowed between a touch down and touch up in a touch gestures in device independent pixels.
+    /// </summary>
+    public int MaxTapGestureMovement { get; set; } = 8;
+
+    /// <summary>
+    /// Use fling gesture to move the map. Default is true. Fling means that the map will continue to move for a 
+    /// short time after the user has lifted the finger.
+    /// </summary>
+    public bool UseFling { get; set; } = true;
+
+    private void SharedConstructor()
     {
-        // Create map
-        Map = new Map();
+        PlatformUtilities.SetOpenInBrowserFunc(OpenInBrowser);
         // Create timer for invalidating the control
         _invalidateTimer?.Dispose();
         _invalidateTimer = new Timer(InvalidateTimerCallback, null, Timeout.Infinite, 16);
         // Start the invalidation timer
         StartUpdates(false);
+        // Mapsui.Rendering.Skia use Mapsui.Nts where GetDbaseLanguageDriver need encoding providers
+        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
     }
 
     private protected void CommonDrawControl(object canvas)
@@ -230,43 +238,7 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
         }
     }
 
-    /// <summary>
-    /// After how many degrees start rotation to take place
-    /// </summary>
-    public double UnSnapRotationDegrees
-    {
-        get => _unSnapRotationDegrees;
-        set
-        {
-            if (_unSnapRotationDegrees != value)
-            {
-                _unSnapRotationDegrees = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private double _reSnapRotationDegrees;
-
-    /// <summary>
-    /// With how many degrees from 0 should map snap to 0 degrees
-    /// </summary>
-    public double ReSnapRotationDegrees
-    {
-        get => _reSnapRotationDegrees;
-        set
-        {
-            if (_reSnapRotationDegrees != value)
-            {
-                _reSnapRotationDegrees = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
     public float PixelDensity => (float)GetPixelDensity();
-
-    private readonly IRenderer _renderer = new MapRenderer();
 
     /// <summary>
     /// Renderer that is used from this MapControl
@@ -407,7 +379,9 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
             Refresh();
         }
     }
+
     // ReSharper restore RedundantNameQualifier
+    private DisposableWrapper<Map>? _map;
 
 #if __MAUI__
 
@@ -432,14 +406,21 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
 
     public Map Map
     {
-        get => (Map)GetValue(MapProperty);
+        get
+        {
+            if (GetValue(MapProperty) is not Map map)
+            {
+                _map ??= new DisposableWrapper<Map>(new Map(), true);
+                map = _map.WrappedObject;
+                SetValue(MapProperty, map);
+            }
+
+            return map;
+        }
         set => SetValue(MapProperty, value);
     }
 
 #else
-
-    private Map _map = new();
-
     /// <summary>
     /// Map holding data for which is shown in this MapControl
     /// </summary>
@@ -449,14 +430,19 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
 #endif
     public Map Map
     {
-        get => _map;
+        get
+        {
+            _map ??= new DisposableWrapper<Map>(new Map(), true);
+            return _map.WrappedObject;
+        }
         set
         {
             if (value is null) throw new ArgumentNullException(nameof(value));
 
             BeforeSetMap();
-            _map = value;
-            AfterSetMap(_map);
+            _map?.Dispose();
+            _map = new DisposableWrapper<Map>(value, false);
+            AfterSetMap(value);
             OnPropertyChanged();
         }
     }
@@ -500,21 +486,16 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
         Map.RefreshData(changeType);
     }
 
-    private void OnInfo(MapInfoEventArgs? mapInfoEventArgs)
+    protected void OnMapInfo(MapInfoEventArgs mapInfoEventArgs)
     {
-        if (mapInfoEventArgs == null) return;
-
-        Map?.OnInfo(mapInfoEventArgs); // Also propagate to Map
+        Map?.OnMapInfo(mapInfoEventArgs); // Also propagate to Map
         Info?.Invoke(this, mapInfoEventArgs);
     }
 
     /// <inheritdoc />
-    public MapInfo? GetMapInfo(MPoint? screenPosition, int margin = 0)
+    public MapInfo GetMapInfo(ScreenPosition screenPosition, int margin = 0)
     {
-        if (screenPosition == null)
-            return null;
-
-        return Renderer?.GetMapInfo(screenPosition.X, screenPosition.Y, Map.Navigator.Viewport, Map?.Layers ?? [], margin);
+        return Renderer.GetMapInfo(screenPosition.X, screenPosition.Y, Map.Navigator.Viewport, Map?.Layers ?? [], margin);
     }
 
     /// <inheritdoc />
@@ -528,31 +509,13 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
     /// Check if a widget or feature at a given screen position is clicked/tapped
     /// </summary>
     /// <param name="screenPosition">Screen position to check for widgets and features</param>
-    /// <param name="startScreenPosition">Screen position of Viewport/MapControl</param>
-    /// <param name="numTaps">Number of clicks/taps</param>
+    /// <param name="tapType">single or double tap</param>
     /// <returns>True, if something done </returns>
-    private MapInfoEventArgs? CreateMapInfoEventArgs(
-        MPoint? screenPosition,
-        MPoint? startScreenPosition,
-        int numTaps)
+    private MapInfoEventArgs CreateMapInfoEventArgs(ScreenPosition screenPosition, TapType tapType)
     {
-        if (screenPosition == null || startScreenPosition == null)
-            return null;
+        var mapInfo = Renderer.GetMapInfo(screenPosition.X, screenPosition.Y, Map.Navigator.Viewport, Map?.Layers ?? []);
 
-        // Check which features in the map were tapped.
-        var mapInfo = Renderer?.GetMapInfo(screenPosition.X, screenPosition.Y, Map.Navigator.Viewport, Map?.Layers ?? []);
-
-        if (mapInfo != null)
-        {
-            return new MapInfoEventArgs
-            {
-                MapInfo = mapInfo,
-                NumTaps = numTaps,
-                Handled = false
-            };
-        }
-
-        return null;
+        return new MapInfoEventArgs(mapInfo, tapType, false);
     }
 
     private void SetViewportSize()
@@ -570,121 +533,102 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
             Unsubscribe();
             StopUpdates();
             _invalidateTimer?.Dispose();
+            _invalidateTimer = null;
             _renderer.Dispose();
+            _map?.Dispose();
+            _map = null;
         }
         _invalidateTimer = null;
     }
 
-    private bool HandleWidgetPointerMove(MPoint position, bool leftButton, int clickCount, bool shift)
+
+    private bool OnWidgetPointerPressed(ScreenPosition position, bool shiftPressed)
     {
-        var touchableWidgets = GetTouchableWidgets();
-
-        if (touchableWidgets.Count == 0)
-            return false;
-
-        var widgetArgs = new WidgetTouchedEventArgs(position, clickCount, leftButton, shift);
-
-        foreach (var widget in touchableWidgets)
+        foreach (var widget in WidgetInput.GetWidgetsAtPosition(position, Map))
         {
-            if (widget.HandleWidgetMoving(Map.Navigator, position, widgetArgs))
+            Logger.Log(LogLevel.Information, $"Widget.PointerPressed: {widget.GetType().Name}");
+            if (widget.OnPointerPressed(Map.Navigator, new WidgetEventArgs(position, 0, true, shiftPressed, () => GetMapInfo(position))))
                 return true;
         }
-
         return false;
     }
 
-    private bool HandleTouchingTouched(MPoint position, MPoint? startPosition, bool leftButton, int clickCount, bool shift)
+    private bool OnWidgetPointerMoved(ScreenPosition position, bool leftButton, bool shiftPressed)
     {
-        bool result = HandleWidgetPointerDown(position, leftButton, clickCount, shift);
-
-        if (HandleWidgetPointerUp(position, startPosition, leftButton, clickCount, shift))
-        {
-            result = true;
-        }
-
-        return result;
+        foreach (var widget in WidgetInput.GetWidgetsAtPosition(position, Map))
+            if (widget.OnPointerMoved(Map.Navigator, new WidgetEventArgs(position, 0, leftButton, shiftPressed, () => GetMapInfo(position))))
+                return true;
+        return false;
     }
 
-
-    private bool HandleWidgetPointerDown(MPoint position, bool leftButton, int clickCount, bool shift)
+    private bool OnWidgetPointerReleased(ScreenPosition position, bool shiftPressed)
     {
-        var touchableWidgets = GetTouchableWidgets();
+        foreach (var widget in WidgetInput.GetWidgetsAtPosition(position, Map))
+        {
+            Logger.Log(LogLevel.Information, $"Widget.Released: {widget.GetType().Name}");
+            if (widget.OnPointerReleased(Map.Navigator, new WidgetEventArgs(position, 0, true, shiftPressed, () => GetMapInfo(position))))
+                return true;
+        }
+        return false;
+    }
 
-        if (touchableWidgets.Count == 0)
-            return false;
-
-        var touchedWidgets = WidgetTouch.GetTouchedWidgets(position, position, touchableWidgets);
-
+    private bool OnWidgetTapped(ScreenPosition position, TapType tapType, bool shiftPressed)
+    {
+        var touchedWidgets = WidgetInput.GetWidgetsAtPosition(position, Map);
         foreach (var widget in touchedWidgets)
         {
-            var widgetArgs = new WidgetTouchedEventArgs(position, clickCount, leftButton, shift);
-            if (widget.HandleWidgetTouching(Map.Navigator, position, widgetArgs))
+            Logger.Log(LogLevel.Information, $"Widget.Tapped: {widget.GetType().Name} TapType: {tapType} KeyState: {shiftPressed}");
+            var e = new WidgetEventArgs(position, tapType, true, shiftPressed, () => GetMapInfo(position));
+            if (widget.OnTapped(Map.Navigator, e))
                 return true;
         }
 
         return false;
     }
 
-    private bool HandleWidgetPointerUp(MPoint position, MPoint? startPosition, bool leftButton, int clickCount, bool shift)
+    private bool OnMapPointerPressed(ReadOnlySpan<ScreenPosition> positions)
     {
-        if (startPosition is null)
-        {
-            Logger.Log(LogLevel.Error, $"The '{nameof(startPosition)}' is null on release. This is not expected");
-            return false;
-        }
-        var touchableWidgets = GetTouchableWidgets();
-
-        if (touchableWidgets.Count == 0)
+        if (positions.Length != 1)
             return false;
 
-        var touchedWidgets = WidgetTouch.GetTouchedWidgets(position, position, touchableWidgets);
+        _flingTracker.Restart();
+        _tapGestureTracker.Restart(positions[0]);
+        return OnWidgetPointerPressed(positions[0], GetShiftPressed());
+    }
 
-        foreach (var widget in touchedWidgets)
-        {
-            if (widget is HyperlinkWidget hyperlink && !string.IsNullOrWhiteSpace(hyperlink.Url))
-            {
-                // The HyperLink is a special case because we need platform specific code to open the
-                // link in a browswer. If the link is not handled within the widget we handle it
-                // here and return true to indicate this is handled.
-                OpenBrowser(hyperlink.Url!);
-                return true;
-            }
+    private bool OnMapPointerMoved(ReadOnlySpan<ScreenPosition> positions, bool isHovering = false)
+    {
+        if (positions.Length != 1)
+            return false;
 
-            var args = new WidgetTouchedEventArgs(position, clickCount, leftButton, shift);
-
-            if (widget.HandleWidgetTouched(Map.Navigator, position, args))
-                return true;
-        }
-
+        if (OnWidgetPointerMoved(positions[0], !isHovering, GetShiftPressed()))
+            return true;
+        if (!isHovering)
+            _flingTracker.AddEvent(positions[0], DateTime.Now.Ticks);
         return false;
     }
 
-    private void AssureWidgets()
+    private bool OnMapPointerReleased(ReadOnlySpan<ScreenPosition> positions)
     {
-        if (_widgetCollection != Map.Widgets)
-        {
-            // reset widgets
-            _touchableWidgets = null;
-            _widgetCollection = Map.Widgets;
-        }
+        if (positions.Length != 1)
+            return false;    
+
+        var handled = false;
+        if (OnWidgetPointerReleased(positions[0], GetShiftPressed()))
+            handled = true; // Set to handled but still handle tap in the next line
+        if (_tapGestureTracker.TapIfNeeded(positions[0], MaxTapGestureMovement * PixelDensity, OnMapTapped))
+            handled = true;
+        if (UseFling)
+            _flingTracker.FlingIfNeeded((vX, vY) => Map.Navigator.Fling(vX, vY, 1000));
+        Refresh();
+        return handled;
     }
 
-    private List<ITouchableWidget> GetTouchableWidgets()
+    private bool OnMapTapped(ScreenPosition position, TapType tapType)
     {
-        AssureWidgets();
-        if (_updateTouchableWidget != Map.Widgets.Count || _touchableWidgets == null)
-        {
-            _updateTouchableWidget = Map.Widgets.Count;
-            _touchableWidgets = [];
-            var touchableWidgets = Map.GetWidgetsOfMapAndLayers().ToList();
-            foreach (var widget in touchableWidgets)
-            {
-                if (widget is not ITouchableWidget) continue;
-
-                _touchableWidgets.Add((ITouchableWidget)widget);
-            }
-        }
-
-        return _touchableWidgets;
+        if (OnWidgetTapped(position, tapType, GetShiftPressed()))
+            return true;
+        OnMapInfo(CreateMapInfoEventArgs(position, TapType.Single));
+        return false;
     }
 }

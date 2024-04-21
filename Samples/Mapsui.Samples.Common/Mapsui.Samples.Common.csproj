@@ -4,6 +4,9 @@
     <TargetFrameworks>net8.0</TargetFrameworks>
     <Authors>Mapsui Contributers</Authors>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!--For Debugging Source Generated Files uncomment the line below-->
+    <!--<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -145,16 +148,21 @@
 
   <ItemGroup>
     <PackageReference Include="BruTile" />
-    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="BruTile.MbTiles" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Mapsui.ArcGIS\Mapsui.ArcGIS.csproj" />
     <ProjectReference Include="..\..\Mapsui.Extensions\Mapsui.Extensions.csproj" />
+    <ProjectReference Include="..\..\Mapsui.Rendering.Skia\Mapsui.Rendering.Skia.csproj" />
     <ProjectReference Include="..\..\Mapsui.Tiling\Mapsui.Tiling.csproj" />
     <ProjectReference Include="..\..\Mapsui\Mapsui.csproj" />
-    <ProjectReference Include="..\Mapsui.Samples.CustomWidget\Mapsui.Samples.CustomWidget.csproj" />
+  </ItemGroup>
+
+  <!--Source Code Generators-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\SourceGenerators\Mapsui.Sample.SourceGenerator\Mapsui.Sample.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

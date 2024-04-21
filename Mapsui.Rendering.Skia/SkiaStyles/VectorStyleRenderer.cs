@@ -1,7 +1,6 @@
 using Mapsui.Layers;
 using Mapsui.Logging;
 using Mapsui.Nts;
-using Mapsui.Nts.Extensions;
 using Mapsui.Rendering.Skia.SkiaStyles;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;
@@ -12,33 +11,32 @@ namespace Mapsui.Rendering.Skia;
 
 public class VectorStyleRenderer : ISkiaStyleRenderer, IFeatureSize
 {
-    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, IStyle style, IRenderCache renderCache, long iteration)
+    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, IStyle style, IRenderService renderService, long iteration)
     {
         try
         {
-            var cache = (IRenderCache<SKPath, SKPaint>)renderCache;
             var vectorStyle = (VectorStyle)style;
             var opacity = (float)(layer.Opacity * style.Opacity);
 
             switch (feature)
             {
                 case PointFeature pointFeature:
-                    SymbolStyleRenderer.DrawXY(canvas, viewport, layer, pointFeature.Point.X, pointFeature.Point.Y, CreateSymbolStyle(vectorStyle), cache);
+                    SymbolStyleRenderer.DrawXY(canvas, viewport, layer, pointFeature.Point.X, pointFeature.Point.Y, CreateSymbolStyle(vectorStyle), renderService);
                     break;
                 case GeometryFeature geometryFeature:
                     switch (geometryFeature.Geometry)
                     {
                         case GeometryCollection collection:
-                            GeometryCollectionRenderer.Draw(canvas, viewport, vectorStyle, feature, collection, opacity, cache);
+                            GeometryCollectionRenderer.Draw(canvas, viewport, vectorStyle, feature, collection, opacity, renderService.VectorCache);
                             break;
                         case Point point:
-                            SymbolStyleRenderer.DrawXY(canvas, viewport, layer, point.X, point.Y, CreateSymbolStyle(vectorStyle), cache);
+                            SymbolStyleRenderer.DrawXY(canvas, viewport, layer, point.X, point.Y, CreateSymbolStyle(vectorStyle), renderService);
                             break;
                         case Polygon polygon:
-                            PolygonRenderer.Draw(canvas, viewport, vectorStyle, feature, polygon, opacity, cache);
+                            PolygonRenderer.Draw(canvas, viewport, vectorStyle, feature, polygon, opacity, renderService.VectorCache);
                             break;
                         case LineString lineString:
-                            LineStringRenderer.Draw(canvas, viewport, vectorStyle, feature, lineString, opacity, cache);
+                            LineStringRenderer.Draw(canvas, viewport, vectorStyle, feature, lineString, opacity, renderService);
                             break;
                         case null:
                             throw new ArgumentException($"Geometry is null, Layer: {layer.Name}");
@@ -66,7 +64,7 @@ public class VectorStyleRenderer : ISkiaStyleRenderer, IFeatureSize
 
     bool IFeatureSize.NeedsFeature => false;
 
-    double IFeatureSize.FeatureSize(IStyle style, IRenderCache renderCache, IFeature? feature)
+    double IFeatureSize.FeatureSize(IStyle style, IRenderService renderService, IFeature? feature)
     {
         if (style is VectorStyle vectorStyle)
         {

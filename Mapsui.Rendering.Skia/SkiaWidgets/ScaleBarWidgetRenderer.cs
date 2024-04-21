@@ -9,10 +9,10 @@ namespace Mapsui.Rendering.Skia.SkiaWidgets;
 
 public class ScaleBarWidgetRenderer : ISkiaWidgetRenderer, IDisposable
 {
-    private SKPaint? _paintScaleBar;
-    private SKPaint? _paintScaleBarStroke;
-    private SKPaint? _paintScaleText;
-    private SKPaint? _paintScaleTextStroke;
+    private readonly SKPaint _paintScaleBar = CreateScaleBarPaint(SKPaintStyle.Fill);
+    private readonly SKPaint _paintScaleBarStroke = CreateScaleBarPaint(SKPaintStyle.Stroke);
+    private readonly SKPaint _paintScaleText = CreateTextPaint(SKPaintStyle.Fill);
+    private readonly SKPaint _paintScaleTextStroke = CreateTextPaint(SKPaintStyle.Stroke);
 
     public void Draw(SKCanvas canvas, Viewport viewport, IWidget widget,
         float layerOpacity)
@@ -20,20 +20,10 @@ public class ScaleBarWidgetRenderer : ISkiaWidgetRenderer, IDisposable
         var scaleBar = (ScaleBarWidget)widget;
         if (!scaleBar.CanProject()) return;
 
-        // If this is the first time, we call this renderer, ...
-        if (_paintScaleBar == null)
-        {
-            // ... than create the paints
-            _paintScaleBar = CreateScaleBarPaint(SKPaintStyle.Fill);
-            _paintScaleBarStroke = CreateScaleBarPaint(SKPaintStyle.Stroke);
-            _paintScaleText = CreateTextPaint(SKPaintStyle.Fill);
-            _paintScaleTextStroke = CreateTextPaint(SKPaintStyle.Stroke);
-        }
-
         // Update paints with new values
         _paintScaleBar.Color = scaleBar.TextColor.ToSkia(layerOpacity);
         _paintScaleBar.StrokeWidth = (float)(scaleBar.StrokeWidth * scaleBar.Scale);
-        _paintScaleBarStroke!.Color = scaleBar.Halo.ToSkia(layerOpacity);
+        _paintScaleBarStroke.Color = scaleBar.Halo.ToSkia(layerOpacity);
         _paintScaleBarStroke.StrokeWidth = (float)(scaleBar.StrokeWidthHalo * scaleBar.Scale);
         _paintScaleText!.Color = scaleBar.TextColor.ToSkia(layerOpacity);
         _paintScaleText.StrokeWidth = (float)(scaleBar.StrokeWidth * scaleBar.Scale);
@@ -59,7 +49,7 @@ public class ScaleBarWidgetRenderer : ISkiaWidgetRenderer, IDisposable
         // Do this, because height of text changes sometimes (e.g. from 2 m to 1 m)
         _paintScaleTextStroke.MeasureText("9999 m", ref textSize);
 
-        var scaleBarHeight = textSize.Height + (scaleBar.TickLength + scaleBar.StrokeWidthHalo * 0.5f + scaleBar.TextMargin) * scaleBar.Scale;
+        var scaleBarHeight = textSize.Height + (scaleBar.TickLength + scaleBar.StrokeWidthHalo * 0.5f + ScaleBarWidget.TextMargin) * scaleBar.Scale;
 
         if (scaleBar.ScaleBarMode == ScaleBarMode.Both && scaleBar.SecondaryUnitConverter != null)
         {
@@ -110,7 +100,7 @@ public class ScaleBarWidgetRenderer : ISkiaWidgetRenderer, IDisposable
             _paintScaleTextStroke.MeasureText(scaleBarText2, ref textSize2);
         }
 
-        var (posX1, posY1, posX2, posY2) = scaleBar.GetScaleBarTextPositions(viewport, textSize.ToMRect(), textSize1.ToMRect(), textSize2.ToMRect(), scaleBar.StrokeWidthHalo);
+        var (posX1, posY1, posX2, posY2) = scaleBar.GetScaleBarTextPositions(viewport, textSize1.ToMRect(), textSize2.ToMRect(), scaleBar.StrokeWidthHalo);
 
         // Now draw text
         canvas.DrawText(scaleBarText1, (float)posX1, (float)(posY1 - textSize1.Top), _paintScaleTextStroke);
@@ -157,11 +147,20 @@ public class ScaleBarWidgetRenderer : ISkiaWidgetRenderer, IDisposable
         };
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
-        _paintScaleBar?.Dispose();
-        _paintScaleBarStroke?.Dispose();
-        _paintScaleText?.Dispose();
-        _paintScaleTextStroke?.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _paintScaleBar.Dispose();
+            _paintScaleBarStroke.Dispose();
+            _paintScaleText.Dispose();
+            _paintScaleTextStroke.Dispose();
+        }
     }
 }

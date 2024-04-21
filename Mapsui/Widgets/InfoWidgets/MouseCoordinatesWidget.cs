@@ -6,30 +6,19 @@ namespace Mapsui.Widgets.InfoWidgets;
 /// <summary>
 /// Widget that shows actual mouse coordinates in a TextBox
 /// </summary>
-public class MouseCoordinatesWidget : TextBoxWidget, ITouchableWidget
+public class MouseCoordinatesWidget : TextBoxWidget
 {
-    public TouchableAreaType TouchableArea => TouchableAreaType.Viewport;
-
     public MouseCoordinatesWidget()
     {
+        InputAreaType = InputAreaType.Map;
         HorizontalAlignment = HorizontalAlignment.Center;
         VerticalAlignment = VerticalAlignment.Bottom;
         Text = "Mouse Position";
     }
 
-    public bool HandleWidgetTouched(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
+    public override bool OnPointerMoved(Navigator navigator, WidgetEventArgs e)
     {
-        return false;
-    }
-
-    public bool HandleWidgetTouching(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
-    {
-        return false;
-    }
-
-    public bool HandleWidgetMoving(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
-    {
-        var worldPosition = navigator.Viewport.ScreenToWorld(position);
+        var worldPosition = navigator.Viewport.ScreenToWorld(e.Position);
         // update the Mouse position
         Text = $"{worldPosition.X:F0}, {worldPosition.Y:F0}";
         return false;

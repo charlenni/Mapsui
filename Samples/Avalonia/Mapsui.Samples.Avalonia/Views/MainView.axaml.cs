@@ -5,7 +5,9 @@ using AvaloniaApplication1.ViewModels;
 using Mapsui.Extensions;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
-using Mapsui.Samples.CustomWidget;
+
+using Mapsui.Tiling;
+using Mapsui.Samples.Common.Maps.Widgets;
 
 namespace Mapsui.Samples.Avalonia.Views;
 
@@ -13,8 +15,8 @@ public partial class MainView : UserControl
 {
     static MainView()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
     }
 
     public MainView()

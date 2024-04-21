@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Mapsui.Fetcher;
-using Mapsui.Logging;
+//using Mapsui.Logging;
 using Mapsui.Rendering;
 using Mapsui.Styles;
 
@@ -30,10 +30,6 @@ public class RasterizingLayer : BaseLayer, IAsyncDataFetcher, ISourceLayer
     /// <param name="layer">The Layer to be rasterized</param>
     /// <param name="delayBeforeRasterize">Delay after viewport change to start re-rasterizing</param>
     /// <param name="rasterizer">Rasterizer to use. null will use the default</param>
-    ///     Set the rasterization policy. false will trigger a rasterization on
-    ///     every viewport change. true will trigger a re-rasterization only if the viewport moves outside the existing
-    ///     rasterization.
-    /// </param>
     /// <param name="pixelDensity"></param>
     /// <param name="renderFormat">render Format png is default and skp is skia picture</param>
     public RasterizingLayer(
@@ -92,15 +88,12 @@ public class RasterizingLayer : BaseLayer, IAsyncDataFetcher, ISourceLayer
                 _currentSection = _fetchInfo.Section;
 
                 using var bitmapStream = _rasterizer.RenderToBitmapStream(ToViewport(_currentSection),
-                    new[] { _layer }, pixelDensity: _pixelDensity, renderFormat: _renderFormat);
+                    [_layer], pixelDensity: _pixelDensity, renderFormat: _renderFormat);
 
                 _cache.Clear();
                 var features = new RasterFeature[1];
                 features[0] = new RasterFeature(new MRaster(bitmapStream.ToArray(), _currentSection.Extent));
                 _cache.PushRange(features);
-#if DEBUG
-                Logger.Log(LogLevel.Debug, $"Memory after rasterizing layer {GC.GetTotalMemory(true):N0}");
-#endif
                 OnDataChanged(new DataChangedEventArgs());
 
                 if (_modified && _layer is IAsyncDataFetcher asyncDataFetcher)
@@ -117,7 +110,7 @@ public class RasterizingLayer : BaseLayer, IAsyncDataFetcher, ISourceLayer
 
     public override IEnumerable<IFeature> GetFeatures(MRect box, double resolution)
     {
-        if (box == null) throw new ArgumentNullException(nameof(box));
+        ArgumentNullException.ThrowIfNull(box);
 
         var features = _cache.ToArray();
 

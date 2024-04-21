@@ -6,13 +6,14 @@ using Mapsui.Samples.Common.Maps.Geometries;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.Widgets.InfoWidgets;
-using Newtonsoft.Json;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -56,7 +57,7 @@ public class CustomCalloutSample : ISample
         const string path = "Mapsui.Samples.Common.GeoData.Json.congo.json";
         var assembly = typeof(PointsSample).GetTypeInfo().Assembly;
         using var stream = assembly.GetManifestResourceStream(path) ?? throw new NullReferenceException();
-        var cities = DeserializeFromStream<City>(stream);
+        var cities = DeserializeFromStream(stream);
 
         return cities.Select(c =>
         {
@@ -128,7 +129,7 @@ public class CustomCalloutSample : ISample
         return memStream;
     }
 
-    private class City
+    internal class City
     {
         public string? Country { get; set; }
         public string? Name { get; set; }
@@ -136,11 +137,13 @@ public class CustomCalloutSample : ISample
         public double Lng { get; set; }
     }
 
-    public static IEnumerable<T> DeserializeFromStream<T>(Stream stream)
+    private static List<City> DeserializeFromStream(Stream stream)
     {
-        var serializer = new JsonSerializer();
-        using var sr = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(sr);
-        return serializer.Deserialize<List<T>>(jsonTextReader) ?? new List<T>();
+        return JsonSerializer.Deserialize(stream, CustomCalloutSampleContext.Default.ListCity) ?? [];
     }
+}
+
+[JsonSerializable(typeof(List<CustomCalloutSample.City>))]
+internal partial class CustomCalloutSampleContext : JsonSerializerContext
+{
 }

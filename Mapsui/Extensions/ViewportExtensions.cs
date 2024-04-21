@@ -2,6 +2,7 @@
 using Mapsui.Utilities;
 using System.Collections.Generic;
 using System.Linq;
+using Mapsui.Manipulations;
 
 namespace Mapsui.Extensions;
 
@@ -33,7 +34,7 @@ public static class ViewportExtensions
         // taken to form the new box. In this case the result is
         // not a real transformation because an MRect can not be
         // rotated.
-        var screenPoints = new List<MPoint>
+        var screenPoints = new List<ScreenPosition>
         {
             viewport.WorldToScreen(rect.BottomLeft),
             viewport.WorldToScreen(rect.BottomRight),
@@ -108,7 +109,7 @@ public static class ViewportExtensions
     /// </summary>
     /// <param name="worldPosition">Coordinate in world units</param>
     /// <returns>MPoint in screen pixels</returns>  
-    public static MPoint WorldToScreen(this Viewport viewport, MPoint worldPosition)
+    public static ScreenPosition WorldToScreen(this Viewport viewport, MPoint worldPosition)
     {
         return viewport.WorldToScreen(worldPosition.X, worldPosition.Y);
     }
@@ -119,7 +120,7 @@ public static class ViewportExtensions
     /// <param name="screenPosition">Coordinate in screen units</param>
     /// <returns>MPoint in world units</returns>
     /// <inheritdoc />
-    public static MPoint ScreenToWorld(this Viewport viewport, MPoint screenPosition)
+    public static MPoint ScreenToWorld(this Viewport viewport, ScreenPosition screenPosition)
     {
         return viewport.ScreenToWorld(screenPosition.X, screenPosition.Y);
     }
@@ -127,8 +128,9 @@ public static class ViewportExtensions
     /// <summary>
     /// Converts X/Y in screen pixels to a point in screen units, respecting rotation
     /// </summary>
-    /// <param name="x">Screen position x coordinate</param>
-    /// <param name="y">Screen position y coordinate</param>
+    /// <param name="viewport">The viewport used to calculate the transformation</param>
+    /// <param name="screenX">Screen position x coordinate</param>
+    /// <param name="screenY">Screen position y coordinate</param>
     /// <returns>MPoint in world units</returns>
     public static MPoint ScreenToWorld(this Viewport viewport, double screenX, double screenY)
     {
@@ -140,13 +142,14 @@ public static class ViewportExtensions
     /// Converts X/Y in world units to a point in device independent units (or DIP or DP),
     /// respecting rotation
     /// </summary>
+    /// <param name="viewport">The viewport used to calculate the transformation</param>
     /// <param name="worldX">X coordinate in world units</param>
     /// <param name="worldY">Y coordinate in world units</param>
     /// <returns>MPoint in screen pixels</returns>
-    public static MPoint WorldToScreen(this Viewport viewport, double worldX, double worldY)
+    public static ScreenPosition WorldToScreen(this Viewport viewport, double worldX, double worldY)
     {
         var (x, y) = viewport.WorldToScreenXY(worldX, worldY);
-        return new MPoint(x, y);
+        return new ScreenPosition(x, y);
     }
 
     /// <summary>
@@ -198,8 +201,8 @@ public static class ViewportExtensions
     /// <summary>
     /// Converts X/Y in screen pixels to a point in screen units, respecting rotation
     /// </summary>
-    /// <param name="x">Screen position x coordinate</param>
-    /// <param name="y">Screen position y coordinate</param>
+    /// <param name="screenX">Screen position x coordinate</param>
+    /// <param name="screenY">Screen position y coordinate</param>
     /// <returns>Tuple of x and y in world coordinates</returns>
     public static (double worldX, double worldY) ScreenToWorldXY(this Viewport viewport, double screenX, double screenY)
     {

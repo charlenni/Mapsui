@@ -6,31 +6,31 @@ using Mapsui.Extensions;
 using Mapsui.Logging;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
-using Mapsui.Samples.CustomWidget;
 using Mapsui.Styles;
 using Mapsui.UI.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices.Sensors;
 using Compass = Microsoft.Maui.Devices.Sensors.Compass;
 using Microsoft.Maui.Dispatching;
+using Mapsui.Manipulations;
+using Mapsui.Samples.Common.Maps.Widgets;
 
 namespace Mapsui.Samples.Maui;
 
 public sealed partial class MapPage : ContentPage, IDisposable
 {
-    private CancellationTokenSource? gpsCancelation;
-    public Func<MapView?, MapClickedEventArgs, bool>? Clicker { get; set; }
+    private CancellationTokenSource? _gpsCancelation;
+    public Func<UI.Maui.MapView?, MapClickedEventArgs, bool>? Clicker { get; set; }
 
     public MapPage()
     {
         InitializeComponent();
 
-        // nullable warning workaround
-        var test = mapView ?? throw new InvalidOperationException();
-        var test1 = info ?? throw new InvalidOperationException();
+        ArgumentNullException.ThrowIfNull(mapView, nameof(mapView));
+        ArgumentNullException.ThrowIfNull(info, nameof(info));
     }
 
-    public MapPage(ISampleBase sample, Func<MapView?, MapClickedEventArgs, bool>? c = null)
+    public MapPage(ISampleBase sample, Func<UI.Maui.MapView?, MapClickedEventArgs, bool>? c = null)
     {
         InitializeComponent();
 
@@ -39,8 +39,6 @@ public sealed partial class MapPage : ContentPage, IDisposable
         var test1 = info ?? throw new InvalidOperationException();
 
         mapView!.RotationLock = false;
-        mapView.UnSnapRotationDegrees = 20;
-        mapView.ReSnapRotationDegrees = 5;
 
         mapView.PinClicked += OnPinClicked;
         mapView.MapClicked += OnMapClicked;
@@ -50,7 +48,7 @@ public sealed partial class MapPage : ContentPage, IDisposable
         mapView.MyLocationLayer.UpdateMyLocation(new Mapsui.UI.Maui.Position());
 
         mapView.Info += MapView_Info;
-        mapView.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
+        mapView.Renderer.WidgetRenders[typeof(CustomWidget)] = new CustomWidgetSkiaRenderer();
 
         Catch.TaskRun(StartGPS);
 
@@ -97,7 +95,7 @@ public sealed partial class MapPage : ContentPage, IDisposable
 
     private void OnMapClicked(object? sender, MapClickedEventArgs e)
     {
-        e.Handled = Clicker?.Invoke(sender as MapView, e) ?? false;
+        e.Handled = Clicker?.Invoke(sender as UI.Maui.MapView, e) ?? false;
         //Samples.SetPins(mapView, e);
         //Samples.DrawPolylines(mapView, e);
     }
@@ -106,13 +104,13 @@ public sealed partial class MapPage : ContentPage, IDisposable
     {
         if (e.Pin != null)
         {
-            if (e.NumOfTaps == 2)
+            if (e.TapType == TapType.Double)
             {
                 // Hide Pin when double click
                 //DisplayAlert($"Pin {e.Pin.Label}", $"Is at position {e.Pin.Position}", "Ok");
                 e.Pin.IsVisible = false;
             }
-            if (e.NumOfTaps == 1)
+            if (e.TapType == TapType.Single)
                 if (e.Pin.Callout.IsVisible)
                     e.Pin.HideCallout();
                 else
@@ -126,17 +124,17 @@ public sealed partial class MapPage : ContentPage, IDisposable
     {
         try
         {
-            gpsCancelation?.Dispose();
-            gpsCancelation = new CancellationTokenSource();
+            _gpsCancelation?.Dispose();
+            _gpsCancelation = new CancellationTokenSource();
 
             await Task.Run(async () =>
             {
-                while (!gpsCancelation.IsCancellationRequested)
+                while (!_gpsCancelation.IsCancellationRequested)
                 {
                     var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                     Application.Current?.Dispatcher.DispatchAsync(async () =>
                     {
-                        var location = await Geolocation.GetLocationAsync(request, gpsCancelation.Token).ConfigureAwait(false);
+                        var location = await Geolocation.GetLocationAsync(request, _gpsCancelation.Token).ConfigureAwait(false);
                         if (location != null)
                         {
                             MyLocationPositionChanged(location);
@@ -145,7 +143,7 @@ public sealed partial class MapPage : ContentPage, IDisposable
 
                     await Task.Delay(200).ConfigureAwait(false);
                 }
-            }, gpsCancelation.Token).ConfigureAwait(false);
+            }, _gpsCancelation.Token).ConfigureAwait(false);
         }
         catch (Exception e)
         {
@@ -155,11 +153,11 @@ public sealed partial class MapPage : ContentPage, IDisposable
 
     public void StopGPS()
     {
-        gpsCancelation?.Cancel();
+        _gpsCancelation?.Cancel();
     }
 
     /// <summary>
-    /// New informations from Geolocator arrived
+    /// New information from Geolocator arrived
     /// </summary>        
     /// <param name="e">Event arguments for new position</param>
     [SuppressMessage("Usage", "VSTHRD100:Avoid async void methods")]
@@ -194,6 +192,6 @@ public sealed partial class MapPage : ContentPage, IDisposable
 
     public void Dispose()
     {
-        ((IDisposable?)gpsCancelation)?.Dispose();
+        ((IDisposable?)_gpsCancelation)?.Dispose();
     }
 }

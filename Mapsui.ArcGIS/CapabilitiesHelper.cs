@@ -1,16 +1,14 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BruTile;
 using Mapsui.ArcGIS.DynamicProvider;
-using Mapsui.ArcGIS.ImageServiceProvider;
 using Mapsui.Cache;
 using Mapsui.Extensions;
 using Mapsui.Logging;
-using Newtonsoft.Json;
 
 namespace Mapsui.ArcGIS;
 
@@ -110,15 +108,7 @@ public class CapabilitiesHelper
                 if (data == null)
                 {
                     var handler = new HttpClientHandler();
-                    try
-                    {
-                        // Blazor does not support this,
-                        handler.Credentials = credentials ?? CredentialCache.DefaultCredentials;
-                    }
-                    catch (PlatformNotSupportedException e)
-                    {
-                        Logger.Log(LogLevel.Error, e.Message, e);
-                    };
+                    handler.SetCredentials(credentials ?? CredentialCache.DefaultCredentials);
 
                     using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(TimeOut) };
                     using var response = await client.GetAsync(requestUri).ConfigureAwait(false);
@@ -142,9 +132,9 @@ public class CapabilitiesHelper
                 }
 
                 if (_capabilitiesType == CapabilitiesType.DynamicServiceCapabilities)
-                    _arcGisCapabilities = JsonConvert.DeserializeObject<ArcGISDynamicCapabilities>(dataStream);
+                    _arcGisCapabilities = JsonSerializer.Deserialize(dataStream, ArcGISContext.Default.ArcGISDynamicCapabilities);
                 else if (_capabilitiesType == CapabilitiesType.ImageServiceCapabilities)
-                    _arcGisCapabilities = JsonConvert.DeserializeObject<ArcGISImageCapabilities>(dataStream);
+                    _arcGisCapabilities = JsonSerializer.Deserialize(dataStream, ArcGISContext.Default.ArcGISImageCapabilities);
 
                 if (_arcGisCapabilities == null)
                 {
@@ -171,9 +161,9 @@ public class CapabilitiesHelper
         });
     }
 
-    private string RemoveTrailingSlash(string url)
+    private static string RemoveTrailingSlash(string url)
     {
-        if (url[url.Length - 1].Equals('/'))
+        if (url[^1].Equals('/'))
             url = url.Remove(url.Length - 1);
 
         return url;

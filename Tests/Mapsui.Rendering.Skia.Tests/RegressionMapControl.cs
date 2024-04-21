@@ -2,15 +2,16 @@
 // The Mapsui authors licensed this file under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using Mapsui.Extensions;
-using Mapsui.Layers;
-using Mapsui.UI;
-using Mapsui.Utilities;
-
 #pragma warning disable CS0067 // The event is never used
 #pragma warning disable IDISP008 // Don't assign member with injected and created disposables
+#pragma warning disable IDE0005 // Using directive is unnecessary, there are differences between contexts
+
+using Mapsui.Layers;
+using Mapsui.Manipulations;
+using Mapsui.UI;
+using Mapsui.Utilities;
+using System;
+using System.Collections.Generic;
 
 namespace Mapsui.Rendering.Skia.Tests;
 
@@ -24,7 +25,13 @@ public sealed class RegressionMapControl : IMapControl
         _map = new();
     }
 
-    public event EventHandler<MapInfoEventArgs>? Info;
+    public double UnSnapRotationDegrees { get; set; }
+    public double ReSnapRotationDegrees { get; set; }
+    public IRenderer Renderer { get; }
+    public float PixelDensity => 1;
+    public Performance? Performance { get; set; }
+    public double ScreenWidth { get; private set; }
+    public double ScreenHeight { get; private set; }
 
     public Map Map
     {
@@ -36,7 +43,9 @@ public sealed class RegressionMapControl : IMapControl
         }
     }
 
+    public event EventHandler<MapInfoEventArgs>? Info;
     public event EventHandler? ViewportInitialized;
+
     public void RefreshGraphics()
     {
         throw new NotImplementedException();
@@ -52,20 +61,16 @@ public sealed class RegressionMapControl : IMapControl
         throw new NotImplementedException();
     }
 
-    public double UnSnapRotationDegrees { get; set; }
-    public double ReSnapRotationDegrees { get; set; }
     public void Unsubscribe()
     {
         throw new NotImplementedException();
     }
 
-    public IRenderer Renderer { get; }
-    public void OpenBrowser(string url)
+    public void OpenInBrowser(string url)
     {
         throw new NotImplementedException();
     }
 
-    public float PixelDensity => 1;
     public MPoint ToDeviceIndependentUnits(MPoint coordinateInPixels)
     {
         throw new NotImplementedException();
@@ -76,7 +81,7 @@ public sealed class RegressionMapControl : IMapControl
         throw new NotImplementedException();
     }
 
-    public MapInfo? GetMapInfo(MPoint screenPosition, int margin = 0)
+    public MapInfo GetMapInfo(ScreenPosition screenPosition, int margin = 0)
     {
         throw new NotImplementedException();
     }
@@ -86,10 +91,6 @@ public sealed class RegressionMapControl : IMapControl
         throw new NotImplementedException();
     }
 
-    public Performance? Performance { get; set; }
-
-    public double ScreenWidth { get; private set; }
-    public double ScreenHeight { get; private set; }
     public void SetSize(int screenWidth, int screenHeight)
     {
         ScreenWidth = screenWidth;

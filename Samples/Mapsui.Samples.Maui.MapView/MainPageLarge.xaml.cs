@@ -1,7 +1,5 @@
-﻿using Mapsui.Rendering.Skia;
-using Mapsui.Samples.Common;
+﻿using Mapsui.Samples.Common;
 using Mapsui.Extensions;
-using Mapsui.Samples.CustomWidget;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -15,6 +13,8 @@ using Mapsui.UI.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Dispatching;
 using Microsoft.Maui.Devices.Sensors;
+using Mapsui.Manipulations;
+using Mapsui.Samples.Common.Maps.Widgets;
 
 namespace Mapsui.Samples.Maui;
 
@@ -22,8 +22,9 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
 {
     static MainPageLarge()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
+        Mapsui.Samples.Maui.MapView.Samples.Register();
     }
 
     readonly IEnumerable<ISampleBase> _allSamples;
@@ -39,7 +40,7 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
         var test = listView ?? throw new InvalidOperationException();
         var test2 = featureInfo ?? throw new InvalidOperationException();
 
-        _allSamples = AllSamples.GetSamples() ?? new List<ISampleBase>();
+        _allSamples = AllSamples.GetSamples() ?? [];
 
         var categories = _allSamples.Select(s => s.Category).Distinct().OrderBy(c => c);
         picker!.ItemsSource = categories.ToList();
@@ -47,8 +48,6 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
         picker.SelectedItem = "Forms";
 
         mapView!.RotationLock = false;
-        mapView.UnSnapRotationDegrees = 30;
-        mapView.ReSnapRotationDegrees = 5;
 
         mapView.PinClicked += OnPinClicked;
         mapView.MapClicked += OnMapClicked;
@@ -60,7 +59,7 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
         mapView.IsNorthingButtonVisible = true;
 
         mapView.Info += MapView_Info;
-        mapView.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
+        mapView.Renderer.WidgetRenders[typeof(CustomWidget)] = new CustomWidgetSkiaRenderer();
 
         StartGPS();
     }
@@ -104,7 +103,7 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
 
     private void OnMapClicked(object? sender, MapClickedEventArgs e)
     {
-        e.Handled = _clicker?.Invoke(sender as MapView, e) ?? false;
+        e.Handled = _clicker?.Invoke(sender as UI.Maui.MapView, e) ?? false;
     }
 
     void OnSelection(object sender, SelectedItemChangedEventArgs e)
@@ -129,7 +128,7 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
         _clicker = null;
         if (sample is IMapViewSample formsSample)
         {
-            _clicker = formsSample.OnClick;
+            _clicker = formsSample.OnTap;
             _updateLocation = formsSample.UpdateLocation;
         }
         else
@@ -142,13 +141,13 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
     {
         if (e.Pin != null)
         {
-            if (e.NumOfTaps == 2)
+            if (e.TapType == TapType.Double)
             {
                 // Hide Pin when double click
                 //DisplayAlert($"Pin {e.Pin.Label}", $"Is at position {e.Pin.Position}", "Ok");
                 e.Pin.IsVisible = false;
             }
-            if (e.NumOfTaps == 1)
+            if (e.TapType == TapType.Single)
                 if (e.Pin.Callout.IsVisible)
                     e.Pin.HideCallout();
                 else
@@ -203,7 +202,7 @@ public sealed partial class MainPageLarge : ContentPage, IDisposable
     }
 
     /// <summary>
-    /// New informations from Geolocator arrived
+    /// New information from Geolocator arrived
     /// </summary>        
     /// <param name="e">Event arguments for new position</param>
     [SuppressMessage("Usage", "VSTHRD100:Avoid async void methods")]

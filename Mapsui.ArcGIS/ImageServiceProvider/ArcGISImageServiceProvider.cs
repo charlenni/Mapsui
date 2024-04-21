@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -63,7 +62,7 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
         set
         {
             _url = value;
-            if (value[value.Length - 1].Equals('/'))
+            if (value[^1].Equals('/'))
                 _url = value.Remove(value.Length - 1);
 
             if (!_url.ToLower().Contains(@"exportimage"))
@@ -78,11 +77,8 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
 
     private void CapabilitiesHelperCapabilitiesReceived(object? sender, EventArgs e)
     {
-        var capabilities = sender as ArcGISImageCapabilities;
-        if (capabilities == null)
-            return;
-
-        ArcGisImageCapabilities = capabilities;
+        if (sender is ArcGISImageCapabilities capabilities)
+            ArcGisImageCapabilities = capabilities;
     }
 
     public ICredentials? Credentials { get; set; }
@@ -105,7 +101,7 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
         {
             return new[] { new RasterFeature(raster) };
         }
-        return Enumerable.Empty<IFeature>();
+        return [];
     }
 
     public async Task<(bool Success, MRaster? Raster)> TryGetMapAsync(MSection section)
@@ -128,15 +124,7 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
         try
         {
             using var handler = new HttpClientHandler();
-            try
-            {
-                // Blazor does not support this,
-                handler.Credentials = Credentials ?? CredentialCache.DefaultCredentials;
-            }
-            catch (PlatformNotSupportedException e)
-            {
-                Logger.Log(LogLevel.Error, e.Message, e);
-            };
+            handler.SetCredentials(Credentials ?? CredentialCache.DefaultCredentials);
 
             try
             {
@@ -184,8 +172,8 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
     {
         var url = new StringBuilder(Url);
 
-        if (!ArcGisImageCapabilities.ServiceUrl?.Contains("?") ?? false) url.Append("?");
-        if (!url.ToString().EndsWith("&") && !url.ToString().EndsWith("?")) url.Append("&");
+        if (!ArcGisImageCapabilities.ServiceUrl?.Contains('?') ?? false) url.Append('?');
+        if (!url.ToString().EndsWith('&') && !url.ToString().EndsWith('?')) url.Append('&');
 
         if (boundingBox != null)
             url.AppendFormat(CultureInfo.InvariantCulture, "bbox={0},{1},{2},{3}",
@@ -208,7 +196,7 @@ public class ArcGISImageServiceProvider : IProvider, IProjectingProvider
             else if (ArcGisImageCapabilities.timeInfo.timeExtent.Length == 1)
                 url.AppendFormat("&time={0}, null", ArcGisImageCapabilities.timeInfo.timeExtent[0]);
             else if (ArcGisImageCapabilities.timeInfo.timeExtent.Length > 1)
-                url.AppendFormat("&time={0}, {1}", ArcGisImageCapabilities.timeInfo.timeExtent[0], ArcGisImageCapabilities.timeInfo.timeExtent[ArcGisImageCapabilities.timeInfo.timeExtent.Length - 1]);
+                url.AppendFormat("&time={0}, {1}", ArcGisImageCapabilities.timeInfo.timeExtent[0], ArcGisImageCapabilities.timeInfo.timeExtent[^1]);
             else
             {
                 if (ArcGisImageCapabilities.StartTime != -1 && ArcGisImageCapabilities.EndTime != -1)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Authentication.ExtendedProtection;
-using System.Threading;
-using Mapsui.Extensions;
+﻿using Mapsui.Extensions;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using NetTopologySuite.Geometries;
@@ -18,7 +14,7 @@ internal static class PolygonRenderer
     private const float _scale = 10.0f;
 
     public static void Draw(SKCanvas canvas, Viewport viewport, VectorStyle vectorStyle, IFeature feature,
-        Polygon polygon, float opacity, IVectorCache<SKPath, SKPaint> vectorCache)
+        Polygon polygon, float opacity, IVectorCache vectorCache)
     {
         SKPath ToPath((long featureId, MRect extent, double rotation, float lineWidth) valueTuple)
         {
@@ -32,7 +28,7 @@ internal static class PolygonRenderer
         var extent = viewport.ToExtent();
         var rotation = viewport.Rotation;
         float lineWidth = (float)(vectorStyle.Outline?.Width ?? 1);
-        
+
         using var path = vectorCache.GetOrCreatePath((feature.Id, extent, rotation, lineWidth), ToPath);
         if (vectorStyle.Fill.IsVisible())
         {
@@ -79,9 +75,9 @@ internal static class PolygonRenderer
 
         var paintFill = new SKPaint { IsAntialias = true };
 
-        if (brush != null)
+        if (brush?.Color is not null)
         {
-            fillColor = brush.Color;
+            fillColor = brush.Color.Value;
         }
 
         // Is there a FillStyle?

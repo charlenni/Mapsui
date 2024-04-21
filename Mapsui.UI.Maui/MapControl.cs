@@ -1,9 +1,6 @@
 using Mapsui.Extensions;
-using Mapsui.Layers;
 using Mapsui.Logging;
-using Mapsui.Rendering;
-using Mapsui.UI.Utils;
-using Mapsui.Utilities;
+using Mapsui.Manipulations;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
@@ -16,7 +13,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mapsui.UI.Maui;
 
@@ -34,52 +30,21 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
         DeviceInfo.Platform != DevicePlatform.MacCatalyst &&
         DeviceInfo.Platform != DevicePlatform.Android;
 
-    private SKGLView? _glView;
-    private SKCanvasView? _canvasView;
-
-    // See http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.0.4_r2.1/android/view/ViewConfiguration.java#ViewConfiguration.0PRESSED_STATE_DURATION for values
-    private const int _shortClick = 250;
-    private const int _delayTap = 200;
-    // If a finger touches down and up it counts as a tap if the distance
-    // between the down and up location is smaller then the touch slob.
-    // The slob is initialized at 8. How did we get to 8? Well you could
-    // read the discussion here: https://github.com/Mapsui/Mapsui/issues/602
-    // We basically copied it from the Java source code: https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/view/ViewConfiguration.java#162
-    private const int _touchSlop = 8;
-    protected readonly bool _initialized;
-    private double _virtualRotation;
-    private readonly ConcurrentDictionary<long, MPoint> _touches = new();
-    private MPoint? _pointerDownPosition;
-    private bool _waitingForDoubleTap;
-    private int _numOfTaps;
-    private readonly FlingTracker _flingTracker = new();
-    private MPoint? _previousCenter;
-    private double _previousAngle; // To save the angle before last pinch movement
-    private double _previousRadius = 1f; // To save the radius before last pinch movement
-    private TouchMode _mode;
-    private long _pointerDownTicks;
-    private long _pointerUpTicks;
-    private bool _widgetPointerDown;
+    private readonly SKGLView? _glView;
+    private readonly SKCanvasView? _canvasView;
+    private readonly ConcurrentDictionary<long, ScreenPosition> _positions = new();
     private Size _oldSize;
     private static List<WeakReference<MapControl>>? _listeners;
+    private readonly ManipulationTracker _manipulationTracker = new();
 
     public MapControl()
     {
-        CommonInitialize();
-        Initialize();
+        SharedConstructor();
 
-        _initialized = true;
-    }
-
-    public IRenderCache RenderCache => _renderer.RenderCache;
-    public bool UseDoubleTap { get; set; } = true;
-    public bool UseFling { get; set; } = true;
-    private double ViewportWidth => Width; // Used in shared code
-    private double ViewportHeight => Height; // Used in shared code
-    
-    private void Initialize()
-    {
         View view;
+
+        BackgroundColor = KnownColor.White;
+        InitTouchesReset(this);
 
         if (UseGPU)
         {
@@ -91,12 +56,12 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
             };
             // Events
             _glView.Touch += OnTouch;
-            _glView.PaintSurface += OnGLPaintSurface;
             _invalidate = () =>
             {
                 // The line below sometimes has a null reference exception on application close.
                 RunOnUIThread(() => _glView.InvalidateSurface());
             };
+            _glView.PaintSurface += OnGLPaintSurface;
             view = _glView;
         }
         else
@@ -108,17 +73,16 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
             };
             // Events
             _canvasView.Touch += OnTouch;
-            _canvasView.PaintSurface += OnPaintSurface;
             _invalidate = () => { RunOnUIThread(() => _canvasView.InvalidateSurface()); };
+            _canvasView.PaintSurface += OnPaintSurface;
             view = _canvasView;
         }
-
         view.PropertyChanged += View_PropertyChanged;
-
         Content = view;
-        BackgroundColor = KnownColor.White;
-        InitTouchesReset(this);
     }
+
+    private double ViewportWidth => Width; // Used in shared code
+    private double ViewportHeight => Height; // Used in shared code
 
     private static void InitTouchesReset(MapControl mapControl)
     {
@@ -180,7 +144,7 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
         }
     }
 
-    private void View_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void View_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
         {
@@ -206,175 +170,76 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
         SetViewportSize();
     }
 
-    private async void OnTouch(object? sender, SKTouchEventArgs e)
+    private void OnTouch(object? sender, SKTouchEventArgs e)
     {
-        try
+        Catch.Exceptions(() =>
         {
-            // Save time, when the event occurs
-            var ticks = DateTime.Now.Ticks;
-
-            var location = GetScreenPosition(e.Location);
-
-            if (e.Handled) return;
+            e.Handled = true;
+            var position = GetScreenPosition(e.Location);
 
             if (e.ActionType == SKTouchAction.Pressed)
             {
-                _widgetPointerDown = false;
-                _touches[e.Id] = location;
+                _positions[e.Id] = position;
+                if (_positions.Count == 1) // Not sure if this check is necessary.
+                    _manipulationTracker.Restart(_positions.Values.ToArray());
 
-                if (_touches.Count == 1)
-                {
-                    // In case of touch we need to check if another finger was not already touching.
-                    _pointerDownPosition = location;
-                    _pointerDownTicks = DateTime.UtcNow.Ticks;
-                }
-
-                if (HandleWidgetPointerDown(location, true, Math.Max(1, _numOfTaps), false))
-                {
-                    e.Handled = true;
-                    _widgetPointerDown = true;
+                if (OnMapPointerPressed(_positions.Values.ToArray()))
                     return;
-                }
-
-                _flingTracker.Clear();
-
-                // Do we have a doubleTapTestTimer running?
-                // If yes, stop it and increment _numOfTaps
-                if (_waitingForDoubleTap)
-                {
-                    _waitingForDoubleTap = false;
-                    _numOfTaps++;
-                }
-                else
-                    _numOfTaps = 1;
-
-                e.Handled = OnTouchStart(_touches.Select(t => t.Value).ToList());
-            }
-            // Delete e.Id from _touches, because finger is released
-            else if (e.ActionType == SKTouchAction.Released && _touches.TryRemove(e.Id, out var releasedTouch))
-            {
-                if (HandleWidgetPointerUp(location, _pointerDownPosition, true, 0, false))
-                {
-                    e.Handled = true;
-                    return;
-                }
-
-                if (_touches.IsEmpty)
-                {
-                    _pointerUpTicks = DateTime.UtcNow.Ticks;
-
-                    // Is this a fling?
-                    if (UseFling)
-                    {
-                        double velocityX;
-                        double velocityY;
-
-                        (velocityX, velocityY) = _flingTracker.CalcVelocity(e.Id, ticks);
-
-                        if (Math.Abs(velocityX) > 200 || Math.Abs(velocityY) > 200)
-                        {
-                            // This was the last finger on screen, so this is a fling
-                            e.Handled = OnFlinged(velocityX, velocityY);
-                        }
-                    }
-
-                    // Do we have a tap event
-                    if (releasedTouch == null)
-                    {
-                        e.Handled = false;
-                        return;
-                    }
-
-                    // While tapping on screen, there could be a small movement of the finger
-                    // (especially on Samsung). So check, if touch start location isn't more 
-                    // than a number of pixels away from touch end location.
-                    var isAround = IsAround(releasedTouch);
-
-                    // If touch start and end is in the same area and the touch time is shorter
-                    // than longTap, than we have a tap.
-                    if (isAround)
-                    {
-                        _waitingForDoubleTap = true;
-                        if (UseDoubleTap) { await Task.Delay(_delayTap); }
-
-                        if (_numOfTaps > 1)
-                        {
-                            if (!e.Handled)
-                                e.Handled = OnDoubleTapped(location, _numOfTaps);
-                        }
-                        else
-                        {
-                            if (!e.Handled)
-                            {
-                                e.Handled = OnSingleTapped(location);
-                            }
-                        }
-                        _numOfTaps = 1;
-                        if (_waitingForDoubleTap)
-                        {
-                            _waitingForDoubleTap = false; ;
-                        }
-                    }
-                }
-
-                _flingTracker.RemoveId(e.Id);
-
-                if (_touches.Count == 1)
-                {
-                    e.Handled = OnTouchStart(_touches.Select(t => t.Value).ToList());
-                }
-
-                if (!e.Handled)
-                    e.Handled = OnTouchEnd(_touches.Select(t => t.Value).ToList());
             }
             else if (e.ActionType == SKTouchAction.Moved)
             {
-                if (HandleWidgetPointerMove(location, true, Math.Max(1, _numOfTaps), false))
+                var isHovering = !e.InContact;
+
+                if (isHovering)
                 {
-                    e.Handled = true;
-                    return;
+                    // In case of hovering we need to send the current position which added to the _positions array
+                    if (OnMapPointerMoved([position], isHovering))
+                        return;
+                }
+                else
+                {
+                    _positions[e.Id] = position;
+
+                    if (OnMapPointerMoved(_positions.Values.ToArray(), isHovering))
+                        return;
+
+                    _manipulationTracker.Manipulate(_positions.Values.ToArray(), Map.Navigator.Manipulate);
                 }
 
-                _touches[e.Id] = location;
-
-                if (e.InContact)
-                    _flingTracker.AddEvent(e.Id, location, ticks);
-
-                if (e.InContact && !e.Handled && !_widgetPointerDown)
-                    e.Handled = OnTouchMove(_touches.Select(t => t.Value).ToList());
+                RefreshGraphics();
+            }
+            else if (e.ActionType == SKTouchAction.Released)
+            {
+                // Delete e.Id from _touches, because finger is released
+                _positions.Remove(e.Id, out var releasedTouch);
+                OnMapPointerReleased([position]);
             }
             else if (e.ActionType == SKTouchAction.Cancelled)
             {
-                // This gesture is cancelled, so clear all touches
-                _touches.Clear();
+                if (!e.InContact)
+                    return;
+
+                _positions.Clear();
+                Refresh();
             }
-            else if (e.ActionType == SKTouchAction.Exited && _touches.TryRemove(e.Id, out var exitedTouch))
+            else if (e.ActionType == SKTouchAction.Exited)
             {
-                e.Handled = OnTouchExited(_touches.Select(t => t.Value).ToList());
+                if (!e.InContact)
+                    return;
+
+                _positions.Remove(e.Id, out var exitedTouch); // Why not clear?
+                Refresh();
             }
             else if (e.ActionType == SKTouchAction.WheelChanged)
             {
-                OnZoomInOrOut(e.WheelDelta, location);
+                OnZoomInOrOut(e.WheelDelta, position);
             }
-        }
-        catch (Exception ex)
-        {
-            Logger.Log(LogLevel.Error, ex.Message, ex);
-        }
-    }
-
-    public bool ShiftPressed { get; set; }
-
-    private bool IsAround(MPoint releasedTouch)
-    {
-        if (_pointerDownPosition == null) { return false; }
-        if (releasedTouch == null) { return false; }
-        return _pointerDownPosition != null && Algorithms.Distance(releasedTouch, _pointerDownPosition) < _touchSlop;
+        });
     }
 
     private void OnGLPaintSurface(object? sender, SKPaintGLSurfaceEventArgs args)
     {
-        if (!_initialized && _glView?.GRContext == null)
+        if (_glView?.GRContext is null)
         {
             // Could this be null before Home is called? If so we should change the logic.
             Logger.Log(LogLevel.Warning, "Refresh can not be called because GRContext is null");
@@ -401,217 +266,18 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
         CommonDrawControl(canvas);
     }
 
-    private MPoint GetScreenPosition(SKPoint point)
-    {
-        return new MPoint(point.X / PixelDensity, point.Y / PixelDensity);
-    }
-        
-    /// <summary>
-        /// Called, when map should zoom in or out
-    /// </summary>
-    /// <param name="currentMousePosition">Center of zoom out event</param>
-    private bool OnZoomInOrOut(int mouseWheelDelta, MPoint currentMousePosition)
-    {
-        Map.Navigator.MouseWheelZoom(mouseWheelDelta, currentMousePosition);
+    private ScreenPosition GetScreenPosition(SKPoint point) => new ScreenPosition(point.X / PixelDensity, point.Y / PixelDensity);
 
-        return true;
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen flinged over map
-    /// </summary>
-    /// <param name="velocityX">Velocity in x direction in pixel/second</param>
-    /// <param name="velocityY">Velocity in y direction in pixel/second</param>
-    private bool OnFlinged(double velocityX, double velocityY)
-    {
-        Map.Navigator.Fling(velocityX, velocityY, 1000);
-
-        return true;
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen click/touch map
-    /// </summary>
-    /// <param name="touchPoints">List of all touched points</param>
-    private bool OnTouchStart(List<MPoint> touchPoints)
-    {
-        // Sanity check
-        if (touchPoints.Count == 0)
-            return false;
-
-        if (touchPoints.Count == 2)
-        {
-            (_previousCenter, _previousRadius, _previousAngle) = GetPinchValues(touchPoints);
-            _mode = TouchMode.Zooming;
-            _virtualRotation = Map.Navigator.Viewport.Rotation;
-        }
-        else
-        {
-            _mode = TouchMode.Dragging;
-            _previousCenter = touchPoints.First();
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen anymore click/touch map
-    /// </summary>
-    /// <param name="touchPoints">List of all touched points</param>
-    /// <param name="releasedPoint">Released point, which was touched before</param>
-    private bool OnTouchEnd(List<MPoint> touchPoints)
-    {
-        // Last touch released
-        if (touchPoints.Count == 0)
-        {
-            _mode = TouchMode.None;
-            if (Map.Navigator.Viewport.ToExtent() is not null)
-            {
-                Map?.RefreshData(new FetchInfo(Map.Navigator.Viewport.ToSection(), Map?.CRS, ChangeType.Discrete));
-            }
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Called when touch exits map
-    /// </summary>
-    /// <param name="touchPoints">List of all touched points</param>
-    /// <param name="releasedPoint">Released point, which was touched before</param>
-    private bool OnTouchExited(List<MPoint> touchPoints)
-    {
-        // Last touch released
-        if (touchPoints.Count == 0)
-        {
-            _mode = TouchMode.None;
-            if (Map.Navigator.Viewport.ToExtent() is not null)
-            {
-                Map?.RefreshData(new FetchInfo(Map.Navigator.Viewport.ToSection(), Map?.CRS, ChangeType.Discrete));
-            }
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen moves over map
-    /// </summary>
-    /// <param name="touchPoints">List of all touched points</param>
-    protected virtual bool OnTouchMove(List<MPoint> touchPoints)
-    {
-        switch (_mode)
-        {
-            case TouchMode.Dragging:
-                {
-                    if (touchPoints.Count != 1)
-                        return false;
-
-                    var touchPosition = touchPoints.First();
-
-                    if (_previousCenter != null)
-                    {
-                        Map.Navigator.Drag(touchPosition, _previousCenter);
-                    }
-
-                    _previousCenter = touchPosition;
-                }
-                break;
-            case TouchMode.Zooming:
-                {
-                    if (touchPoints.Count != 2)
-                        return false;
-
-                    var (prevCenter, prevRadius, prevAngle) = (_previousCenter, _previousRadius, _previousAngle);
-                    var (center, radius, angle) = GetPinchValues(touchPoints);
-
-                    double rotationDelta = 0;
-
-                    if (Map.Navigator.RotationLock == false)
-                    {
-                        var deltaRotation = angle - prevAngle;
-                        _virtualRotation += deltaRotation;
-
-                        rotationDelta = RotationCalculations.CalculateRotationDeltaWithSnapping(
-                            _virtualRotation, Map.Navigator.Viewport.Rotation, _unSnapRotationDegrees, _reSnapRotationDegrees);
-                    }
-
-                    if (prevCenter != null)
-                        Map.Navigator.Pinch(center, prevCenter, radius / prevRadius, rotationDelta);
-
-                    (_previousCenter, _previousRadius, _previousAngle) = (center, radius, angle);
-
-                    RefreshGraphics();
-                }
-                break;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen tapped on map 2 or more times
-    /// </summary>
-    /// <param name="screenPosition">First clicked/touched position on screen</param>
-    /// <param name="numOfTaps">Number of taps on map (2 is a double click/tap)</param>
-    /// <returns>True, if the event is handled</returns>
-    protected virtual bool OnDoubleTapped(MPoint screenPosition, int numOfTaps)
-    {
-        var eventReturn = CreateMapInfoEventArgs(screenPosition, screenPosition, numOfTaps);
-
-        if (eventReturn?.Handled == true)
-            return true;
-
-        // Double tap as zoom
-        return OnZoomInOrOut(1, screenPosition); // mouseWheelDelta > 0 to zoom in
-    }
-
-    /// <summary>
-    /// Called, when mouse/finger/pen tapped on map one time
-    /// </summary>
-    /// <param name="screenPosition">Clicked/touched position on screen</param>
-    /// <returns>True, if the event is handled</returns>
-    protected virtual bool OnSingleTapped(MPoint screenPosition)
-    {
-        var infoToInvoke = CreateMapInfoEventArgs(screenPosition, screenPosition, 1);
-
-        if (infoToInvoke?.Handled == true)
-            return true;
-
-        OnInfo(infoToInvoke);
-        return infoToInvoke?.Handled ?? false;
-    }
-
-    private static (MPoint centre, double radius, double angle) GetPinchValues(List<MPoint> locations)
-    {
-        if (locations.Count != 2)
-            throw new ArgumentOutOfRangeException(nameof(locations), locations.Count, "Value should be two");
-
-        double centerX = 0;
-        double centerY = 0;
-
-        foreach (var location in locations)
-        {
-            centerX += location.X;
-            centerY += location.Y;
-        }
-
-        centerX /= locations.Count;
-        centerY /= locations.Count;
-
-        var radius = Algorithms.Distance(centerX, centerY, locations[0].X, locations[0].Y);
-
-        var angle = Math.Atan2(locations[1].Y - locations[0].Y, locations[1].X - locations[0].X) * 180.0 / Math.PI;
-
-        return (new MPoint(centerX, centerY), radius, angle);
-    }
+    private void OnZoomInOrOut(int mouseWheelDelta, ScreenPosition currentMousePosition)
+        => Map.Navigator.MouseWheelZoom(mouseWheelDelta, currentMousePosition);
 
     /// <summary>
     /// Public functions
     /// </summary>
 
-    public void OpenBrowser(string url)
+    public void OpenInBrowser(string url)
     {
-        Launcher.OpenAsync(new Uri(url));
+        Catch.TaskRun(() => _ = Launcher.OpenAsync(new Uri(url)));
     }
 
     /// <summary>
@@ -619,7 +285,7 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
     /// </summary>
     public void ClearTouchState()
     {
-        _touches.Clear();
+        _positions.Clear();
     }
 
     protected void RunOnUIThread(Action action)
@@ -661,4 +327,6 @@ public partial class MapControl : ContentView, IMapControl, IDisposable
             ? _glView!.CanvasSize.Width / Width
             : _canvasView!.CanvasSize.Width / Width;
     }
+
+    private static bool GetShiftPressed() => false; // Work in progress: https://github.com/dotnet/maui/issues/16202
 }

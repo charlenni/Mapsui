@@ -6,7 +6,7 @@ using System;
 namespace Mapsui.Nts;
 
 /// <summary>
-/// Feature representing a NTS geometry on the <cref="Map"/>
+/// Feature representing a NTS geometry on the map./>
 /// </summary>
 public class GeometryFeature : BaseFeature, IFeature
 {
@@ -77,5 +77,10 @@ public class GeometryFeature : BaseFeature, IFeature
         Geometry?.GeometryChanged();
         // Recalculate the Envelope
         Geometry?.GeometryChangedAction();
+    }
+
+    public virtual object Clone()
+    {
+        return new GeometryFeature(this);
     }
 }

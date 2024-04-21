@@ -7,9 +7,9 @@ namespace Mapsui;
 public delegate void CoordinateSetter(double x, double y);
 
 /// <summary>
-/// Interface for a feature which could be displayed on the <cref="Map"/>
+/// Interface for a feature which could be displayed on the map.
 /// </summary>
-public interface IFeature
+public interface IFeature : ICloneable
 {
     /// <summary>
     /// Styles used for this feature
@@ -33,7 +33,7 @@ public interface IFeature
     /// </remarks>
     int ZOrder { get; }
     /// <summary>
-    /// <cref="Extent"/> of feature
+    /// Extent of the feature
     /// </summary>
     MRect? Extent { get; }
     /// <summary>

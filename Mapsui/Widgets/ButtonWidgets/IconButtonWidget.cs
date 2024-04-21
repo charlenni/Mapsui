@@ -20,7 +20,7 @@ namespace Mapsui.Widgets.ButtonWidgets;
 /// Rotation: Value for rotation in degrees
 /// Opacity: Opacity of button
 /// </remarks>
-public class IconButtonWidget : BoxWidget, ITouchableWidget
+public class IconButtonWidget : BoxWidget
 {
     public IconButtonWidget() : base()
     {
@@ -30,9 +30,9 @@ public class IconButtonWidget : BoxWidget, ITouchableWidget
     /// <summary>
     /// Event handler which is called, when the button is touched
     /// </summary>
-    public event EventHandler<WidgetTouchedEventArgs>? Touched;
+    public Func<IconButtonWidget, WidgetEventArgs, bool> Tapped = (s, e) => false;
 
-    private MRect _padding = new MRect(0);
+    private MRect _padding = new(0);
 
     /// <summary>
     /// Padding left and right for icon inside the Widget
@@ -43,8 +43,8 @@ public class IconButtonWidget : BoxWidget, ITouchableWidget
         set
         {
             if (_padding == value)
-              return;
-            
+                return;
+
             _padding = value;
             Invalidate();
         }
@@ -102,22 +102,8 @@ public class IconButtonWidget : BoxWidget, ITouchableWidget
         }
     }
 
-    public TouchableAreaType TouchableArea => TouchableAreaType.Widget;
-
-    public bool HandleWidgetTouched(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
+    public override bool OnTapped(Navigator navigator, WidgetEventArgs e)
     {
-        Touched?.Invoke(this, args);
-
-        return args.Handled;
-    }
-
-    public bool HandleWidgetTouching(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
-    {
-        return false;
-    }
-
-    public bool HandleWidgetMoving(Navigator navigator, MPoint position, WidgetTouchedEventArgs args)
-    {
-        return false;
+        return Tapped(this, e);
     }
 }

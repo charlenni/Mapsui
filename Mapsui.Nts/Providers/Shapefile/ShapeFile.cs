@@ -7,8 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -578,7 +576,7 @@ public class ShapeFile : IProvider, IDisposable, IProviderExtended
 
         for (var x = 0; x < _featureCount; ++x)
         {
-            offsetOfRecord[x] = 2 * SwapByteOrder(_brShapeIndex.ReadInt32()); // Read shape data position // ibuffer);
+            offsetOfRecord[x] = 2 * SwapByteOrder(_brShapeIndex.ReadInt32()); // Read shape data position
             _brShapeIndex.BaseStream.Seek(_brShapeIndex.BaseStream.Position + 4, 0); // Skip content length
         }
         return offsetOfRecord;
@@ -708,25 +706,38 @@ public class ShapeFile : IProvider, IDisposable, IProviderExtended
 
         var offsetOfRecord = ReadIndex(); //Read the whole .idx file
 
-        if (_shapeType == ShapeType.Point)
-            for (var a = 0; a < _featureCount; ++a)
-            {
-                _fsShapeFile.Seek(offsetOfRecord[a] + 8, 0); // Skip record number and content length
-                if ((ShapeType)_brShapeFile.ReadInt32() != ShapeType.Null)
+        switch (_shapeType)
+        {
+            case ShapeType.Point:
+            case ShapeType.PointZ:
+            case ShapeType.PointM:
                 {
-                    var x = _brShapeFile.ReadDouble();
-                    var y = _brShapeFile.ReadDouble();
-                    yield return new MRect(x, y, x, y);
+                    for (var a = 0; a < _featureCount; ++a)
+                    {
+                        _fsShapeFile.Seek(offsetOfRecord[a] + 8, 0); // Skip record number and content length
+                        if ((ShapeType)_brShapeFile.ReadInt32() != ShapeType.Null)
+                        {
+                            var x = _brShapeFile.ReadDouble();
+                            var y = _brShapeFile.ReadDouble();
+                            yield return new MRect(x, y, x, y);
+                        }
+                    }
+
+                    break;
                 }
-            }
-        else
-            for (var a = 0; a < _featureCount; ++a)
-            {
-                _fsShapeFile.Seek(offsetOfRecord[a] + 8, 0); // Skip record number and content length
-                if ((ShapeType)_brShapeFile.ReadInt32() != ShapeType.Null)
-                    yield return new MRect(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
-                                                 _brShapeFile.ReadDouble(), _brShapeFile.ReadDouble());
-            }
+            default:
+                {
+                    for (var a = 0; a < _featureCount; ++a)
+                    {
+                        _fsShapeFile.Seek(offsetOfRecord[a] + 8, 0); // Skip record number and content length
+                        if ((ShapeType)_brShapeFile.ReadInt32() != ShapeType.Null)
+                            yield return new MRect(_brShapeFile.ReadDouble(), _brShapeFile.ReadDouble(),
+                                _brShapeFile.ReadDouble(), _brShapeFile.ReadDouble());
+                    }
+
+                    break;
+                }
+        }
     }
 
     /// <summary>
@@ -852,10 +863,9 @@ public class ShapeFile : IProvider, IDisposable, IProviderExtended
     }
 
     /// <summary>
-    /// Gets a data row from the data source at the specified index belonging to the specified datatable
+    /// Gets a data row from the data source at the specified index belonging to the specified data table
     /// </summary>
     /// <param name="rowId"></param>
-    /// <param name="features">Data table to feature should belong to.</param>
     /// <returns></returns>
     public GeometryFeature? GetFeature(uint rowId)
     {

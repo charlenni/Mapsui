@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Security;
 using System.Threading.Tasks;
 using Mapsui.Cache;
+using Mapsui.Extensions;
 using Mapsui.Logging;
 using Mapsui.Utilities;
 
@@ -20,15 +21,15 @@ namespace Mapsui.Providers.Wfs.Utilities;
 /// <summary>
 /// This class provides an easy to use interface for HTTP-GET and HTTP-POST requests.
 /// </summary>
-public class HttpClientUtil : IDisposable
+public class HttpClientUtil(IUrlPersistentCache? persistentCache = null) : IDisposable
 {
 
-    private readonly Dictionary<string, string?> _requestHeaders;
+    private readonly Dictionary<string, string?> _requestHeaders = [];
     private byte[]? _postData;
     private string? _proxyUrl;
     private string? _url;
     private ICredentials? _credentials;
-    private readonly IUrlPersistentCache? _persistentCache;
+    private readonly IUrlPersistentCache? _persistentCache = persistentCache;
 
     /// <summary>
     /// Gets ans sets the Url of the request.
@@ -65,15 +66,6 @@ public class HttpClientUtil : IDisposable
         set => _credentials = value;
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="HttpClientUtil"/> class.
-    /// </summary>
-    public HttpClientUtil(IUrlPersistentCache? persistentCache = null)
-    {
-        _persistentCache = persistentCache;
-        _requestHeaders = [];
-    }
-
 
 
     /// <summary>
@@ -94,7 +86,7 @@ public class HttpClientUtil : IDisposable
         if (string.IsNullOrEmpty(_url))
             throw new Exception($"Property {nameof(Url)} was not set");
 
-        var bytes = _persistentCache?.Find(_url!);
+        var bytes = _persistentCache?.Find(_url!, _postData);
         if (bytes != null)
         {
             return new MemoryStream(bytes);
@@ -118,8 +110,8 @@ public class HttpClientUtil : IDisposable
 
         if (Credentials != null)
         {
-            httpClientHandler.UseDefaultCredentials = false;
-            httpClientHandler.Credentials = Credentials;
+            httpClientHandler.SetUseDefaultCredentials(false);
+            httpClientHandler.SetCredentials(Credentials);
         }
 
         // To do: Dispose:
@@ -168,7 +160,7 @@ public class HttpClientUtil : IDisposable
                 if (stream != null && _url != null)
                 {
                     bytes = StreamHelper.ReadFully(stream);
-                    _persistentCache?.Add(_url, bytes);
+                    _persistentCache?.Add(_url, _postData, bytes);
                     return new MemoryStream(bytes);
                 }
 

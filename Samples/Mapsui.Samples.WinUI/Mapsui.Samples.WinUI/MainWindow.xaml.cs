@@ -1,17 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using System;
-using System.IO;
 using System.Linq;
-using Windows.Storage;
 using Mapsui.Extensions;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
-using Mapsui.Samples.Common.Maps;
-using Mapsui.Samples.CustomWidget;
 using Mapsui.Tiling;
-using Mapsui.Samples.Common.Utilities;
+using Mapsui.Samples.Common.Maps.Widgets;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,8 +20,8 @@ public sealed partial class MainWindow : Window
 {
     static MainWindow()
     {
-        // todo: find proper way to load assembly
-        Tests.Common.Utilities.LoadAssembly();
+        Mapsui.Tests.Common.Samples.Register();
+        Mapsui.Samples.Common.Samples.Register();
     }
 
     public MainWindow()
@@ -35,9 +30,7 @@ public sealed partial class MainWindow : Window
 
         MapControl.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
         MapControl.Map.Navigator.RotationLock = false;
-        MapControl.UnSnapRotationDegrees = 30;
-        MapControl.ReSnapRotationDegrees = 5;
-        MapControl.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
+        MapControl.Renderer.WidgetRenders[typeof(CustomWidget)] = new CustomWidgetSkiaRenderer();
 
         CategoryComboBox.SelectionChanged += CategoryComboBoxSelectionChanged;
 

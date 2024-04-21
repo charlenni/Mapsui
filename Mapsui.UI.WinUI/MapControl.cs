@@ -6,9 +6,10 @@
 
 using Mapsui.Extensions;
 using Mapsui.Logging;
+using Mapsui.Manipulations;
 using Mapsui.UI.WinUI.Extensions;
-using Mapsui.Utilities;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -26,18 +27,12 @@ public partial class MapControl : Grid, IMapControl, IDisposable
 {
     private readonly Rectangle _selectRectangle = CreateSelectRectangle();
     private readonly SKXamlCanvas _canvas = CreateRenderTarget();
-    private double _virtualRotation;
-    private MPoint? _pointerDownPosition;
     bool _shiftPressed;
 
     public MapControl()
     {
-        CommonInitialize();
-        Initialize();
-    }
+        SharedConstructor();
 
-    private void Initialize()
-    {
         _invalidate = () =>
         {
             // The commented out code crashes the app when MouseWheelAnimation.Duration > 0. Could be a bug in SKXamlCanvas
@@ -59,15 +54,14 @@ public partial class MapControl : Grid, IMapControl, IDisposable
 
         ManipulationMode = ManipulationModes.Scale | ManipulationModes.TranslateX | ManipulationModes.TranslateY | ManipulationModes.Rotate;
 
-        // Pointer events        
-        ManipulationStarted += OnManipulationStarted;
+        ManipulationInertiaStarting += OnManipulationInertiaStarting;
         ManipulationDelta += OnManipulationDelta;
         ManipulationCompleted += OnManipulationCompleted;
-        ManipulationInertiaStarting += OnManipulationInertiaStarting;
-        Tapped += OnSingleTapped;
-        PointerPressed += MapControl_PointerDown;
-        DoubleTapped += OnDoubleTapped;
+
+        PointerPressed += MapControl_PointerPressed;
         PointerMoved += MapControl_PointerMoved;
+        PointerReleased += MapControl_PointerReleased;
+
         PointerWheelChanged += MapControl_PointerWheelChanged;
 
         KeyDown += MapControl_KeyDown;
@@ -97,48 +91,42 @@ public partial class MapControl : Grid, IMapControl, IDisposable
     private void OnManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
     {
         RefreshData();
-        Console.WriteLine(Guid.NewGuid());
     }
 
-    private void OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+    private void MapControl_PointerPressed(object sender, PointerRoutedEventArgs e)
     {
-        _virtualRotation = Map.Navigator.Viewport.Rotation;
-    }
+        var position = e.GetCurrentPoint(this).Position.ToScreenPosition();
 
-    private void MapControl_PointerDown(object sender, PointerRoutedEventArgs e)
-    {
-        _pointerDownPosition = e.GetCurrentPoint(this).Position.ToMapsui();
+        if (OnMapPointerPressed([position]))
+            return;
     }
 
     private void MapControl_PointerMoved(object sender, PointerRoutedEventArgs e)
     {
-        var position = e.GetCurrentPoint(this).Position.ToMapsui();
-        if (HandleWidgetPointerMove(position, true, 0, e.KeyModifiers == VirtualKeyModifiers.Shift))
-            e.Handled = true;
+        // This is a bit weird. The OnManipulationDelta event fires on both touch and mouse events
+        // and deals with both properly, except for mouse hover events. This handler only deals with
+        // hover events.
+        if (!IsHovering(e))
+            return;
+        var position = e.GetCurrentPoint(this).Position.ToScreenPosition();
+
+        if (OnMapPointerMoved([position], true)) // Only for hover events
+            return;
+
+        RefreshGraphics();
     }
 
-    private void OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+    private void MapControl_PointerReleased(object sender, PointerRoutedEventArgs e)
     {
-        var tapPosition = e.GetPosition(this).ToMapsui();
-        if (HandleTouchingTouched(tapPosition, _pointerDownPosition, true, 2, _shiftPressed))
-        {
-            e.Handled = true;
-            return;
-        }
-
-        OnInfo(CreateMapInfoEventArgs(tapPosition, tapPosition, 2));
+        var position = e.GetCurrentPoint(this).Position.ToScreenPosition();
+        OnMapPointerReleased([position]);
     }
 
-    private void OnSingleTapped(object sender, TappedRoutedEventArgs e)
+    private bool IsHovering(PointerRoutedEventArgs e)
     {
-        var tabPosition = e.GetPosition(this).ToMapsui();
-        if (HandleTouchingTouched(tabPosition, _pointerDownPosition, true, 1, _shiftPressed))
-        {
-            e.Handled = true;
-            return;
-        }
-
-        OnInfo(CreateMapInfoEventArgs(tabPosition, tabPosition, 1));
+        if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+            return false;
+        return !e.GetCurrentPoint(this).Properties.IsLeftButtonPressed;
     }
 
     private static Rectangle CreateSelectRectangle()
@@ -170,11 +158,10 @@ public partial class MapControl : Grid, IMapControl, IDisposable
 
     private void MapControl_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
     {
-        var currentPoint = e.GetCurrentPoint(this);
-        var currentMousePosition = new MPoint(currentPoint.Position.X, currentPoint.Position.Y);
-        var mouseWheelDelta = currentPoint.Properties.MouseWheelDelta;
+        var mousePointerPoint = e.GetCurrentPoint(this);
+        var mouseWheelDelta = mousePointerPoint.Properties.MouseWheelDelta;
 
-        Map.Navigator.MouseWheelZoom(mouseWheelDelta, currentMousePosition);
+        Map.Navigator.MouseWheelZoom(mouseWheelDelta, mousePointerPoint.ToScreenPosition());
 
         e.Handled = true;
     }
@@ -224,28 +211,23 @@ public partial class MapControl : Grid, IMapControl, IDisposable
 
     private void OnManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
     {
-        var center = e.Position.ToMapsui();
-        var radius = e.Delta.Scale;
-        var rotation = e.Delta.Rotation;
+        var manipulation = ToManipulation(e);
 
-        var previousCenter = e.Position.ToMapsui().Offset(-e.Delta.Translation.X, -e.Delta.Translation.Y);
-        var previousRadius = 1f;
+        if (OnMapPointerMoved([manipulation.Center]))
+            return;
 
-        double rotationDelta = 0;
-
-        if (Map.Navigator.RotationLock == false)
-        {
-            _virtualRotation += rotation;
-
-            rotationDelta = RotationCalculations.CalculateRotationDeltaWithSnapping(
-                _virtualRotation, Map.Navigator.Viewport.Rotation, _unSnapRotationDegrees, _reSnapRotationDegrees);
-        }
-
-        Map.Navigator.Pinch(center, previousCenter, radius / previousRadius, rotationDelta);
-        e.Handled = true;
+        Map.Navigator.Manipulate(ToManipulation(e));
+        RefreshGraphics();
     }
 
-    public void OpenBrowser(string url)
+    private Manipulation ToManipulation(ManipulationDeltaRoutedEventArgs e)
+    {
+        var previousCenter = TransformToVisual(this).Inverse.TransformPoint(e.Position).ToScreenPosition();
+        var center = previousCenter.Offset(e.Delta.Translation.X, e.Delta.Translation.Y);
+        return new Manipulation(center, previousCenter, e.Delta.Scale, e.Delta.Rotation, e.Cumulative.Rotation);
+    }
+
+    public void OpenInBrowser(string url)
     {
         Catch.TaskRun(async () => await Launcher.LaunchUriAsync(new Uri(url)));
     }
@@ -254,6 +236,8 @@ public partial class MapControl : Grid, IMapControl, IDisposable
     private double ViewportHeight => ActualHeight;
 
     private double GetPixelDensity() => XamlRoot?.RasterizationScale ?? 1d;
+
+    private bool GetShiftPressed() => _shiftPressed;
 
 #if __ANDROID__
     protected override void Dispose(bool disposing)

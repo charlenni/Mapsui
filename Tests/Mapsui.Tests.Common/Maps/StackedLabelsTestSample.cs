@@ -7,7 +7,6 @@ using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.DataBuilders;
 using Mapsui.Styles;
 using Mapsui.Tests.Common.TestTools;
-using Mapsui.UI;
 
 namespace Mapsui.Tests.Common.Maps;
 
@@ -28,7 +27,7 @@ public class StackedLabelsTestSample : ISample
 
         var map = new Map
         {
-            BackColor = Color.FromString("WhiteSmoke"),
+            BackColor = Color.WhiteSmoke,
         };
 
         map.Navigator.ZoomToBox(layer.Extent!.Grow(layer.Extent.Width * 0.3));

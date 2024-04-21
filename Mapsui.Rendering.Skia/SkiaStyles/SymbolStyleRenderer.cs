@@ -1,69 +1,35 @@
 ﻿using Mapsui.Extensions;
 using Mapsui.Layers;
-using Mapsui.Nts;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Rendering.Skia.SkiaStyles;
 using Mapsui.Styles;
-using NetTopologySuite.Geometries;
 using SkiaSharp;
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Mapsui.Rendering.Skia;
 
 public class SymbolStyleRenderer : ISkiaStyleRenderer, IFeatureSize
 {
-    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, IStyle style, IRenderCache renderCache, long iteration)
+    public bool Draw(SKCanvas canvas, Viewport viewport, ILayer layer, IFeature feature, IStyle style, IRenderService renderService, long iteration)
     {
-        var cache = (IRenderCache<SKPath, SKPaint>)renderCache;
         var symbolStyle = (SymbolStyle)style;
-        switch (feature)
+        feature.CoordinateVisitor((x, y, setter) =>
         {
-            case PointFeature pointFeature:
-                DrawXY(canvas, viewport, layer, pointFeature.Point.X, pointFeature.Point.Y, symbolStyle, cache);
-                break;
-            case GeometryFeature geometryFeature:
-                switch (geometryFeature.Geometry)
-                {
-                    case GeometryCollection collection:
-                        foreach (var point in GetPoints(collection))
-                            DrawXY(canvas, viewport, layer, point.X, point.Y, symbolStyle, cache);
-                        break;
-                    case Point point:
-                        DrawXY(canvas, viewport, layer, point.X, point.Y, symbolStyle, cache);
-                        break;
-                }
-                break;
-        }
-
+            DrawXY(canvas, viewport, layer, x, y, symbolStyle, renderService);
+        });
         return true;
     }
 
-    private static IEnumerable<Point> GetPoints(GeometryCollection geometryCollection)
-    {
-        foreach (var geometry in geometryCollection)
-        {
-            if (geometry is Point point)
-                yield return point;
-            if (geometry is GeometryCollection collection)
-            {
-                var points = GetPoints(collection);
-                foreach (var p in points)
-                    yield return p;
-            }
-        }
-    }
 
-    public static bool DrawXY(SKCanvas canvas, Viewport viewport, ILayer layer, double x, double y, SymbolStyle symbolStyle, IRenderCache<SKPath,SKPaint> renderCache)
+    public static bool DrawXY(SKCanvas canvas, Viewport viewport, ILayer layer, double x, double y, SymbolStyle symbolStyle, IRenderService renderService)
     {
         if (symbolStyle.SymbolType == SymbolType.Image)
         {
-            return DrawImage(canvas, viewport, layer, x, y, symbolStyle, renderCache);
+            return DrawImage(canvas, viewport, layer, x, y, symbolStyle, renderService.SymbolCache);
         }
         else
         {
-            return DrawSymbol(canvas, viewport, layer, x, y, symbolStyle, renderCache);
+            return DrawSymbol(canvas, viewport, layer, x, y, symbolStyle, renderService.VectorCache);
         }
     }
 
@@ -143,7 +109,7 @@ public class SymbolStyleRenderer : ISkiaStyleRenderer, IFeatureSize
         return true;
     }
 
-    private static bool DrawSymbol(SKCanvas canvas, Viewport viewport, ILayer layer, double x, double y, SymbolStyle symbolStyle, IVectorCache<SKPath, SKPaint> vectorCache)
+    private static bool DrawSymbol(SKCanvas canvas, Viewport viewport, ILayer layer, double x, double y, SymbolStyle symbolStyle, IVectorCache vectorCache)
     {
         var opacity = (float)(layer.Opacity * symbolStyle.Opacity);
 
@@ -259,11 +225,11 @@ public class SymbolStyleRenderer : ISkiaStyleRenderer, IFeatureSize
 
     bool IFeatureSize.NeedsFeature => false;
 
-    double IFeatureSize.FeatureSize(IStyle style, IRenderCache renderCache, IFeature? feature)
+    double IFeatureSize.FeatureSize(IStyle style, IRenderService renderService, IFeature? feature)
     {
         if (style is SymbolStyle symbolStyle)
         {
-            return FeatureSize(symbolStyle, renderCache);
+            return FeatureSize(symbolStyle, renderService.SymbolCache);
         }
 
         return 0;

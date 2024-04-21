@@ -3,9 +3,10 @@ using Android.Graphics;
 using Android.OS;
 using Android.Util;
 using Android.Views;
+using Mapsui.Extensions;
 using Mapsui.Logging;
+using Mapsui.Manipulations;
 using Mapsui.UI.Android.Extensions;
-using Mapsui.Utilities;
 using SkiaSharp.Views.Android;
 
 namespace Mapsui.UI.Android;
@@ -16,53 +17,28 @@ public enum SkiaRenderMode
     Software
 }
 
-internal class MapControlGestureListener : GestureDetector.SimpleOnGestureListener
-{
-    public EventHandler<GestureDetector.FlingEventArgs>? Fling;
-#if NET7_0
-    public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-#else
-    public override bool OnFling(MotionEvent? e1, MotionEvent e2, float velocityX, float velocityY)
-#endif
-    {
-        if (Fling != null)
-        {
-            Fling?.Invoke(this, new GestureDetector.FlingEventArgs(false, e1, e2, velocityX, velocityY));
-            return true;
-        }
-
-        return base.OnFling(e1, e2, velocityX, velocityY);
-    }
-}
-
 public partial class MapControl : ViewGroup, IMapControl
 {
     private View? _canvas;
-    private double _virtualRotation;
-    private GestureDetector? _gestureDetector;
-    private double _previousAngle;
-    private double _previousRadius = 1f;
-    private TouchMode _mode = TouchMode.None;
     private Handler? _mainLooperHandler;
-    private MPoint _previousTouch = new();
-    private MPoint? _pointerDownPosition;
     private SkiaRenderMode _renderMode = SkiaRenderMode.Hardware;
+    private readonly ManipulationTracker _manipulationTracker = new();
 
     public MapControl(Context context, IAttributeSet attrs) :
         base(context, attrs)
     {
-        CommonInitialize();
-        Initialize();
+        SharedConstructor();
+        LocalConstructor();
     }
 
     public MapControl(Context context, IAttributeSet attrs, int defStyle) :
         base(context, attrs, defStyle)
     {
-        CommonInitialize();
-        Initialize();
+        SharedConstructor();
+        LocalConstructor();
     }
 
-    private void Initialize()
+    private void LocalConstructor()
     {
         _invalidate = () => { RunOnUIThread(RefreshGraphicsWithTryCatch); };
 
@@ -76,12 +52,6 @@ public partial class MapControl : ViewGroup, IMapControl
 
         // Pointer events
         Touch += MapControl_Touch;
-        var listener = new MapControlGestureListener(); // Todo: Find out if/why we need this custom gesture detector. Why not the _gestureDetector?
-        listener.Fling += OnFling;
-        _gestureDetector?.Dispose();
-        _gestureDetector = new GestureDetector(Context, listener);
-        _gestureDetector.SingleTapConfirmed += OnSingleTapped;
-        _gestureDetector.DoubleTap += OnDoubleTapped;
     }
 
     private void CanvasOnPaintSurface(object? sender, SKPaintSurfaceEventArgs args)
@@ -121,23 +91,6 @@ public partial class MapControl : ViewGroup, IMapControl
         }
     }
 
-    private void OnDoubleTapped(object? sender, GestureDetector.DoubleTapEventArgs e)
-    {
-        if (e.Event == null)
-            return;
-
-        var position = GetScreenPosition(e.Event, this);
-        OnInfo(CreateMapInfoEventArgs(position, position, 2));
-    }
-
-    private void OnSingleTapped(object? sender, GestureDetector.SingleTapConfirmedEventArgs e)
-    {
-        if (e.Event == null)
-            return;
-
-        var position = GetScreenPosition(e.Event, this);
-        OnInfo(CreateMapInfoEventArgs(position, position, 1));
-    }
 
     protected override void OnSizeChanged(int width, int height, int oldWidth, int oldHeight)
     {
@@ -165,109 +118,29 @@ public partial class MapControl : ViewGroup, IMapControl
         CommonDrawControl(canvas);
     }
 
-    public void OnFling(object? sender, GestureDetector.FlingEventArgs args)
-    {
-        Map.Navigator.Fling(args.VelocityX / 10, args.VelocityY / 10, 1000);
-    }
-
     public void MapControl_Touch(object? sender, TouchEventArgs args)
     {
-        if (args.Event != null && (_gestureDetector?.OnTouchEvent(args.Event) ?? false))
+        if (args.Event is null)
             return;
 
-        var touchPoints = GetScreenPositions(args.Event, this);
+        var positions = GetScreenPositions(args.Event, this, PixelDensity);
 
-        switch (args.Event?.Action)
+        switch (args.Event.Action)
         {
-            case MotionEventActions.Up:
-                Refresh();
-                _mode = TouchMode.None;
-                HandleWidgetPointerUp(touchPoints.First(), _pointerDownPosition, true, 0, false);
-                break;
             case MotionEventActions.Down:
-            case MotionEventActions.Pointer1Down:
-            case MotionEventActions.Pointer2Down:
-            case MotionEventActions.Pointer3Down:
-                if (touchPoints.Count >= 2)
-                {
-                    (_previousTouch, _previousRadius, _previousAngle) = GetPinchValues(touchPoints);
-                    _mode = TouchMode.Zooming;
-                    _virtualRotation = Map.Navigator.Viewport.Rotation;
-                }
-                else
-                {
-                    _previousTouch = touchPoints.First();
-                    _pointerDownPosition = touchPoints.First();
-
-                    if (HandleWidgetPointerDown(_pointerDownPosition, true, 1, false))
-                        return;
-                    _mode = TouchMode.Dragging;
-                }
-                break;
-            case MotionEventActions.Pointer1Up:
-            case MotionEventActions.Pointer2Up:
-            case MotionEventActions.Pointer3Up:
-                // Remove the touchPoint that was released from the locations to reset the
-                // starting points of the move and rotation
-                touchPoints.RemoveAt(args.Event.ActionIndex);
-
-                if (touchPoints.Count >= 2)
-                {
-                    (_previousTouch, _previousRadius, _previousAngle) = GetPinchValues(touchPoints);
-                    _mode = TouchMode.Zooming;
-                    _virtualRotation = Map.Navigator.Viewport.Rotation;
-                }
-                else
-                {
-                    _mode = TouchMode.Dragging;
-                    _previousTouch = touchPoints.First();
-                }
-                Refresh();
+                _manipulationTracker.Restart(positions);
+                if (OnMapPointerPressed(positions))
+                    return;
                 break;
             case MotionEventActions.Move:
-                switch (_mode)
-                {
-                    // There is no widget move handling in Mapsui.Android so the edit widget will not work.
-                    // If this is added there should be testing of editing and all existing functionality.
-                    case TouchMode.Dragging:
-                        {
-                            if (touchPoints.Count != 1)
-                                return;
-
-                            var touch = touchPoints.First();
-                            if (_previousTouch != null)
-                            {
-                                Map.Navigator.Drag(touch, _previousTouch);
-                            }
-                            _previousTouch = touch;
-                        }
-                        break;
-                    case TouchMode.Zooming:
-                        {
-                            if (touchPoints.Count < 2)
-                                return;
-
-                            var (previousTouch, previousRadius, previousAngle) = (_previousTouch, _previousRadius, _previousAngle);
-                            var (touch, radius, angle) = GetPinchValues(touchPoints);
-
-                            double rotationDelta = 0;
-
-                            if (Map.Navigator.RotationLock is false)
-                            {
-                                _virtualRotation += angle - previousAngle;
-
-                                rotationDelta = RotationCalculations.CalculateRotationDeltaWithSnapping(
-                                    _virtualRotation, Map.Navigator.Viewport.Rotation, _unSnapRotationDegrees, _reSnapRotationDegrees);
-                            }
-
-                            Map.Navigator.Pinch(touch, previousTouch, radius / previousRadius, rotationDelta);
-
-                            (_previousTouch, _previousRadius, _previousAngle) = (touch, radius, angle);
+                if (OnMapPointerMoved(positions, false))
+                    return;
+                _manipulationTracker.Manipulate(positions, Map.Navigator.Manipulate);
+                break;
+            case MotionEventActions.Up:
+                OnMapPointerReleased(positions);
 
 
-                        }
-                        break;
-                }
                 break;
         }
     }
@@ -278,17 +151,12 @@ public partial class MapControl : ViewGroup, IMapControl
     /// <param name="motionEvent"></param>
     /// <param name="view"></param>
     /// <returns></returns>
-    private List<MPoint> GetScreenPositions(MotionEvent? motionEvent, View view)
+    private static ReadOnlySpan<ScreenPosition> GetScreenPositions(MotionEvent motionEvent, View view, double pixelDensity)
     {
-        if (motionEvent == null)
-            return [];
-
-        var result = new List<MPoint>();
+        var result = new ScreenPosition[motionEvent.PointerCount];
         for (var i = 0; i < motionEvent.PointerCount; i++)
-        {
-            var pixelCoordinate = new MPoint(motionEvent.GetX(i) - view.Left, motionEvent.GetY(i) - view.Top);
-            result.Add(pixelCoordinate.ToDeviceIndependentUnits(PixelDensity));
-        }
+            result[i] = new ScreenPosition(motionEvent.GetX(i) - view.Left, motionEvent.GetY(i) - view.Top)
+                .ToDeviceIndependentUnits(pixelDensity);
         return result;
     }
 
@@ -298,7 +166,7 @@ public partial class MapControl : ViewGroup, IMapControl
     /// <param name="motionEvent"></param>
     /// <param name="view"></param>
     /// <returns></returns>
-    private MPoint GetScreenPosition(MotionEvent motionEvent, View view)
+    private ScreenPosition GetScreenPosition(MotionEvent motionEvent, View view)
     {
         return GetScreenPositionInPixels(motionEvent, view).ToDeviceIndependentUnits(PixelDensity);
     }
@@ -309,9 +177,9 @@ public partial class MapControl : ViewGroup, IMapControl
     /// <param name="motionEvent"></param>
     /// <param name="view"></param>
     /// <returns></returns>
-    private static MPoint GetScreenPositionInPixels(MotionEvent motionEvent, View view)
+    private static ScreenPosition GetScreenPositionInPixels(MotionEvent motionEvent, View view)
     {
-        return new MPoint(motionEvent.GetX(0) - view.Left, motionEvent.GetY(0) - view.Top);
+        return new ScreenPosition(motionEvent.GetX(0) - view.Left, motionEvent.GetY(0) - view.Top);
     }
 
     private void RefreshGraphicsWithTryCatch()
@@ -348,14 +216,17 @@ public partial class MapControl : ViewGroup, IMapControl
         view.Right = r;
     }
 
-    public void OpenBrowser(string url)
+    public void OpenInBrowser(string url)
     {
-        var uri = global::Android.Net.Uri.Parse(url);
-        var intent = new Intent(Intent.ActionView);
-        intent.SetData(uri);
+        Catch.TaskRun(() =>
+        {
+            var uri = global::Android.Net.Uri.Parse(url);
+            using var intent = new Intent(Intent.ActionView);
+            intent.SetData(uri);
 
-        var chooser = Intent.CreateChooser(intent, "Open with");
-        Context?.StartActivity(chooser);
+            using var chooser = Intent.CreateChooser(intent, "Open with");
+            Context?.StartActivity(chooser);
+        });
     }
 
     protected override void Dispose(bool disposing)
@@ -365,35 +236,10 @@ public partial class MapControl : ViewGroup, IMapControl
             _map?.Dispose();
             _mainLooperHandler?.Dispose();
             _canvas?.Dispose();
-            _gestureDetector?.Dispose();
         }
         CommonDispose(disposing);
 
         base.Dispose(disposing);
-    }
-
-    private static (MPoint centre, double radius, double angle) GetPinchValues(List<MPoint> locations)
-    {
-        if (locations.Count < 2)
-            throw new ArgumentOutOfRangeException(nameof(locations));
-
-        double centerX = 0;
-        double centerY = 0;
-
-        foreach (var location in locations)
-        {
-            centerX += location.X;
-            centerY += location.Y;
-        }
-
-        centerX /= locations.Count;
-        centerY /= locations.Count;
-
-        var radius = Algorithms.Distance(centerX, centerY, locations[0].X, locations[0].Y);
-
-        var angle = Math.Atan2(locations[1].Y - locations[0].Y, locations[1].X - locations[0].X) * 180.0 / Math.PI;
-
-        return (new MPoint(centerX, centerY), radius, angle);
     }
 
     private double ViewportWidth => ToDeviceIndependentUnits(Width);
@@ -450,4 +296,6 @@ public partial class MapControl : ViewGroup, IMapControl
     {
         return Resources?.DisplayMetrics?.Density ?? 0d;
     }
+
+    private static bool GetShiftPressed() => false;
 }

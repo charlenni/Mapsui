@@ -5,7 +5,6 @@ using Mapsui.Layers;
 using Mapsui.Nts.Extensions;
 using Mapsui.Nts.Providers;
 using Mapsui.Projections;
-using Mapsui.Providers;
 using Mapsui.Rendering;
 using Mapsui.Rendering.Skia;
 using Mapsui.Rendering.Skia.Cache;
@@ -34,26 +33,25 @@ public sealed class RasterizingTileLayerWithThousandsOfPolygonsSample : IMapCont
 
     public Map CreateMap()
     {
-        DefaultRendererFactory.Create = () => new MapRenderer(new RenderCache(900000));
+        DefaultRendererFactory.Create = () => new MapRenderer(new RenderService(900000));
         _map?.Dispose();
         _map = new Map();
         _map.Layers.Add(Tiling.OpenStreetMap.CreateTileLayer());
         _map.Layers.Add(new RasterizingTileLayer(CreatePolygonLayer()));
         var home = Mercator.FromLonLat(0, 0);
         _map.Navigator.CenterOnAndZoomTo(home, _map.Navigator.Resolutions[9]);
-        var buttonWidget = new TextButtonWidget
+        _map.Widgets.Enqueue(new ButtonWidget
         {
             Text = "Change Color",
             HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top
-        };
-        buttonWidget.Touched += ChangeColor;
-        _map.Widgets.Enqueue(buttonWidget);
+            VerticalAlignment = VerticalAlignment.Top,
+            Tapped = ChangeColor
+        });
 
         return _map;
     }
 
-    private void ChangeColor(object? sender, WidgetTouchedEventArgs e)
+    private bool ChangeColor(object? sender, WidgetEventArgs e)
     {
         var layer = (_map?.Layers)?.First(f => f is RasterizingTileLayer) as RasterizingTileLayer;
         var random = new Random();
@@ -64,6 +62,7 @@ public sealed class RasterizingTileLayerWithThousandsOfPolygonsSample : IMapCont
             Fill = new Brush(color),
         };
         layer.ClearCache();
+        return false;
     }
 
     public static ILayer CreatePolygonLayer()
@@ -83,19 +82,19 @@ public sealed class RasterizingTileLayerWithThousandsOfPolygonsSample : IMapCont
         var result = new List<Polygon>();
 
         Polygon polygon1;
-        int factor = 0;
+        int factor;
 
         for (int i = 0; i < 900000; i++)
         {
             factor = i - 100 * (int)Math.Round((double)(i / 100));
             polygon1 = new Polygon(
-                new LinearRing(new[] {
-                    new Coordinate(1000*(factor-1), 1000*(factor-1)-(Math.Round((double)(i/100))*1000)),
-                    new Coordinate(1000*(factor-1), 1000*(factor)-(Math.Round((double)(i/100))*1000)),
-                    new Coordinate(1000*(factor), 1000*(factor)-(Math.Round((double)(i/100))*1000)),
-                    new Coordinate(1000*(factor), 1000*(factor-1)-(Math.Round((double)(i/100))*1000)),
-                    new Coordinate(1000*(factor-1), 1000*(factor-1)-(Math.Round((double)(i/100))*1000))
-                }));
+                new LinearRing([
+                    new Coordinate(1000 * (factor - 1), 1000 * (factor - 1) - (Math.Round((double)(i / 100)) * 1000)),
+                    new Coordinate(1000 * (factor - 1), 1000 * (factor) - (Math.Round((double)(i / 100)) * 1000)),
+                    new Coordinate(1000 * (factor), 1000 * (factor) - (Math.Round((double)(i / 100)) * 1000)),
+                    new Coordinate(1000 * (factor), 1000 * (factor - 1) - (Math.Round((double)(i / 100)) * 1000)),
+                    new Coordinate(1000 * (factor - 1), 1000 * (factor - 1) - (Math.Round((double)(i / 100)) * 1000))
+                ]));
 
             result.Add(polygon1);
         }

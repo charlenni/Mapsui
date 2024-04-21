@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts;
-using Mapsui.Providers;
 using Mapsui.Samples.Common;
 using Mapsui.Styles;
-using Mapsui.UI;
 using NetTopologySuite.Geometries;
 
 namespace Mapsui.Tests.Common.Maps;
@@ -30,7 +28,7 @@ public class BitmapSymbolInCollectionSample : ISample
 
         var map = new Map
         {
-            BackColor = Color.FromString("WhiteSmoke"),
+            BackColor = Color.WhiteSmoke,
         };
 
         map.Navigator.ZoomToBox(layer.Extent!.Grow(layer.Extent.Width * 2));
@@ -48,28 +46,28 @@ public class BitmapSymbolInCollectionSample : ISample
         // This test was created the easy way, by copying BitmapSymbol and the GeometryCollection. A test 
         // written specifically for GeometryCollection would probably look different.
 
-        return new List<IFeature>
-        {
+        return
+        [
             new GeometryFeature
             {
-                Geometry = new  GeometryCollection(new Geometry[]  { new Point(50, 50) } ),
-                Styles = new[] {new VectorStyle {Fill = new Brush(Color.Red)}}
+                Geometry = new GeometryCollection([new Point(50, 50)]),
+                Styles = [new VectorStyle { Fill = new Brush(Color.Red) }]
             },
             new GeometryFeature
             {
-                Geometry = new  GeometryCollection(new Geometry[]  {  new Point(50, 100) } ),
-                Styles = new[] {new SymbolStyle { BitmapId = circleIconId}}
+                Geometry = new GeometryCollection([new Point(50, 100)]),
+                Styles = [new SymbolStyle { BitmapId = circleIconId }]
             },
             new GeometryFeature
             {
-                Geometry = new GeometryCollection(new Geometry[]  {  new Point(100, 50) } ),
-                Styles = new[] {new SymbolStyle { BitmapId = checkeredIconId}}
+                Geometry = new GeometryCollection([new Point(100, 50)]),
+                Styles = [new SymbolStyle { BitmapId = checkeredIconId }]
             },
             new GeometryFeature
             {
-                Geometry = new GeometryCollection(new Geometry[]  {  new Point(100, 100) } ),
-                Styles = new[] {new VectorStyle {Fill = new Brush(Color.Green), Outline = null}}
+                Geometry = new GeometryCollection([new Point(100, 100)]),
+                Styles = [new VectorStyle { Fill = new Brush(Color.Green) }]
             }
-        };
+        ];
     }
 }

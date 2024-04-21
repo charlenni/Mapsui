@@ -24,8 +24,6 @@ namespace Mapsui.Providers.Wfs.Utilities;
 /// </summary>
 internal abstract class GeometryFactory : IDisposable
 {
-
-    protected const string GmlNs = "http://www.opengis.net/gml";
     private readonly NumberFormatInfo _formatInfo = new();
     private readonly HttpClientUtil? _httpClientUtil;
     private readonly List<IPathNode> _pathNodes = [];
@@ -46,6 +44,8 @@ internal abstract class GeometryFactory : IDisposable
     /// Gets or sets the axis order
     /// </summary>
     internal int[] AxisOrder { get; set; } = [0, 1]; // default value
+
+    protected string GmlNs => FeatureTypeInfo.GmlNs;
 
     /// <summary>
     /// Protected constructor for the abstract class.
@@ -258,7 +258,7 @@ internal abstract class GeometryFactory : IDisposable
             Async = true,
         };
         return XmlReader.Create(
-            await httpClientUtil.GetDataStreamAsync() ?? throw new ArgumentException(nameof(httpClientUtil)),
+            await httpClientUtil.GetDataStreamAsync() ?? throw new ArgumentException("HttpClientUtil.GetDataStreamAsync returned null"),
             xmlReaderSettings);
     }
 
@@ -267,11 +267,11 @@ internal abstract class GeometryFactory : IDisposable
     /// </summary>
     private void InitializePathNodes()
     {
-        IPathNode coordinatesNode = new PathNode("http://www.opengis.net/gml", "coordinates",
+        IPathNode coordinatesNode = new PathNode(GmlNs, "coordinates",
             (NameTable)XmlReader!.NameTable);
-        IPathNode posListNode = new PathNode("http://www.opengis.net/gml", "posList",
+        IPathNode posListNode = new PathNode(GmlNs, "posList",
             (NameTable)XmlReader.NameTable);
-        IPathNode posNode = new PathNode("http://www.opengis.net/gml", "pos",
+        IPathNode posNode = new PathNode(GmlNs, "pos",
             (NameTable)XmlReader.NameTable);
         IPathNode ogcServiceExceptionNode = new PathNode("http://www.opengis.net/ogc", "ServiceException",
             (NameTable)XmlReader.NameTable);
@@ -353,7 +353,7 @@ internal class PointFactory : GeometryFactory
         await InitAsync();
         IPathNode pointNode = new PathNode(GmlNs, "Point", (NameTable)XmlReader!.NameTable);
         var labelValues = new Dictionary<string, string>();
-        var geomeryFound = false;
+        var geometryFound = false;
 
         try
         {
@@ -363,10 +363,10 @@ internal class PointFactory : GeometryFactory
                 while ((GeometryReader = GetSubReaderOf(FeatureReader, labelValues, pointNode, CoordinatesNode)) != null)
                 {
                     Geometries.Add(ParseCoordinates(GeometryReader)[0].ToPoint());
-                    geomeryFound = true;
+                    geometryFound = true;
                 }
-                if (geomeryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
-                geomeryFound = false;
+                if (geometryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
+                geometryFound = false;
             }
         }
         catch (Exception ex)
@@ -496,7 +496,7 @@ internal class PolygonFactory : GeometryFactory
         IPathNode innerBoundaryNodeAlt = new AlternativePathNodesCollection(innerBoundaryNode, interiorNode);
         IPathNode linearRingNode = new PathNode(GmlNs, "LinearRing", (NameTable)XmlReader.NameTable);
         var labelValues = new Dictionary<string, string>();
-        var geomFound = false;
+        var geometryFound = false;
 
         try
         {
@@ -525,11 +525,11 @@ internal class PolygonFactory : GeometryFactory
                             Geometries.Add(new Polygon(exteriorRing, [.. holes]));
                         else
                             Geometries.Add(new Polygon(exteriorRing));
-                        geomFound = true;
+                        geometryFound = true;
                     }
                 }
-                if (geomFound) features.Add(AddLabel(labelValues, Geometries[^1]));
-                geomFound = false;
+                if (geometryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
+                geometryFound = false;
             }
         }
         catch (Exception ex)
@@ -582,7 +582,7 @@ internal class MultiPointFactory : GeometryFactory
         IPathNode multiPointNode = new PathNode(GmlNs, "MultiPoint", (NameTable)XmlReader!.NameTable);
         IPathNode pointMemberNode = new PathNode(GmlNs, "pointMember", (NameTable)XmlReader.NameTable);
         var labelValues = new Dictionary<string, string>();
-        var geomFound = false;
+        var geometryFound = false;
 
         try
         {
@@ -596,10 +596,10 @@ internal class MultiPointFactory : GeometryFactory
                     using GeometryFactory geomFactory = new PointFactory(GeometryReader, FeatureTypeInfo) { AxisOrder = AxisOrder };
                     var points = (await geomFactory.CreateGeometriesAsync(features)).Cast<Point>();
                     Geometries.Add(new MultiPoint(points.ToArray()));
-                    geomFound = true;
+                    geometryFound = true;
                 }
-                if (geomFound) features.Add(AddLabel(labelValues, Geometries[^1]));
-                geomFound = false;
+                if (geometryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
+                geometryFound = false;
             }
         }
         catch (Exception ex)
@@ -610,7 +610,6 @@ internal class MultiPointFactory : GeometryFactory
 
         return Geometries;
     }
-
 }
 
 /// <summary>
@@ -640,8 +639,6 @@ internal class MultiLineStringFactory : GeometryFactory
     {
     }
 
-
-
     /// <summary>
     /// This method produces instances of type <see cref="MultiLineString"/>.
     /// </summary>
@@ -656,7 +653,7 @@ internal class MultiLineStringFactory : GeometryFactory
         IPathNode curveMemberNode = new PathNode(GmlNs, "curveMember", (NameTable)XmlReader.NameTable);
         IPathNode lineStringMemberNodeAlt = new AlternativePathNodesCollection(lineStringMemberNode, curveMemberNode);
         var labelValues = new Dictionary<string, string>();
-        var geomFound = false;
+        var geometryFound = false;
 
         try
         {
@@ -668,14 +665,14 @@ internal class MultiLineStringFactory : GeometryFactory
                      GetSubReaderOf(FeatureReader, labelValues, multiLineStringNodeAlt, lineStringMemberNodeAlt)) !=
                     null)
                 {
-                    using GeometryFactory geomFactory = new LineStringFactory(GeometryReader, FeatureTypeInfo) { AxisOrder = AxisOrder };
+                    using GeometryFactory geometryFactory = new LineStringFactory(GeometryReader, FeatureTypeInfo) { AxisOrder = AxisOrder };
 
-                    var lineStrings = (await geomFactory.CreateGeometriesAsync(features)).Cast<LineString>();
+                    var lineStrings = (await geometryFactory.CreateGeometriesAsync(features)).Cast<LineString>();
                     Geometries.Add(new MultiLineString(lineStrings.ToArray()));
-                    geomFound = true;
+                    geometryFound = true;
                 }
-                if (geomFound) features.Add(AddLabel(labelValues, Geometries[^1]));
-                geomFound = false;
+                if (geometryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
+                geometryFound = false;
             }
         }
         catch (Exception ex)
@@ -729,9 +726,8 @@ internal class MultiPolygonFactory : GeometryFactory
         IPathNode polygonMemberNode = new PathNode(GmlNs, "polygonMember", (NameTable)XmlReader.NameTable);
         IPathNode surfaceMemberNode = new PathNode(GmlNs, "surfaceMember", (NameTable)XmlReader.NameTable);
         IPathNode polygonMemberNodeAlt = new AlternativePathNodesCollection(polygonMemberNode, surfaceMemberNode);
-        IPathNode linearRingNode = new PathNode(GmlNs, "LinearRing", (NameTable)XmlReader.NameTable);
         var labelValues = new Dictionary<string, string>();
-        var geomFound = false;
+        var geometryFound = false;
 
         try
         {
@@ -742,13 +738,13 @@ internal class MultiPolygonFactory : GeometryFactory
                     (GeometryReader =
                      GetSubReaderOf(FeatureReader, labelValues, multiPolygonNodeAlt, polygonMemberNodeAlt)) != null)
                 {
-                    using GeometryFactory geomFactory = new PolygonFactory(GeometryReader, FeatureTypeInfo) { AxisOrder = AxisOrder };
-                    var polygons = (await geomFactory.CreateGeometriesAsync(features)).Cast<Polygon>();
+                    using GeometryFactory geometryFactory = new PolygonFactory(GeometryReader, FeatureTypeInfo) { AxisOrder = AxisOrder };
+                    var polygons = (await geometryFactory.CreateGeometriesAsync(features)).Cast<Polygon>();
                     Geometries.Add(new MultiPolygon(polygons.ToArray()));
-                    geomFound = true;
+                    geometryFound = true;
                 }
-                if (geomFound) features.Add(AddLabel(labelValues, Geometries[^1]));
-                geomFound = false;
+                if (geometryFound) features.Add(AddLabel(labelValues, Geometries[^1]));
+                geometryFound = false;
             }
         }
         catch (Exception ex)
