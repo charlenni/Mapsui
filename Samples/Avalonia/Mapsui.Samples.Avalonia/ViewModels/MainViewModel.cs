@@ -16,8 +16,6 @@ public partial class MainViewModel : ObservableObject
 {
     static MainViewModel()
     {
-        // todo: find proper way to load assembly
-        Mapsui.Tests.Common.Utilities.LoadAssembly();
     }
 
     public MainViewModel()

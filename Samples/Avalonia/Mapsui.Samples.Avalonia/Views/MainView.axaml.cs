@@ -5,8 +5,6 @@ using AvaloniaApplication1.ViewModels;
 using Mapsui.Extensions;
 using Mapsui.Samples.Common;
 using Mapsui.Samples.Common.Extensions;
-
-using Mapsui.Tiling;
 using Mapsui.Samples.Common.Maps.Widgets;
 
 namespace Mapsui.Samples.Avalonia.Views;
@@ -29,8 +27,8 @@ public partial class MainView : UserControl
     private void MainView_DataContextChanged(object? sender, System.EventArgs e)
     {
         mapControl.Map.Navigator.RotationLock = false;
-        mapControl.UnSnapRotationDegrees = 30;
-        mapControl.ReSnapRotationDegrees = 5;
+        mapControl.Map.Navigator.UnSnapRotation = 30;
+        mapControl.Map.Navigator.ReSnapRotation = 5;
 
         slider.ValueChanged += Slider_ValueChanged;
 
@@ -41,7 +39,7 @@ public partial class MainView : UserControl
 
         // The CustomWidgetSkiaRenderer needs to be registered to make the CustomWidget sample work.
         // Perhaps it is possible to let the sample itself do this so we do not have to do this for each platform.
-        mapControl.Renderer.WidgetRenders[typeof(CustomWidget.CustomWidget)] = new CustomWidgetSkiaRenderer();
+        mapControl.Renderer.WidgetRenders[typeof(CustomWidget)] = new CustomWidgetSkiaRenderer();
     }
 
     private void ComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
