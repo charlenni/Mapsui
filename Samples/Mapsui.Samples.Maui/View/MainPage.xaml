@@ -32,14 +32,14 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </ScrollView>
-            <Slider x:Name="slider" Grid.Row="2" Margin="4,6" Minimum="0" Maximum="360" MinimumTrackColor="LightGray" MaximumTrackColor="LightGray" ThumbColor="Green" ValueChanged="Slider_ValueChanged"/>
+            <Slider x:Name="slider" Grid.Row="2" Margin="4,6" Minimum="0" Maximum="360" Value="{Binding Rotation}" MinimumTrackColor="LightGray" MaximumTrackColor="LightGray" ThumbColor="Green" ValueChanged="Slider_ValueChanged"/>
             <ScrollView Grid.Row="3">
                 <VerticalStackLayout Margin="4">
                     <CollectionView x:Name="layersList" ItemsSource="{Binding Layers}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <HorizontalStackLayout HeightRequest="35">
-                                    <CheckBox IsChecked="{Binding Enabled}" Color="Gray"/>
+                                    <CheckBox IsChecked="{Binding Enabled}" CheckedChanged="CheckBox_CheckedChanged" Color="Gray"/>
                                     <Label Text="{Binding Name}" VerticalTextAlignment="Center"/>
                                 </HorizontalStackLayout>
                             </DataTemplate>

@@ -44,10 +44,15 @@ public partial class MainPage : ContentPage
 
     private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
     {
-        if (BindingContext is MainViewModel mainViewModel)
+        if (BindingContext is MainViewModel mainViewModel && mainViewModel.Map?.Navigator.Viewport.Rotation != e.NewValue)
         {
-            mainViewModel.Map?.Navigator.RotateTo(slider.Value);
+            mainViewModel.Map?.Navigator.RotateTo(e.NewValue);
         }
+    }
+
+    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        (BindingContext as MainViewModel)?.Map?.Refresh();
     }
 }
 

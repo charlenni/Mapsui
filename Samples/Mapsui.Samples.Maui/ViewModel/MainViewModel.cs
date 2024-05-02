@@ -26,7 +26,8 @@ public partial class MainViewModel : ObservableObject
         PopulateSamples();
         _selectedSample = Samples.First();
         Map = new Map();
-        Map.Layers.Changed += PopulateLayers; 
+        Map.Layers.Changed += PopulateLayers;
+        Map.Navigator.ViewportChanged += ViewportChanged;
     }
 
     [ObservableProperty]
@@ -37,6 +38,9 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     Map? _map;
+
+    [ObservableProperty]
+    double _rotation;
 
     public ObservableCollection<ISampleBase> Samples { get; set; } = new();
     public ObservableCollection<ILayer> Layers { get; set; } = new();
@@ -67,10 +71,15 @@ public partial class MainViewModel : ObservableObject
 
             if (SelectedSample is ISample sample)
             {
-                if (Map != null) 
+                if (Map != null)
+                {
                     Map.Layers.Changed -= PopulateLayers;
+                    Map.Navigator.ViewportChanged -= ViewportChanged;
+                }
+
                 Map = await sample.CreateMapAsync();
                 Map.Layers.Changed += PopulateLayers;
+                Map.Navigator.ViewportChanged += ViewportChanged;
                 PopulateLayers(null, null);
             }
             else if (SelectedSample is IMapControlSample mapControlSample && MapControl != null)
@@ -87,5 +96,10 @@ public partial class MainViewModel : ObservableObject
         Layers.Clear();
         foreach (var layer in Map?.Layers)
             Layers.Add(layer);
+    }
+
+    private void ViewportChanged(object sender, ViewportChangedEventArgs e)
+    {
+        Rotation = Map?.Navigator.Viewport.Rotation ?? 0.0;
     }
 }
