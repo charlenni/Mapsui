@@ -1,11 +1,9 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using AvaloniaApplication1.ViewModels;
-using Mapsui.Extensions;
-using Mapsui.Samples.Common;
-using Mapsui.Samples.Common.Extensions;
 using Mapsui.Samples.Common.Maps.Widgets;
+using System.Linq;
 
 namespace Mapsui.Samples.Avalonia.Views;
 
@@ -47,36 +45,27 @@ public partial class MainView : UserControl
         if (DataContext is MainViewModel mainViewModel)
         {
             mainViewModel.PopulateSamples();
+            mainViewModel.SelectSample(mainViewModel.Samples.FirstOrDefault());
         }
     }
 
     private void Slider_ValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
-        if (DataContext is MainViewModel mainViewModel)
-        {
+        if (DataContext is MainViewModel mainViewModel && mainViewModel.Map?.Navigator.Viewport.Rotation != e.NewValue)
             mainViewModel.Map?.Navigator.RotateTo(e.NewValue);
+    }
+
+    private void RadioButton_IsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (sender is RadioButton rb && (rb.IsChecked ?? false) && DataContext is MainViewModel mainViewModel)
+        {
+            var sample = mainViewModel.Samples.FirstOrDefault(s => s.Name == (string)(rb.Content ?? ""));
+            mainViewModel.SelectSample(sample);
         }
     }
 
-    private RadioButton CreateRadioButton(ISampleBase sample)
+    private void CheckBox_IsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        var radioButton = new RadioButton
-        {
-            FontSize = 16,
-            Content = sample.Name,
-            Margin = new Thickness(4)
-        };
-
-        radioButton.Click += (s, a) =>
-        {
-            Catch.Exceptions(async () =>
-            {
-                mapControl.Map?.Layers.Clear();
-                await sample.SetupAsync(mapControl);
-                mapControl.Refresh();
-            });
-        };
-
-        return radioButton;
+        (DataContext as MainViewModel)?.Map?.Refresh();
     }
 }

@@ -35,12 +35,15 @@ public partial class MainViewModel : ObservableObject
     string _selectedCategory;
 
     [ObservableProperty]
-    ISampleBase _selectedSample;
+    SampleBaseExtension _selectedSample;
 
     [ObservableProperty]
     Map? _map;
 
-    public ObservableCollection<ISampleBase> Samples { get; set; } = new();
+    [ObservableProperty]
+    double _rotation;
+
+    public ObservableCollection<SampleBaseExtension> Samples { get; set; } = new();
     public ObservableCollection<ILayer> Layers { get; set; } = new();
     public ObservableCollection<string> Categories { get; } = new();
 
@@ -49,35 +52,46 @@ public partial class MainViewModel : ObservableObject
 
     public void PopulateSamples()
     {
-        var samples = AllSamples.GetSamples().OfType<ISampleBase>().Where(s => s.Category == SelectedCategory);
-        SelectedSample = samples?.FirstOrDefault();
+        var samples1 = AllSamples.GetSamples();
+        var samples2 = samples1.OfType<ISampleBase>();
+        var samples = samples2.Where(s => s.Category == SelectedCategory);
         Samples.Clear();
         foreach (var sample in samples)
-            Samples.Add(sample);
+            Samples.Add(new SampleBaseExtension(sample));
         SelectSample(Samples.First());
     }
 
     [SuppressMessage("Usage", "VSTHRD100:Avoid async void methods")]
-    public async void SelectSample(ISampleBase selectedSample)
+    public async void SelectSample(SampleBaseExtension selectedSample)
     {
         try
         {
             if (selectedSample is null)
                 return;
 
+            if (SelectedSample != null)
+                SelectedSample.IsSelected = false;
+
             SelectedSample = selectedSample;
 
-            if (SelectedSample is ISample sample)
+            SelectedSample.IsSelected = true;
+
+            if (SelectedSample.Sample is ISample sample)
             {
                 if (Map != null)
+                {
                     Map.Layers.Changed -= PopulateLayers;
+                    Map.Navigator.ViewportChanged -= ViewportChanged;
+                }
                 Map = await sample.CreateMapAsync();
                 Map.Layers.Changed += PopulateLayers;
+                Map.Navigator.ViewportChanged += ViewportChanged;
+
                 PopulateLayers(null, null);
                 if (MapControl != null)
                     MapControl.Map = Map;
             }
-            else if (SelectedSample is IMapControlSample mapControlSample && MapControl != null)
+            else if (SelectedSample.Sample is IMapControlSample mapControlSample && MapControl != null)
                 mapControlSample.Setup(MapControl);
         }
         catch (Exception ex)
@@ -86,10 +100,33 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    private void ViewportChanged(object sender, ViewportChangedEventArgs e)
+    {
+        Rotation = Map?.Navigator.Viewport.Rotation ?? 0.0;
+    }
+
+    /// <summary>
+    /// Add all layers of map to layer list 
+    /// </summary>
     private void PopulateLayers(object sender, LayerCollectionChangedEventArgs args)
     {
         Layers.Clear();
         foreach (var layer in Map?.Layers)
             Layers.Add(layer);
+    }
+}
+
+/// <summary>
+/// Wrapper around the ISampleBase to have the possibility to get a flag which sample is selected
+/// </summary>
+public class SampleBaseExtension
+{
+    public ISampleBase Sample { get; init; }
+    public bool IsSelected { get; set; }
+    public string Name => Sample.Name;
+
+    public SampleBaseExtension(ISampleBase sample)
+    {
+        Sample = sample;
     }
 }
