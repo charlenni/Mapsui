@@ -75,6 +75,7 @@ public partial class MainViewModel : ObservableObject
                 {
                     Map.Layers.Changed -= PopulateLayers;
                     Map.Navigator.ViewportChanged -= ViewportChanged;
+                    Map.Dispose();
                 }
 
                 Map = await sample.CreateMapAsync();
