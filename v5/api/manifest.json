@@ -962,30 +962,10 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "pages/Mapsui.Fetcher.FetchWorker.yml",
-      "output": {
-        ".html": {
-          "relative_path": "pages/Mapsui.Fetcher.FetchWorker.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "pages/Mapsui.Fetcher.IAsyncDataFetcher.yml",
       "output": {
         ".html": {
           "relative_path": "pages/Mapsui.Fetcher.IAsyncDataFetcher.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "pages/Mapsui.Fetcher.IFetchDispatcher.yml",
-      "output": {
-        ".html": {
-          "relative_path": "pages/Mapsui.Fetcher.IFetchDispatcher.html"
         }
       },
       "version": ""
@@ -3536,6 +3516,16 @@
       "output": {
         ".html": {
           "relative_path": "pages/Mapsui.Styles.Font.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "pages/Mapsui.Styles.IBitmapRegistry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "pages/Mapsui.Styles.IBitmapRegistry.html"
         }
       },
       "version": ""

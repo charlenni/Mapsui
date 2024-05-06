@@ -5723,6 +5723,19 @@ references:
   commentId: T:Mapsui.Extensions.StreamExtensions
   fullName: Mapsui.Extensions.StreamExtensions
   nameWithType: StreamExtensions
+- uid: Mapsui.Extensions.StreamExtensions.CopyToMemoryStream(System.IO.Stream)
+  name: CopyToMemoryStream(Stream)
+  href: pages/Mapsui.Extensions.StreamExtensions.html#Mapsui_Extensions_StreamExtensions_CopyToMemoryStream_System_IO_Stream_
+  commentId: M:Mapsui.Extensions.StreamExtensions.CopyToMemoryStream(System.IO.Stream)
+  fullName: Mapsui.Extensions.StreamExtensions.CopyToMemoryStream(System.IO.Stream)
+  nameWithType: StreamExtensions.CopyToMemoryStream(Stream)
+- uid: Mapsui.Extensions.StreamExtensions.CopyToMemoryStream*
+  name: CopyToMemoryStream
+  href: pages/Mapsui.Extensions.StreamExtensions.html#Mapsui_Extensions_StreamExtensions_CopyToMemoryStream_
+  commentId: Overload:Mapsui.Extensions.StreamExtensions.CopyToMemoryStream
+  isSpec: "True"
+  fullName: Mapsui.Extensions.StreamExtensions.CopyToMemoryStream
+  nameWithType: StreamExtensions.CopyToMemoryStream
 - uid: Mapsui.Extensions.StreamExtensions.IsSvg(System.IO.Stream)
   name: IsSvg(Stream)
   href: pages/Mapsui.Extensions.StreamExtensions.html#Mapsui_Extensions_StreamExtensions_IsSvg_System_IO_Stream_
@@ -5869,6 +5882,22 @@ references:
   isSpec: "True"
   fullName: Mapsui.Extensions.TypeExtensions.LoadBitmapId
   nameWithType: TypeExtensions.LoadBitmapId
+- uid: Mapsui.Extensions.TypeExtensions.LoadBitmapPath(System.Type,System.String)
+  name: LoadBitmapPath(Type, string)
+  href: pages/Mapsui.Extensions.TypeExtensions.html#Mapsui_Extensions_TypeExtensions_LoadBitmapPath_System_Type_System_String_
+  commentId: M:Mapsui.Extensions.TypeExtensions.LoadBitmapPath(System.Type,System.String)
+  name.vb: LoadBitmapPath(Type, String)
+  fullName: Mapsui.Extensions.TypeExtensions.LoadBitmapPath(System.Type, string)
+  fullName.vb: Mapsui.Extensions.TypeExtensions.LoadBitmapPath(System.Type, String)
+  nameWithType: TypeExtensions.LoadBitmapPath(Type, string)
+  nameWithType.vb: TypeExtensions.LoadBitmapPath(Type, String)
+- uid: Mapsui.Extensions.TypeExtensions.LoadBitmapPath*
+  name: LoadBitmapPath
+  href: pages/Mapsui.Extensions.TypeExtensions.html#Mapsui_Extensions_TypeExtensions_LoadBitmapPath_
+  commentId: Overload:Mapsui.Extensions.TypeExtensions.LoadBitmapPath
+  isSpec: "True"
+  fullName: Mapsui.Extensions.TypeExtensions.LoadBitmapPath
+  nameWithType: TypeExtensions.LoadBitmapPath
 - uid: Mapsui.Extensions.ViewportExtensions
   name: ViewportExtensions
   href: pages/Mapsui.Extensions.ViewportExtensions.html
@@ -6131,24 +6160,24 @@ references:
   fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New()
   nameWithType: DataChangedEventArgs.DataChangedEventArgs()
   nameWithType.vb: DataChangedEventArgs.New()
-- uid: Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.Boolean,System.Object)
-  name: DataChangedEventArgs(Exception?, bool, object?)
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs__ctor_System_Exception_System_Boolean_System_Object_
-  commentId: M:Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.Boolean,System.Object)
-  name.vb: New(Exception, Boolean, Object)
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.DataChangedEventArgs(System.Exception?, bool, object?)
-  fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New(System.Exception, Boolean, Object)
-  nameWithType: DataChangedEventArgs.DataChangedEventArgs(Exception?, bool, object?)
-  nameWithType.vb: DataChangedEventArgs.New(Exception, Boolean, Object)
-- uid: Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.Boolean,System.Object,System.String)
-  name: DataChangedEventArgs(Exception?, bool, object?, string)
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs__ctor_System_Exception_System_Boolean_System_Object_System_String_
-  commentId: M:Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.Boolean,System.Object,System.String)
-  name.vb: New(Exception, Boolean, Object, String)
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.DataChangedEventArgs(System.Exception?, bool, object?, string)
-  fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New(System.Exception, Boolean, Object, String)
-  nameWithType: DataChangedEventArgs.DataChangedEventArgs(Exception?, bool, object?, string)
-  nameWithType.vb: DataChangedEventArgs.New(Exception, Boolean, Object, String)
+- uid: Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception)
+  name: DataChangedEventArgs(Exception?)
+  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs__ctor_System_Exception_
+  commentId: M:Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception)
+  name.vb: New(Exception)
+  fullName: Mapsui.Fetcher.DataChangedEventArgs.DataChangedEventArgs(System.Exception?)
+  fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New(System.Exception)
+  nameWithType: DataChangedEventArgs.DataChangedEventArgs(Exception?)
+  nameWithType.vb: DataChangedEventArgs.New(Exception)
+- uid: Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.String)
+  name: DataChangedEventArgs(Exception?, string)
+  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs__ctor_System_Exception_System_String_
+  commentId: M:Mapsui.Fetcher.DataChangedEventArgs.#ctor(System.Exception,System.String)
+  name.vb: New(Exception, String)
+  fullName: Mapsui.Fetcher.DataChangedEventArgs.DataChangedEventArgs(System.Exception?, string)
+  fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New(System.Exception, String)
+  nameWithType: DataChangedEventArgs.DataChangedEventArgs(Exception?, string)
+  nameWithType.vb: DataChangedEventArgs.New(Exception, String)
 - uid: Mapsui.Fetcher.DataChangedEventArgs.#ctor*
   name: DataChangedEventArgs
   href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs__ctor_
@@ -6159,19 +6188,6 @@ references:
   fullName.vb: Mapsui.Fetcher.DataChangedEventArgs.New
   nameWithType: DataChangedEventArgs.DataChangedEventArgs
   nameWithType.vb: DataChangedEventArgs.New
-- uid: Mapsui.Fetcher.DataChangedEventArgs.Cancelled
-  name: Cancelled
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_Cancelled
-  commentId: P:Mapsui.Fetcher.DataChangedEventArgs.Cancelled
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.Cancelled
-  nameWithType: DataChangedEventArgs.Cancelled
-- uid: Mapsui.Fetcher.DataChangedEventArgs.Cancelled*
-  name: Cancelled
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_Cancelled_
-  commentId: Overload:Mapsui.Fetcher.DataChangedEventArgs.Cancelled
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.Cancelled
-  nameWithType: DataChangedEventArgs.Cancelled
 - uid: Mapsui.Fetcher.DataChangedEventArgs.Error
   name: Error
   href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_Error
@@ -6185,19 +6201,6 @@ references:
   isSpec: "True"
   fullName: Mapsui.Fetcher.DataChangedEventArgs.Error
   nameWithType: DataChangedEventArgs.Error
-- uid: Mapsui.Fetcher.DataChangedEventArgs.Info
-  name: Info
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_Info
-  commentId: P:Mapsui.Fetcher.DataChangedEventArgs.Info
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.Info
-  nameWithType: DataChangedEventArgs.Info
-- uid: Mapsui.Fetcher.DataChangedEventArgs.Info*
-  name: Info
-  href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_Info_
-  commentId: Overload:Mapsui.Fetcher.DataChangedEventArgs.Info
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.DataChangedEventArgs.Info
-  nameWithType: DataChangedEventArgs.Info
 - uid: Mapsui.Fetcher.DataChangedEventArgs.LayerName
   name: LayerName
   href: pages/Mapsui.Fetcher.DataChangedEventArgs.html#Mapsui_Fetcher_DataChangedEventArgs_LayerName
@@ -6242,34 +6245,21 @@ references:
   fullName.vb: Mapsui.Fetcher.Delayer.New
   nameWithType: Delayer.Delayer
   nameWithType.vb: Delayer.New
-- uid: Mapsui.Fetcher.Delayer.Dispose
-  name: Dispose()
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_Dispose
-  commentId: M:Mapsui.Fetcher.Delayer.Dispose
-  fullName: Mapsui.Fetcher.Delayer.Dispose()
-  nameWithType: Delayer.Dispose()
-- uid: Mapsui.Fetcher.Delayer.Dispose(System.Boolean)
-  name: Dispose(bool)
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_Dispose_System_Boolean_
-  commentId: M:Mapsui.Fetcher.Delayer.Dispose(System.Boolean)
-  name.vb: Dispose(Boolean)
-  fullName: Mapsui.Fetcher.Delayer.Dispose(bool)
-  fullName.vb: Mapsui.Fetcher.Delayer.Dispose(Boolean)
-  nameWithType: Delayer.Dispose(bool)
-  nameWithType.vb: Delayer.Dispose(Boolean)
-- uid: Mapsui.Fetcher.Delayer.Dispose*
-  name: Dispose
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_Dispose_
-  commentId: Overload:Mapsui.Fetcher.Delayer.Dispose
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.Delayer.Dispose
-  nameWithType: Delayer.Dispose
 - uid: Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Action)
   name: ExecuteDelayed(Action)
   href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Action_
   commentId: M:Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Action)
   fullName: Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Action)
   nameWithType: Delayer.ExecuteDelayed(Action)
+- uid: Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func{System.Threading.Tasks.Task})
+  name: ExecuteDelayed(Func<Task>)
+  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func{System.Threading.Tasks.Task})
+  name.vb: ExecuteDelayed(Func(Of Task))
+  fullName: Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: Delayer.ExecuteDelayed(Func<Task>)
+  nameWithType.vb: Delayer.ExecuteDelayed(Func(Of Task))
 - uid: Mapsui.Fetcher.Delayer.ExecuteDelayed*
   name: ExecuteDelayed
   href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_ExecuteDelayed_
@@ -6277,47 +6267,47 @@ references:
   isSpec: "True"
   fullName: Mapsui.Fetcher.Delayer.ExecuteDelayed
   nameWithType: Delayer.ExecuteDelayed
-- uid: Mapsui.Fetcher.Delayer.MillisecondsToWait
-  name: MillisecondsToWait
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsToWait
-  commentId: P:Mapsui.Fetcher.Delayer.MillisecondsToWait
-  fullName: Mapsui.Fetcher.Delayer.MillisecondsToWait
-  nameWithType: Delayer.MillisecondsToWait
-- uid: Mapsui.Fetcher.Delayer.MillisecondsToWait*
-  name: MillisecondsToWait
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsToWait_
-  commentId: Overload:Mapsui.Fetcher.Delayer.MillisecondsToWait
+- uid: Mapsui.Fetcher.Delayer.MillisecondsBeforeCall
+  name: MillisecondsBeforeCall
+  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsBeforeCall
+  commentId: P:Mapsui.Fetcher.Delayer.MillisecondsBeforeCall
+  fullName: Mapsui.Fetcher.Delayer.MillisecondsBeforeCall
+  nameWithType: Delayer.MillisecondsBeforeCall
+- uid: Mapsui.Fetcher.Delayer.MillisecondsBeforeCall*
+  name: MillisecondsBeforeCall
+  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsBeforeCall_
+  commentId: Overload:Mapsui.Fetcher.Delayer.MillisecondsBeforeCall
   isSpec: "True"
-  fullName: Mapsui.Fetcher.Delayer.MillisecondsToWait
-  nameWithType: Delayer.MillisecondsToWait
-- uid: Mapsui.Fetcher.Delayer.StartWithDelay
-  name: StartWithDelay
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_StartWithDelay
-  commentId: P:Mapsui.Fetcher.Delayer.StartWithDelay
-  fullName: Mapsui.Fetcher.Delayer.StartWithDelay
-  nameWithType: Delayer.StartWithDelay
-- uid: Mapsui.Fetcher.Delayer.StartWithDelay*
-  name: StartWithDelay
-  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_StartWithDelay_
-  commentId: Overload:Mapsui.Fetcher.Delayer.StartWithDelay
+  fullName: Mapsui.Fetcher.Delayer.MillisecondsBeforeCall
+  nameWithType: Delayer.MillisecondsBeforeCall
+- uid: Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls
+  name: MillisecondsBetweenCalls
+  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsBetweenCalls
+  commentId: P:Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls
+  fullName: Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls
+  nameWithType: Delayer.MillisecondsBetweenCalls
+- uid: Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls*
+  name: MillisecondsBetweenCalls
+  href: pages/Mapsui.Fetcher.Delayer.html#Mapsui_Fetcher_Delayer_MillisecondsBetweenCalls_
+  commentId: Overload:Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls
   isSpec: "True"
-  fullName: Mapsui.Fetcher.Delayer.StartWithDelay
-  nameWithType: Delayer.StartWithDelay
+  fullName: Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls
+  nameWithType: Delayer.MillisecondsBetweenCalls
 - uid: Mapsui.Fetcher.FetchMachine
   name: FetchMachine
   href: pages/Mapsui.Fetcher.FetchMachine.html
   commentId: T:Mapsui.Fetcher.FetchMachine
   fullName: Mapsui.Fetcher.FetchMachine
   nameWithType: FetchMachine
-- uid: Mapsui.Fetcher.FetchMachine.#ctor(Mapsui.Fetcher.IFetchDispatcher,System.Int32)
-  name: FetchMachine(IFetchDispatcher, int)
-  href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine__ctor_Mapsui_Fetcher_IFetchDispatcher_System_Int32_
-  commentId: M:Mapsui.Fetcher.FetchMachine.#ctor(Mapsui.Fetcher.IFetchDispatcher,System.Int32)
-  name.vb: New(IFetchDispatcher, Integer)
-  fullName: Mapsui.Fetcher.FetchMachine.FetchMachine(Mapsui.Fetcher.IFetchDispatcher, int)
-  fullName.vb: Mapsui.Fetcher.FetchMachine.New(Mapsui.Fetcher.IFetchDispatcher, Integer)
-  nameWithType: FetchMachine.FetchMachine(IFetchDispatcher, int)
-  nameWithType.vb: FetchMachine.New(IFetchDispatcher, Integer)
+- uid: Mapsui.Fetcher.FetchMachine.#ctor(System.Int32)
+  name: FetchMachine(int)
+  href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine__ctor_System_Int32_
+  commentId: M:Mapsui.Fetcher.FetchMachine.#ctor(System.Int32)
+  name.vb: New(Integer)
+  fullName: Mapsui.Fetcher.FetchMachine.FetchMachine(int)
+  fullName.vb: Mapsui.Fetcher.FetchMachine.New(Integer)
+  nameWithType: FetchMachine.FetchMachine(int)
+  nameWithType.vb: FetchMachine.New(Integer)
 - uid: Mapsui.Fetcher.FetchMachine.#ctor*
   name: FetchMachine
   href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine__ctor_
@@ -6328,12 +6318,15 @@ references:
   fullName.vb: Mapsui.Fetcher.FetchMachine.New
   nameWithType: FetchMachine.FetchMachine
   nameWithType.vb: FetchMachine.New
-- uid: Mapsui.Fetcher.FetchMachine.Start
-  name: Start()
-  href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine_Start
-  commentId: M:Mapsui.Fetcher.FetchMachine.Start
-  fullName: Mapsui.Fetcher.FetchMachine.Start()
-  nameWithType: FetchMachine.Start()
+- uid: Mapsui.Fetcher.FetchMachine.Start(System.Func{System.Threading.Tasks.Task})
+  name: Start(Func<Task>)
+  href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine_Start_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Mapsui.Fetcher.FetchMachine.Start(System.Func{System.Threading.Tasks.Task})
+  name.vb: Start(Func(Of Task))
+  fullName: Mapsui.Fetcher.FetchMachine.Start(System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Mapsui.Fetcher.FetchMachine.Start(System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: FetchMachine.Start(Func<Task>)
+  nameWithType.vb: FetchMachine.Start(Func(Of Task))
 - uid: Mapsui.Fetcher.FetchMachine.Start*
   name: Start
   href: pages/Mapsui.Fetcher.FetchMachine.html#Mapsui_Fetcher_FetchMachine_Start_
@@ -6354,85 +6347,6 @@ references:
   isSpec: "True"
   fullName: Mapsui.Fetcher.FetchMachine.Stop
   nameWithType: FetchMachine.Stop
-- uid: Mapsui.Fetcher.FetchWorker
-  name: FetchWorker
-  href: pages/Mapsui.Fetcher.FetchWorker.html
-  commentId: T:Mapsui.Fetcher.FetchWorker
-  fullName: Mapsui.Fetcher.FetchWorker
-  nameWithType: FetchWorker
-- uid: Mapsui.Fetcher.FetchWorker.#ctor(Mapsui.Fetcher.IFetchDispatcher)
-  name: FetchWorker(IFetchDispatcher)
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker__ctor_Mapsui_Fetcher_IFetchDispatcher_
-  commentId: M:Mapsui.Fetcher.FetchWorker.#ctor(Mapsui.Fetcher.IFetchDispatcher)
-  name.vb: New(IFetchDispatcher)
-  fullName: Mapsui.Fetcher.FetchWorker.FetchWorker(Mapsui.Fetcher.IFetchDispatcher)
-  fullName.vb: Mapsui.Fetcher.FetchWorker.New(Mapsui.Fetcher.IFetchDispatcher)
-  nameWithType: FetchWorker.FetchWorker(IFetchDispatcher)
-  nameWithType.vb: FetchWorker.New(IFetchDispatcher)
-- uid: Mapsui.Fetcher.FetchWorker.#ctor*
-  name: FetchWorker
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker__ctor_
-  commentId: Overload:Mapsui.Fetcher.FetchWorker.#ctor
-  isSpec: "True"
-  name.vb: New
-  fullName: Mapsui.Fetcher.FetchWorker.FetchWorker
-  fullName.vb: Mapsui.Fetcher.FetchWorker.New
-  nameWithType: FetchWorker.FetchWorker
-  nameWithType.vb: FetchWorker.New
-- uid: Mapsui.Fetcher.FetchWorker.Dispose
-  name: Dispose()
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Dispose
-  commentId: M:Mapsui.Fetcher.FetchWorker.Dispose
-  fullName: Mapsui.Fetcher.FetchWorker.Dispose()
-  nameWithType: FetchWorker.Dispose()
-- uid: Mapsui.Fetcher.FetchWorker.Dispose(System.Boolean)
-  name: Dispose(bool)
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Dispose_System_Boolean_
-  commentId: M:Mapsui.Fetcher.FetchWorker.Dispose(System.Boolean)
-  name.vb: Dispose(Boolean)
-  fullName: Mapsui.Fetcher.FetchWorker.Dispose(bool)
-  fullName.vb: Mapsui.Fetcher.FetchWorker.Dispose(Boolean)
-  nameWithType: FetchWorker.Dispose(bool)
-  nameWithType.vb: FetchWorker.Dispose(Boolean)
-- uid: Mapsui.Fetcher.FetchWorker.Dispose*
-  name: Dispose
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Dispose_
-  commentId: Overload:Mapsui.Fetcher.FetchWorker.Dispose
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.FetchWorker.Dispose
-  nameWithType: FetchWorker.Dispose
-- uid: Mapsui.Fetcher.FetchWorker.RestartCounter
-  name: RestartCounter
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_RestartCounter
-  commentId: F:Mapsui.Fetcher.FetchWorker.RestartCounter
-  fullName: Mapsui.Fetcher.FetchWorker.RestartCounter
-  nameWithType: FetchWorker.RestartCounter
-- uid: Mapsui.Fetcher.FetchWorker.Start
-  name: Start()
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Start
-  commentId: M:Mapsui.Fetcher.FetchWorker.Start
-  fullName: Mapsui.Fetcher.FetchWorker.Start()
-  nameWithType: FetchWorker.Start()
-- uid: Mapsui.Fetcher.FetchWorker.Start*
-  name: Start
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Start_
-  commentId: Overload:Mapsui.Fetcher.FetchWorker.Start
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.FetchWorker.Start
-  nameWithType: FetchWorker.Start
-- uid: Mapsui.Fetcher.FetchWorker.Stop
-  name: Stop()
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Stop
-  commentId: M:Mapsui.Fetcher.FetchWorker.Stop
-  fullName: Mapsui.Fetcher.FetchWorker.Stop()
-  nameWithType: FetchWorker.Stop()
-- uid: Mapsui.Fetcher.FetchWorker.Stop*
-  name: Stop
-  href: pages/Mapsui.Fetcher.FetchWorker.html#Mapsui_Fetcher_FetchWorker_Stop_
-  commentId: Overload:Mapsui.Fetcher.FetchWorker.Stop
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.FetchWorker.Stop
-  nameWithType: FetchWorker.Stop
 - uid: Mapsui.Fetcher.IAsyncDataFetcher
   name: IAsyncDataFetcher
   href: pages/Mapsui.Fetcher.IAsyncDataFetcher.html
@@ -6478,34 +6392,6 @@ references:
   isSpec: "True"
   fullName: Mapsui.Fetcher.IAsyncDataFetcher.RefreshData
   nameWithType: IAsyncDataFetcher.RefreshData
-- uid: Mapsui.Fetcher.IFetchDispatcher
-  name: IFetchDispatcher
-  href: pages/Mapsui.Fetcher.IFetchDispatcher.html
-  commentId: T:Mapsui.Fetcher.IFetchDispatcher
-  fullName: Mapsui.Fetcher.IFetchDispatcher
-  nameWithType: IFetchDispatcher
-- uid: Mapsui.Fetcher.IFetchDispatcher.PropertyChanged
-  name: PropertyChanged
-  href: pages/Mapsui.Fetcher.IFetchDispatcher.html#Mapsui_Fetcher_IFetchDispatcher_PropertyChanged
-  commentId: E:Mapsui.Fetcher.IFetchDispatcher.PropertyChanged
-  fullName: Mapsui.Fetcher.IFetchDispatcher.PropertyChanged
-  nameWithType: IFetchDispatcher.PropertyChanged
-- uid: Mapsui.Fetcher.IFetchDispatcher.TryTake(System.Func{System.Threading.Tasks.Task}@)
-  name: TryTake(out Func<Task>?)
-  href: pages/Mapsui.Fetcher.IFetchDispatcher.html#Mapsui_Fetcher_IFetchDispatcher_TryTake_System_Func_System_Threading_Tasks_Task___
-  commentId: M:Mapsui.Fetcher.IFetchDispatcher.TryTake(System.Func{System.Threading.Tasks.Task}@)
-  name.vb: TryTake(Func(Of Task))
-  fullName: Mapsui.Fetcher.IFetchDispatcher.TryTake(out System.Func<System.Threading.Tasks.Task>?)
-  fullName.vb: Mapsui.Fetcher.IFetchDispatcher.TryTake(System.Func(Of System.Threading.Tasks.Task))
-  nameWithType: IFetchDispatcher.TryTake(out Func<Task>?)
-  nameWithType.vb: IFetchDispatcher.TryTake(Func(Of Task))
-- uid: Mapsui.Fetcher.IFetchDispatcher.TryTake*
-  name: TryTake
-  href: pages/Mapsui.Fetcher.IFetchDispatcher.html#Mapsui_Fetcher_IFetchDispatcher_TryTake_
-  commentId: Overload:Mapsui.Fetcher.IFetchDispatcher.TryTake
-  isSpec: "True"
-  fullName: Mapsui.Fetcher.IFetchDispatcher.TryTake
-  nameWithType: IFetchDispatcher.TryTake
 - uid: Mapsui.IFeature
   name: IFeature
   href: pages/Mapsui.IFeature.html
@@ -7367,6 +7253,22 @@ references:
   isSpec: "True"
   fullName: Mapsui.Layers.FetchInfo.ChangeType
   nameWithType: FetchInfo.ChangeType
+- uid: Mapsui.Layers.FetchInfo.Equals(System.Object)
+  name: Equals(object?)
+  href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_Equals_System_Object_
+  commentId: M:Mapsui.Layers.FetchInfo.Equals(System.Object)
+  name.vb: Equals(Object)
+  fullName: Mapsui.Layers.FetchInfo.Equals(object?)
+  fullName.vb: Mapsui.Layers.FetchInfo.Equals(Object)
+  nameWithType: FetchInfo.Equals(object?)
+  nameWithType.vb: FetchInfo.Equals(Object)
+- uid: Mapsui.Layers.FetchInfo.Equals*
+  name: Equals
+  href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_Equals_
+  commentId: Overload:Mapsui.Layers.FetchInfo.Equals
+  isSpec: "True"
+  fullName: Mapsui.Layers.FetchInfo.Equals
+  nameWithType: FetchInfo.Equals
 - uid: Mapsui.Layers.FetchInfo.Extent
   name: Extent
   href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_Extent
@@ -7380,6 +7282,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Layers.FetchInfo.Extent
   nameWithType: FetchInfo.Extent
+- uid: Mapsui.Layers.FetchInfo.GetHashCode
+  name: GetHashCode()
+  href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_GetHashCode
+  commentId: M:Mapsui.Layers.FetchInfo.GetHashCode
+  fullName: Mapsui.Layers.FetchInfo.GetHashCode()
+  nameWithType: FetchInfo.GetHashCode()
+- uid: Mapsui.Layers.FetchInfo.GetHashCode*
+  name: GetHashCode
+  href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_GetHashCode_
+  commentId: Overload:Mapsui.Layers.FetchInfo.GetHashCode
+  isSpec: "True"
+  fullName: Mapsui.Layers.FetchInfo.GetHashCode
+  nameWithType: FetchInfo.GetHashCode
 - uid: Mapsui.Layers.FetchInfo.Grow(System.Double)
   name: Grow(double)
   href: pages/Mapsui.Layers.FetchInfo.html#Mapsui_Layers_FetchInfo_Grow_System_Double_
@@ -8098,6 +8013,22 @@ references:
   isSpec: "True"
   fullName: Mapsui.Layers.Layer.Extent
   nameWithType: Layer.Extent
+- uid: Mapsui.Layers.Layer.FetchAsync(Mapsui.Layers.FetchInfo,System.Int32)
+  name: FetchAsync(FetchInfo, int)
+  href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_FetchAsync_Mapsui_Layers_FetchInfo_System_Int32_
+  commentId: M:Mapsui.Layers.Layer.FetchAsync(Mapsui.Layers.FetchInfo,System.Int32)
+  name.vb: FetchAsync(FetchInfo, Integer)
+  fullName: Mapsui.Layers.Layer.FetchAsync(Mapsui.Layers.FetchInfo, int)
+  fullName.vb: Mapsui.Layers.Layer.FetchAsync(Mapsui.Layers.FetchInfo, Integer)
+  nameWithType: Layer.FetchAsync(FetchInfo, int)
+  nameWithType.vb: Layer.FetchAsync(FetchInfo, Integer)
+- uid: Mapsui.Layers.Layer.FetchAsync*
+  name: FetchAsync
+  href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_FetchAsync_
+  commentId: Overload:Mapsui.Layers.Layer.FetchAsync
+  isSpec: "True"
+  fullName: Mapsui.Layers.Layer.FetchAsync
+  nameWithType: Layer.FetchAsync
 - uid: Mapsui.Layers.Layer.FetchingPostponedInMilliseconds
   name: FetchingPostponedInMilliseconds
   href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_FetchingPostponedInMilliseconds
@@ -8140,19 +8071,6 @@ references:
   isSpec: "True"
   fullName: Mapsui.Layers.Layer.RefreshData
   nameWithType: Layer.RefreshData
-- uid: Mapsui.Layers.Layer.SymbolStyle
-  name: SymbolStyle
-  href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_SymbolStyle
-  commentId: P:Mapsui.Layers.Layer.SymbolStyle
-  fullName: Mapsui.Layers.Layer.SymbolStyle
-  nameWithType: Layer.SymbolStyle
-- uid: Mapsui.Layers.Layer.SymbolStyle*
-  name: SymbolStyle
-  href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_SymbolStyle_
-  commentId: Overload:Mapsui.Layers.Layer.SymbolStyle
-  isSpec: "True"
-  fullName: Mapsui.Layers.Layer.SymbolStyle
-  nameWithType: Layer.SymbolStyle
 - uid: Mapsui.Layers.Layer.UpdateAnimations
   name: UpdateAnimations()
   href: pages/Mapsui.Layers.Layer.html#Mapsui_Layers_Layer_UpdateAnimations
@@ -23474,6 +23392,19 @@ references:
   commentId: T:Mapsui.Styles.BitmapRegistry
   fullName: Mapsui.Styles.BitmapRegistry
   nameWithType: BitmapRegistry
+- uid: Mapsui.Styles.BitmapRegistry.Dispose
+  name: Dispose()
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Dispose
+  commentId: M:Mapsui.Styles.BitmapRegistry.Dispose
+  fullName: Mapsui.Styles.BitmapRegistry.Dispose()
+  nameWithType: BitmapRegistry.Dispose()
+- uid: Mapsui.Styles.BitmapRegistry.Dispose*
+  name: Dispose
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Dispose_
+  commentId: Overload:Mapsui.Styles.BitmapRegistry.Dispose
+  isSpec: "True"
+  fullName: Mapsui.Styles.BitmapRegistry.Dispose
+  nameWithType: BitmapRegistry.Dispose
 - uid: Mapsui.Styles.BitmapRegistry.Get(System.Int32)
   name: Get(int)
   href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Get_System_Int32_
@@ -23519,22 +23450,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.BitmapRegistry.Register
   nameWithType: BitmapRegistry.Register
-- uid: Mapsui.Styles.BitmapRegistry.Set(System.Int32,System.Object)
-  name: Set(int, object)
-  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Set_System_Int32_System_Object_
-  commentId: M:Mapsui.Styles.BitmapRegistry.Set(System.Int32,System.Object)
-  name.vb: Set(Integer, Object)
-  fullName: Mapsui.Styles.BitmapRegistry.Set(int, object)
-  fullName.vb: Mapsui.Styles.BitmapRegistry.Set(Integer, Object)
-  nameWithType: BitmapRegistry.Set(int, object)
-  nameWithType.vb: BitmapRegistry.Set(Integer, Object)
-- uid: Mapsui.Styles.BitmapRegistry.Set*
-  name: Set
-  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Set_
-  commentId: Overload:Mapsui.Styles.BitmapRegistry.Set
+- uid: Mapsui.Styles.BitmapRegistry.RegisterAsync(System.Uri)
+  name: RegisterAsync(Uri)
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_RegisterAsync_System_Uri_
+  commentId: M:Mapsui.Styles.BitmapRegistry.RegisterAsync(System.Uri)
+  fullName: Mapsui.Styles.BitmapRegistry.RegisterAsync(System.Uri)
+  nameWithType: BitmapRegistry.RegisterAsync(Uri)
+- uid: Mapsui.Styles.BitmapRegistry.RegisterAsync*
+  name: RegisterAsync
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_RegisterAsync_
+  commentId: Overload:Mapsui.Styles.BitmapRegistry.RegisterAsync
   isSpec: "True"
-  fullName: Mapsui.Styles.BitmapRegistry.Set
-  nameWithType: BitmapRegistry.Set
+  fullName: Mapsui.Styles.BitmapRegistry.RegisterAsync
+  nameWithType: BitmapRegistry.RegisterAsync
 - uid: Mapsui.Styles.BitmapRegistry.TryGetBitmapId(System.String,System.Int32@)
   name: TryGetBitmapId(string, out int)
   href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_TryGetBitmapId_System_String_System_Int32__
@@ -23567,6 +23495,22 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.BitmapRegistry.Unregister
   nameWithType: BitmapRegistry.Unregister
+- uid: Mapsui.Styles.BitmapRegistry.Update(System.Int32,System.Object)
+  name: Update(int, object)
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Update_System_Int32_System_Object_
+  commentId: M:Mapsui.Styles.BitmapRegistry.Update(System.Int32,System.Object)
+  name.vb: Update(Integer, Object)
+  fullName: Mapsui.Styles.BitmapRegistry.Update(int, object)
+  fullName.vb: Mapsui.Styles.BitmapRegistry.Update(Integer, Object)
+  nameWithType: BitmapRegistry.Update(int, object)
+  nameWithType.vb: BitmapRegistry.Update(Integer, Object)
+- uid: Mapsui.Styles.BitmapRegistry.Update*
+  name: Update
+  href: pages/Mapsui.Styles.BitmapRegistry.html#Mapsui_Styles_BitmapRegistry_Update_
+  commentId: Overload:Mapsui.Styles.BitmapRegistry.Update
+  isSpec: "True"
+  fullName: Mapsui.Styles.BitmapRegistry.Update
+  nameWithType: BitmapRegistry.Update
 - uid: Mapsui.Styles.Brush
   name: Brush
   href: pages/Mapsui.Styles.Brush.html
@@ -26497,6 +26441,105 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.Font.ToString
   nameWithType: Font.ToString
+- uid: Mapsui.Styles.IBitmapRegistry
+  name: IBitmapRegistry
+  href: pages/Mapsui.Styles.IBitmapRegistry.html
+  commentId: T:Mapsui.Styles.IBitmapRegistry
+  fullName: Mapsui.Styles.IBitmapRegistry
+  nameWithType: IBitmapRegistry
+- uid: Mapsui.Styles.IBitmapRegistry.Get(System.Int32)
+  name: Get(int)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Get_System_Int32_
+  commentId: M:Mapsui.Styles.IBitmapRegistry.Get(System.Int32)
+  name.vb: Get(Integer)
+  fullName: Mapsui.Styles.IBitmapRegistry.Get(int)
+  fullName.vb: Mapsui.Styles.IBitmapRegistry.Get(Integer)
+  nameWithType: IBitmapRegistry.Get(int)
+  nameWithType.vb: IBitmapRegistry.Get(Integer)
+- uid: Mapsui.Styles.IBitmapRegistry.Get*
+  name: Get
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Get_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.Get
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.Get
+  nameWithType: IBitmapRegistry.Get
+- uid: Mapsui.Styles.IBitmapRegistry.Register(System.Object,System.String)
+  name: Register(object, string?)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Register_System_Object_System_String_
+  commentId: M:Mapsui.Styles.IBitmapRegistry.Register(System.Object,System.String)
+  name.vb: Register(Object, String)
+  fullName: Mapsui.Styles.IBitmapRegistry.Register(object, string?)
+  fullName.vb: Mapsui.Styles.IBitmapRegistry.Register(Object, String)
+  nameWithType: IBitmapRegistry.Register(object, string?)
+  nameWithType.vb: IBitmapRegistry.Register(Object, String)
+- uid: Mapsui.Styles.IBitmapRegistry.Register*
+  name: Register
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Register_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.Register
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.Register
+  nameWithType: IBitmapRegistry.Register
+- uid: Mapsui.Styles.IBitmapRegistry.RegisterAsync(System.Uri)
+  name: RegisterAsync(Uri)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_RegisterAsync_System_Uri_
+  commentId: M:Mapsui.Styles.IBitmapRegistry.RegisterAsync(System.Uri)
+  fullName: Mapsui.Styles.IBitmapRegistry.RegisterAsync(System.Uri)
+  nameWithType: IBitmapRegistry.RegisterAsync(Uri)
+- uid: Mapsui.Styles.IBitmapRegistry.RegisterAsync*
+  name: RegisterAsync
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_RegisterAsync_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.RegisterAsync
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.RegisterAsync
+  nameWithType: IBitmapRegistry.RegisterAsync
+- uid: Mapsui.Styles.IBitmapRegistry.TryGetBitmapId(System.String,System.Int32@)
+  name: TryGetBitmapId(string, out int)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_TryGetBitmapId_System_String_System_Int32__
+  commentId: M:Mapsui.Styles.IBitmapRegistry.TryGetBitmapId(System.String,System.Int32@)
+  name.vb: TryGetBitmapId(String, Integer)
+  fullName: Mapsui.Styles.IBitmapRegistry.TryGetBitmapId(string, out int)
+  fullName.vb: Mapsui.Styles.IBitmapRegistry.TryGetBitmapId(String, Integer)
+  nameWithType: IBitmapRegistry.TryGetBitmapId(string, out int)
+  nameWithType.vb: IBitmapRegistry.TryGetBitmapId(String, Integer)
+- uid: Mapsui.Styles.IBitmapRegistry.TryGetBitmapId*
+  name: TryGetBitmapId
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_TryGetBitmapId_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.TryGetBitmapId
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.TryGetBitmapId
+  nameWithType: IBitmapRegistry.TryGetBitmapId
+- uid: Mapsui.Styles.IBitmapRegistry.Unregister(System.Int32)
+  name: Unregister(int)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Unregister_System_Int32_
+  commentId: M:Mapsui.Styles.IBitmapRegistry.Unregister(System.Int32)
+  name.vb: Unregister(Integer)
+  fullName: Mapsui.Styles.IBitmapRegistry.Unregister(int)
+  fullName.vb: Mapsui.Styles.IBitmapRegistry.Unregister(Integer)
+  nameWithType: IBitmapRegistry.Unregister(int)
+  nameWithType.vb: IBitmapRegistry.Unregister(Integer)
+- uid: Mapsui.Styles.IBitmapRegistry.Unregister*
+  name: Unregister
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Unregister_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.Unregister
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.Unregister
+  nameWithType: IBitmapRegistry.Unregister
+- uid: Mapsui.Styles.IBitmapRegistry.Update(System.Int32,System.Object)
+  name: Update(int, object)
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Update_System_Int32_System_Object_
+  commentId: M:Mapsui.Styles.IBitmapRegistry.Update(System.Int32,System.Object)
+  name.vb: Update(Integer, Object)
+  fullName: Mapsui.Styles.IBitmapRegistry.Update(int, object)
+  fullName.vb: Mapsui.Styles.IBitmapRegistry.Update(Integer, Object)
+  nameWithType: IBitmapRegistry.Update(int, object)
+  nameWithType.vb: IBitmapRegistry.Update(Integer, Object)
+- uid: Mapsui.Styles.IBitmapRegistry.Update*
+  name: Update
+  href: pages/Mapsui.Styles.IBitmapRegistry.html#Mapsui_Styles_IBitmapRegistry_Update_
+  commentId: Overload:Mapsui.Styles.IBitmapRegistry.Update
+  isSpec: "True"
+  fullName: Mapsui.Styles.IBitmapRegistry.Update
+  nameWithType: IBitmapRegistry.Update
 - uid: Mapsui.Styles.IFeatureSize
   name: IFeatureSize
   href: pages/Mapsui.Styles.IFeatureSize.html
@@ -29069,6 +29112,19 @@ references:
   commentId: E:Mapsui.Tiling.Fetcher.TileFetchDispatcher.DataChanged
   fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.DataChanged
   nameWithType: TileFetchDispatcher.DataChanged
+- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles
+  name: FetchNextTiles()
+  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_FetchNextTiles
+  commentId: M:Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles
+  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles()
+  nameWithType: TileFetchDispatcher.FetchNextTiles()
+- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles*
+  name: FetchNextTiles
+  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_FetchNextTiles_
+  commentId: Overload:Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles
+  isSpec: "True"
+  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.FetchNextTiles
+  nameWithType: TileFetchDispatcher.FetchNextTiles
 - uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.MaxTilesInOneRequest
   name: MaxTilesInOneRequest
   href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_MaxTilesInOneRequest
@@ -29101,32 +29157,19 @@ references:
   commentId: E:Mapsui.Tiling.Fetcher.TileFetchDispatcher.PropertyChanged
   fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.PropertyChanged
   nameWithType: TileFetchDispatcher.PropertyChanged
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport(Mapsui.Layers.FetchInfo)
-  name: SetViewport(FetchInfo)
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_SetViewport_Mapsui_Layers_FetchInfo_
-  commentId: M:Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport(Mapsui.Layers.FetchInfo)
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport(Mapsui.Layers.FetchInfo)
-  nameWithType: TileFetchDispatcher.SetViewport(FetchInfo)
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport*
-  name: SetViewport
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_SetViewport_
-  commentId: Overload:Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport
+- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData(Mapsui.Layers.FetchInfo)
+  name: RefreshData(FetchInfo)
+  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_RefreshData_Mapsui_Layers_FetchInfo_
+  commentId: M:Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData(Mapsui.Layers.FetchInfo)
+  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData(Mapsui.Layers.FetchInfo)
+  nameWithType: TileFetchDispatcher.RefreshData(FetchInfo)
+- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData*
+  name: RefreshData
+  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_RefreshData_
+  commentId: Overload:Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData
   isSpec: "True"
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.SetViewport
-  nameWithType: TileFetchDispatcher.SetViewport
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching
-  name: StartFetching()
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_StartFetching
-  commentId: M:Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching()
-  nameWithType: TileFetchDispatcher.StartFetching()
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching*
-  name: StartFetching
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_StartFetching_
-  commentId: Overload:Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching
-  isSpec: "True"
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StartFetching
-  nameWithType: TileFetchDispatcher.StartFetching
+  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.RefreshData
+  nameWithType: TileFetchDispatcher.RefreshData
 - uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StopFetching
   name: StopFetching()
   href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_StopFetching
@@ -29140,22 +29183,6 @@ references:
   isSpec: "True"
   fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.StopFetching
   nameWithType: TileFetchDispatcher.StopFetching
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake(System.Func{System.Threading.Tasks.Task}@)
-  name: TryTake(out Func<Task>?)
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_TryTake_System_Func_System_Threading_Tasks_Task___
-  commentId: M:Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake(System.Func{System.Threading.Tasks.Task}@)
-  name.vb: TryTake(Func(Of Task))
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake(out System.Func<System.Threading.Tasks.Task>?)
-  fullName.vb: Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake(System.Func(Of System.Threading.Tasks.Task))
-  nameWithType: TileFetchDispatcher.TryTake(out Func<Task>?)
-  nameWithType.vb: TileFetchDispatcher.TryTake(Func(Of Task))
-- uid: Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake*
-  name: TryTake
-  href: pages/Mapsui.Tiling.Fetcher.TileFetchDispatcher.html#Mapsui_Tiling_Fetcher_TileFetchDispatcher_TryTake_
-  commentId: Overload:Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake
-  isSpec: "True"
-  fullName: Mapsui.Tiling.Fetcher.TileFetchDispatcher.TryTake
-  nameWithType: TileFetchDispatcher.TryTake
 - uid: Mapsui.Tiling.Layers
   name: Mapsui.Tiling.Layers
   href: pages/Mapsui.Tiling.Layers.html
@@ -38495,6 +38522,22 @@ references:
   commentId: T:Mapsui.Utilities.EmbeddedResourceLoader
   fullName: Mapsui.Utilities.EmbeddedResourceLoader
   nameWithType: EmbeddedResourceLoader
+- uid: Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri(System.Type,System.String)
+  name: GetResourceUri(Type, string)
+  href: pages/Mapsui.Utilities.EmbeddedResourceLoader.html#Mapsui_Utilities_EmbeddedResourceLoader_GetResourceUri_System_Type_System_String_
+  commentId: M:Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri(System.Type,System.String)
+  name.vb: GetResourceUri(Type, String)
+  fullName: Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri(System.Type, string)
+  fullName.vb: Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri(System.Type, String)
+  nameWithType: EmbeddedResourceLoader.GetResourceUri(Type, string)
+  nameWithType.vb: EmbeddedResourceLoader.GetResourceUri(Type, String)
+- uid: Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri*
+  name: GetResourceUri
+  href: pages/Mapsui.Utilities.EmbeddedResourceLoader.html#Mapsui_Utilities_EmbeddedResourceLoader_GetResourceUri_
+  commentId: Overload:Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri
+  isSpec: "True"
+  fullName: Mapsui.Utilities.EmbeddedResourceLoader.GetResourceUri
+  nameWithType: EmbeddedResourceLoader.GetResourceUri
 - uid: Mapsui.Utilities.EmbeddedResourceLoader.Load(System.String,System.Type)
   name: Load(string, Type)
   href: pages/Mapsui.Utilities.EmbeddedResourceLoader.html#Mapsui_Utilities_EmbeddedResourceLoader_Load_System_String_System_Type_
@@ -39077,6 +39120,22 @@ references:
   isSpec: "True"
   fullName: Mapsui.Utilities.SvgHelper.LoadSvgId
   nameWithType: SvgHelper.LoadSvgId
+- uid: Mapsui.Utilities.SvgHelper.LoadSvgPath(System.Type,System.String)
+  name: LoadSvgPath(Type, string)
+  href: pages/Mapsui.Utilities.SvgHelper.html#Mapsui_Utilities_SvgHelper_LoadSvgPath_System_Type_System_String_
+  commentId: M:Mapsui.Utilities.SvgHelper.LoadSvgPath(System.Type,System.String)
+  name.vb: LoadSvgPath(Type, String)
+  fullName: Mapsui.Utilities.SvgHelper.LoadSvgPath(System.Type, string)
+  fullName.vb: Mapsui.Utilities.SvgHelper.LoadSvgPath(System.Type, String)
+  nameWithType: SvgHelper.LoadSvgPath(Type, string)
+  nameWithType.vb: SvgHelper.LoadSvgPath(Type, String)
+- uid: Mapsui.Utilities.SvgHelper.LoadSvgPath*
+  name: LoadSvgPath
+  href: pages/Mapsui.Utilities.SvgHelper.html#Mapsui_Utilities_SvgHelper_LoadSvgPath_
+  commentId: Overload:Mapsui.Utilities.SvgHelper.LoadSvgPath
+  isSpec: "True"
+  fullName: Mapsui.Utilities.SvgHelper.LoadSvgPath
+  nameWithType: SvgHelper.LoadSvgPath
 - uid: Mapsui.Utilities.SvgHelper.LoadSvgPicture(System.IO.Stream)
   name: LoadSvgPicture(Stream?)
   href: pages/Mapsui.Utilities.SvgHelper.html#Mapsui_Utilities_SvgHelper_LoadSvgPicture_System_IO_Stream_

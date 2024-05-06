@@ -89,10 +89,6 @@
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Delayer</span></div>
   </div>
-  <div class="implements">
-    <h5>Implements</h5>
-    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
-  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -121,7 +117,7 @@
   <h6><strong>Assembly</strong>: Mapsui.dll</h6>
   <h5 id="Mapsui_Fetcher_Delayer_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Delayer : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Delayer</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -130,7 +126,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer__ctor.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L22">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L20">View Source</a>
   </span>
   <a id="Mapsui_Fetcher_Delayer__ctor_" data-uid="Mapsui.Fetcher.Delayer.#ctor*"></a>
   <h4 id="Mapsui_Fetcher_Delayer__ctor" data-uid="Mapsui.Fetcher.Delayer.#ctor">Delayer()</h4>
@@ -144,19 +140,19 @@
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_MillisecondsToWait.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.MillisecondsToWait%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_MillisecondsBeforeCall.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.MillisecondsBeforeCall%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L18">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L29">View Source</a>
   </span>
-  <a id="Mapsui_Fetcher_Delayer_MillisecondsToWait_" data-uid="Mapsui.Fetcher.Delayer.MillisecondsToWait*"></a>
-  <h4 id="Mapsui_Fetcher_Delayer_MillisecondsToWait" data-uid="Mapsui.Fetcher.Delayer.MillisecondsToWait">MillisecondsToWait</h4>
-  <div class="markdown level1 summary"><p>The delay between two calls.</p>
+  <a id="Mapsui_Fetcher_Delayer_MillisecondsBeforeCall_" data-uid="Mapsui.Fetcher.Delayer.MillisecondsBeforeCall*"></a>
+  <h4 id="Mapsui_Fetcher_Delayer_MillisecondsBeforeCall" data-uid="Mapsui.Fetcher.Delayer.MillisecondsBeforeCall">MillisecondsBeforeCall</h4>
+  <div class="markdown level1 summary"><p>The delay between the call to ExecuteDelayed and the actual call to the method.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int MillisecondsToWait { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int MillisecondsBeforeCall { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -175,18 +171,19 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_StartWithDelay.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.StartWithDelay%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_MillisecondsBetweenCalls.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L20">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L25">View Source</a>
   </span>
-  <a id="Mapsui_Fetcher_Delayer_StartWithDelay_" data-uid="Mapsui.Fetcher.Delayer.StartWithDelay*"></a>
-  <h4 id="Mapsui_Fetcher_Delayer_StartWithDelay" data-uid="Mapsui.Fetcher.Delayer.StartWithDelay">StartWithDelay</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Mapsui_Fetcher_Delayer_MillisecondsBetweenCalls_" data-uid="Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls*"></a>
+  <h4 id="Mapsui_Fetcher_Delayer_MillisecondsBetweenCalls" data-uid="Mapsui.Fetcher.Delayer.MillisecondsBetweenCalls">MillisecondsBetweenCalls</h4>
+  <div class="markdown level1 summary"><p>The minimum delay between two calls.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool StartWithDelay { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int MillisecondsBetweenCalls { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -198,7 +195,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -207,66 +204,14 @@
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_Dispose.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.Dispose%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L55">View Source</a>
-  </span>
-  <a id="Mapsui_Fetcher_Delayer_Dispose_" data-uid="Mapsui.Fetcher.Delayer.Dispose*"></a>
-  <h4 id="Mapsui_Fetcher_Delayer_Dispose" data-uid="Mapsui.Fetcher.Delayer.Dispose">Dispose()</h4>
-  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
-  </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L61">View Source</a>
-  </span>
-  <a id="Mapsui_Fetcher_Delayer_Dispose_" data-uid="Mapsui.Fetcher.Delayer.Dispose*"></a>
-  <h4 id="Mapsui_Fetcher_Delayer_Dispose_System_Boolean_" data-uid="Mapsui.Fetcher.Delayer.Dispose(System.Boolean)">Dispose(bool)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void Dispose(bool disposing)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
-        <td><span class="parametername">disposing</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Action_.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Action)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L36">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L52">View Source</a>
   </span>
   <a id="Mapsui_Fetcher_Delayer_ExecuteDelayed_" data-uid="Mapsui.Fetcher.Delayer.ExecuteDelayed*"></a>
   <h4 id="Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Action_" data-uid="Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Action)">ExecuteDelayed(Action)</h4>
-  <div class="markdown level1 summary"><p>Executes the method passed as argument with a possible delay. After a previous
-call the next call is delayed until 'MillisecondsToWait' has passed.
-When ExecuteRequest is called before the previous delayed action was executed
-the previous one will be cancelled.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -285,19 +230,51 @@ the previous one will be cancelled.</p>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></td>
         <td><span class="parametername">action</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Func_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func%7BSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L47">View Source</a>
+  </span>
+  <a id="Mapsui_Fetcher_Delayer_ExecuteDelayed_" data-uid="Mapsui.Fetcher.Delayer.ExecuteDelayed*"></a>
+  <h4 id="Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Func_System_Threading_Tasks_Task__" data-uid="Mapsui.Fetcher.Delayer.ExecuteDelayed(System.Func{System.Threading.Tasks.Task})">ExecuteDelayed(Func&lt;Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>Executes the method passed as argument with a possible delay. After a previous
+call the next call is delayed until 'MillisecondsToWait' has passed.
+When ExecuteRequest is called before the previous delayed action was executed
+the previous one will be cancelled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ExecuteDelayed(Func&lt;Task&gt; func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</td>
+        <td><span class="parametername">func</span></td>
         <td><p>The action to be executed after the possible delay</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Action__remarks">Remarks</h5>
+  <h5 id="Mapsui_Fetcher_Delayer_ExecuteDelayed_System_Func_System_Threading_Tasks_Task___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the previous call was more than 'MillisecondsToWait' ago there will
 be no delay.</p>
 </div>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
-  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Mapsui.Extensions.DisposableExtension.html#Mapsui_Extensions_DisposableExtension_DisposeIfDisposable_System_Object_">DisposableExtension.DisposeIfDisposable(object?)</a>
@@ -314,7 +291,7 @@ be no delay.</p>
                     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Fetcher_Delayer.md&amp;value=---%0Auid%3A%20Mapsui.Fetcher.Delayer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                   </li>
                   <li>
-                    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Fetcher/Delayer.cs/#L10" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
