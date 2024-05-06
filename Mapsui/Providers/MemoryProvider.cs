@@ -1,11 +1,9 @@
 using Mapsui.Features;
-using Mapsui.Fetcher;
 using Mapsui.Layers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mapsui.Providers;
 
@@ -118,19 +116,6 @@ public class MemoryProvider : IProvider, IDataChangedProvider
     }
 
     /// <summary>
-    /// Clear list of features
-    /// </summary>
-    public void Clear()
-    {
-        lock (_sync)
-        {
-            _features = new List<IFeature>();
-        }
-
-        DataHasChanged();
-    }
-
-    /// <summary>
     /// Add a feature to list
     /// </summary>
     /// <param name="feature">Feature to add</param>
@@ -202,6 +187,19 @@ public class MemoryProvider : IProvider, IDataChangedProvider
                 _features.Remove(feature);
 
             _extent = GetExtent(_features);
+        }
+
+        DataHasChanged();
+    }
+
+    /// <summary>
+    /// Remove all features from list
+    /// </summary>
+    public void RemoveAll()
+    {
+        lock (_sync)
+        {
+            _features = new List<IFeature>();
         }
 
         DataHasChanged();
