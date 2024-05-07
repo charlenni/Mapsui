@@ -11,8 +11,8 @@ namespace Mapsui.Providers;
 /// </summary>
 public class MemoryProvider : IProvider
 {
-    private readonly MRect? _boundingBox;
     private readonly object _sync = new object();
+    private MRect? _boundingBox;
 
     /// <summary>
     /// Initializes a new instance of the MemoryProvider without any features
@@ -34,7 +34,7 @@ public class MemoryProvider : IProvider
         lock (_sync)
         {
             _features = [feature];
-            _boundingBox = GetExtent(_features);
+            _boundingBox = GetExtent(Features);
         }
     }
 
@@ -47,7 +47,7 @@ public class MemoryProvider : IProvider
         lock (_sync)
         {
             _features.AddRange(features.ToList());
-            _boundingBox = GetExtent(_features);
+            _boundingBox = GetExtent(Features);
         }
     }
 
@@ -66,10 +66,10 @@ public class MemoryProvider : IProvider
     public string? CRS { get; set; }
 
     /// <summary>
-    /// Get all features belonging to the FetchInfo
+    /// Get all features contained in FetchInfos extend
     /// </summary>
-    /// <param name="fetchInfo">FetchInfo with Extent</param>
-    /// <returns>All Features inside the Extent of FetchInfo increased about SymbolSize</returns>
+    /// <param name="fetchInfo">FetchInfo to use</param>
+    /// <returns>Task to get list of features</returns>
     public virtual Task<IEnumerable<IFeature>> GetFeaturesAsync(FetchInfo fetchInfo)
     {
         ArgumentNullException.ThrowIfNull(fetchInfo);
@@ -79,14 +79,43 @@ public class MemoryProvider : IProvider
 
         lock (_sync)
         {
-            features = _features.ToArray(); // An Array is faster than a List
+            features = [.. _features]; // An Array is faster than a List
         }
 
         fetchInfo = new FetchInfo(fetchInfo);
+
         // Use a larger extent so that symbols partially outside of the extent are included
         var biggerBox = fetchInfo.Extent?.Grow(fetchInfo.Resolution * SymbolSize * 0.5);
+
         var result = features.Where(f => f != null && (f.Extent?.Intersects(biggerBox) ?? false)).ToList();
+
         return Task.FromResult((IEnumerable<IFeature>)result);
+    }
+
+    /// <summary>
+    /// Get extend of all features provided by this provider
+    /// </summary>
+    /// <returns>Extend for all features</returns>
+    public MRect? GetExtent()
+    {
+        return _boundingBox;
+    }
+
+    internal static MRect? GetExtent(IEnumerable<IFeature> features)
+    {
+        MRect? extent = null;
+
+        foreach (var feature in features)
+        {
+            if (feature.Extent == null)
+                continue;
+
+            extent = extent == null
+                ? feature.Extent
+                : extent.Join(feature.Extent);
+        }
+
+        return extent;
     }
 
     /// <summary>
@@ -97,36 +126,91 @@ public class MemoryProvider : IProvider
     /// <returns></returns>
     public IFeature? Find(object? value, string fieldName)
     {
-        return Features.FirstOrDefault(f => value != null && f[fieldName] == value);
+        IFeature? result;
+
+        lock (_sync)
+        {
+            result = _features.FirstOrDefault(f => value != null && f[fieldName] == value);
+        }
+
+        return result;
     }
 
     /// <summary>
-    /// BoundingBox of data set
+    /// Add a feature to list
     /// </summary>
-    /// <returns>BoundingBox</returns>
-    public MRect? GetExtent()
+    /// <param name="feature">Feature to add</param>
+    public void Add(IFeature? feature)
     {
-        return _boundingBox;
-    }
+        if (feature == null)
+            return;
 
-    internal static MRect? GetExtent(IReadOnlyList<IFeature> features)
-    {
-        MRect? box = null;
-        foreach (var feature in features)
+        lock (_sync)
         {
-            if (feature.Extent == null) continue;
-            box = box == null
-                ? feature.Extent
-                : box.Join(feature.Extent);
+            _features.Add(feature);
+            _boundingBox = GetExtent(_features);
         }
-        return box;
     }
 
+    /// <summary>
+    /// Add features to list
+    /// </summary>
+    /// <param name="features">Features to add</param>
+    public void AddRange(IEnumerable<IFeature>? features)
+    {
+        if (features == null)
+            return;
+
+        lock (_sync)
+        {
+            _features.AddRange(features);
+            _boundingBox = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Remove feature from list
+    /// </summary>
+    /// <param name="feature">Feature to remove</param>
+    public void Remove(IFeature? feature)
+    {
+        if (feature == null)
+            return;
+
+        lock (_sync)
+        {
+            _features.Remove(feature);
+            _boundingBox = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Remove features from list
+    /// </summary>
+    /// <param name="features">Features to remove</param>
+    public void RemoveRange(IEnumerable<IFeature>? features)
+    {
+        if (features == null)
+            return;
+
+        lock (_sync)
+        {
+            foreach (var feature in features)
+                _features.Remove(feature);
+
+            _boundingBox = GetExtent(_features);
+        }
+    }
+
+    /// <summary>
+    /// Remove all features from list
+    /// </summary>
     public void RemoveAll()
     {
         lock (_sync)
         {
             _features.Clear();
+            _boundingBox = null;
         }
     }
 }
