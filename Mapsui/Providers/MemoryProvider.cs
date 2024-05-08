@@ -1,5 +1,6 @@
 using Mapsui.Layers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 namespace Mapsui.Providers;
 
 /// <summary>
-/// A Provider that keepos all its features in memory
+/// A Provider that keeps all its features in memory
 /// </summary>
-public class MemoryProvider : IProvider
+public class MemoryProvider : IProvider, IList<IFeature>
 {
     private readonly object _sync = new object();
     private MRect? _boundingBox;
@@ -20,9 +21,7 @@ public class MemoryProvider : IProvider
     public MemoryProvider()
     {
         lock (_sync)
-        {
             _boundingBox = null;
-        }
     }
 
     /// <summary>
@@ -51,8 +50,11 @@ public class MemoryProvider : IProvider
         }
     }
 
-    private List<IFeature> _features = new();
+    private List<IFeature> _features = [];
 
+    /// <summary>
+    /// Readonly list of features
+    /// </summary>
     public IReadOnlyList<IFeature> Features => _features.AsReadOnly();
 
     /// <summary>
@@ -64,6 +66,31 @@ public class MemoryProvider : IProvider
     /// The spatial reference ID (CRS)
     /// </summary>
     public string? CRS { get; set; }
+
+    public int Count
+    {
+        get
+        {
+            lock (_sync)
+                return _features.Count;
+        }
+    }
+
+    public bool IsReadOnly => false;
+
+    public IFeature this[int index]
+    {
+        get
+        {
+            lock (_sync)
+                return _features[index];
+        }
+        set
+        {
+            lock (_sync)
+                _features[index] = value;
+        }
+    }
 
     /// <summary>
     /// Get all features contained in FetchInfos extend
@@ -78,9 +105,8 @@ public class MemoryProvider : IProvider
         IFeature[] features;
 
         lock (_sync)
-        {
-            features = [.. _features]; // An Array is faster than a List
-        }
+            // An Array is faster than a List
+            features = [.. _features];
 
         fetchInfo = new FetchInfo(fetchInfo);
 
@@ -172,15 +198,18 @@ public class MemoryProvider : IProvider
     /// Remove feature from list
     /// </summary>
     /// <param name="feature">Feature to remove</param>
-    public void Remove(IFeature? feature)
+    /// <returns>True, if feature was removed</returns>
+    public bool Remove(IFeature? feature)
     {
         if (feature == null)
-            return;
+            return false;
 
         lock (_sync)
         {
-            _features.Remove(feature);
+            var result = _features.Remove(feature);
             _boundingBox = GetExtent(_features);
+
+            return result;
         }
     }
 
@@ -207,10 +236,116 @@ public class MemoryProvider : IProvider
     /// </summary>
     public void RemoveAll()
     {
+        Clear();
+    }
+
+    /// <summary>
+    /// Move a feature to a new position
+    /// </summary>
+    /// <param name="oldIndex">Old position of feature in list of features</param>
+    /// <param name="newIndex">New position of feature in list of features</param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public void Move(int oldIndex, int newIndex)
+    {
+        lock (_sync)
+        {
+            if (newIndex < 0 || newIndex >= _features.Count)
+                throw new ArgumentOutOfRangeException(nameof(newIndex));
+
+            var feature = _features[oldIndex];
+
+            _features.RemoveAt(oldIndex);
+
+            // Actual index could have shifted due to the removal
+            if (newIndex > oldIndex)
+                newIndex--;
+
+            _features.Insert(newIndex, feature);
+        }
+    }
+
+    /// <summary>
+    /// Move given feature to a new position
+    /// </summary>
+    /// <param name="feature">Feature to move</param>
+    /// <param name="newIndex">New position of feature in list of features</param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public void Move(IFeature feature, int newIndex)
+    {
+        ArgumentNullException.ThrowIfNull(feature);
+
+        lock (_sync)
+        {
+            if (newIndex < 0 || newIndex >= _features.Count)
+                throw new ArgumentOutOfRangeException(nameof(newIndex));
+
+            var oldIndex = _features.IndexOf(feature);
+
+            if (oldIndex > -1)
+            {
+                _features.RemoveAt(oldIndex);
+
+                // Actual index could have shifted due to the removal
+                if (newIndex > oldIndex)
+                    newIndex--;
+
+                _features.Insert(newIndex, feature);
+            }
+        }
+
+    }
+    public int IndexOf(IFeature item)
+    {
+        lock (_sync)
+            return _features.IndexOf(item);
+    }
+
+    public void Insert(int index, IFeature item)
+    {
+        lock (_sync)
+        {
+            _features.Insert(index, item);
+            _boundingBox = GetExtent(_features);
+        }
+    }
+
+    public void RemoveAt(int index)
+    {
+        lock (_sync)
+        {
+            _features.RemoveAt(index);
+            _boundingBox = GetExtent(_features);
+        }
+    }
+
+    public void Clear()
+    {
         lock (_sync)
         {
             _features.Clear();
             _boundingBox = null;
         }
+    }
+
+    public bool Contains(IFeature item)
+    {
+        lock (_sync)
+            return _features.Contains(item);
+    }
+
+    public void CopyTo(IFeature[] array, int arrayIndex)
+    {
+        lock (_sync)
+            _features.CopyTo(array, arrayIndex);
+    }
+
+    public IEnumerator<IFeature> GetEnumerator()
+    {
+        return Features.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return Features.GetEnumerator();
     }
 }
