@@ -21103,6 +21103,19 @@ references:
   commentId: T:Mapsui.Rendering.IRenderService
   fullName: Mapsui.Rendering.IRenderService
   nameWithType: IRenderService
+- uid: Mapsui.Rendering.IRenderService.BitmapRegistry
+  name: BitmapRegistry
+  href: pages/Mapsui.Rendering.IRenderService.html#Mapsui_Rendering_IRenderService_BitmapRegistry
+  commentId: P:Mapsui.Rendering.IRenderService.BitmapRegistry
+  fullName: Mapsui.Rendering.IRenderService.BitmapRegistry
+  nameWithType: IRenderService.BitmapRegistry
+- uid: Mapsui.Rendering.IRenderService.BitmapRegistry*
+  name: BitmapRegistry
+  href: pages/Mapsui.Rendering.IRenderService.html#Mapsui_Rendering_IRenderService_BitmapRegistry_
+  commentId: Overload:Mapsui.Rendering.IRenderService.BitmapRegistry
+  isSpec: "True"
+  fullName: Mapsui.Rendering.IRenderService.BitmapRegistry
+  nameWithType: IRenderService.BitmapRegistry
 - uid: Mapsui.Rendering.IRenderService.LabelCache
   name: LabelCache
   href: pages/Mapsui.Rendering.IRenderService.html#Mapsui_Rendering_IRenderService_LabelCache
@@ -21334,15 +21347,15 @@ references:
   isSpec: "True"
   fullName: Mapsui.Rendering.IVectorCache.GetOrCreatePaint
   nameWithType: IVectorCache.GetOrCreatePaint
-- uid: Mapsui.Rendering.IVectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.ISymbolCache,``1})
-  name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, ISymbolCache, TPaint>)
-  href: pages/Mapsui.Rendering.IVectorCache.html#Mapsui_Rendering_IVectorCache_GetOrCreatePaint__2___0_System_Func___0_Mapsui_Rendering_ISymbolCache___1__
-  commentId: M:Mapsui.Rendering.IVectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.ISymbolCache,``1})
-  name.vb: GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, ISymbolCache, TPaint))
-  fullName: Mapsui.Rendering.IVectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, System.Func<TParam, Mapsui.Rendering.ISymbolCache, TPaint>)
-  fullName.vb: Mapsui.Rendering.IVectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, System.Func(Of TParam, Mapsui.Rendering.ISymbolCache, TPaint))
-  nameWithType: IVectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, ISymbolCache, TPaint>)
-  nameWithType.vb: IVectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, ISymbolCache, TPaint))
+- uid: Mapsui.Rendering.IVectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.IRenderService,``1})
+  name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, IRenderService, TPaint>)
+  href: pages/Mapsui.Rendering.IVectorCache.html#Mapsui_Rendering_IVectorCache_GetOrCreatePaint__2___0_System_Func___0_Mapsui_Rendering_IRenderService___1__
+  commentId: M:Mapsui.Rendering.IVectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.IRenderService,``1})
+  name.vb: GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, IRenderService, TPaint))
+  fullName: Mapsui.Rendering.IVectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, System.Func<TParam, Mapsui.Rendering.IRenderService, TPaint>)
+  fullName.vb: Mapsui.Rendering.IVectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, System.Func(Of TParam, Mapsui.Rendering.IRenderService, TPaint))
+  nameWithType: IVectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, IRenderService, TPaint>)
+  nameWithType.vb: IVectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, IRenderService, TPaint))
 - uid: Mapsui.Rendering.IVectorCache.GetOrCreatePaint``2(``0,System.Func{``0,``1})
   name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, TPaint>)
   href: pages/Mapsui.Rendering.IVectorCache.html#Mapsui_Rendering_IVectorCache_GetOrCreatePaint__2___0_System_Func___0___1__
@@ -21829,6 +21842,137 @@ references:
   fullName.vb: Mapsui.Rendering.Skia.Cache.LabelCache.GetOrCreateTypeface(Of T)(Mapsui.Styles.Font, System.Func(Of Mapsui.Styles.Font, T))
   nameWithType: LabelCache.GetOrCreateTypeface<T>(Font, Func<Font, T>)
   nameWithType.vb: LabelCache.GetOrCreateTypeface(Of T)(Font, Func(Of Font, T))
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry
+  name: RenderBitmapRegistry
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html
+  commentId: T:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry
+  nameWithType: RenderBitmapRegistry
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.#ctor(Mapsui.Styles.BitmapRegistry)
+  name: RenderBitmapRegistry(BitmapRegistry)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry__ctor_Mapsui_Styles_BitmapRegistry_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.#ctor(Mapsui.Styles.BitmapRegistry)
+  name.vb: New(BitmapRegistry)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RenderBitmapRegistry(Mapsui.Styles.BitmapRegistry)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.New(Mapsui.Styles.BitmapRegistry)
+  nameWithType: RenderBitmapRegistry.RenderBitmapRegistry(BitmapRegistry)
+  nameWithType.vb: RenderBitmapRegistry.New(BitmapRegistry)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.#ctor*
+  name: RenderBitmapRegistry
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry__ctor_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RenderBitmapRegistry
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.New
+  nameWithType: RenderBitmapRegistry.RenderBitmapRegistry
+  nameWithType.vb: RenderBitmapRegistry.New
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose
+  name: Dispose()
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Dispose
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose()
+  nameWithType: RenderBitmapRegistry.Dispose()
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose*
+  name: Dispose
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Dispose_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Dispose
+  nameWithType: RenderBitmapRegistry.Dispose
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get(System.Int32)
+  name: Get(int)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Get_System_Int32_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get(System.Int32)
+  name.vb: Get(Integer)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get(int)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get(Integer)
+  nameWithType: RenderBitmapRegistry.Get(int)
+  nameWithType.vb: RenderBitmapRegistry.Get(Integer)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get*
+  name: Get
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Get_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Get
+  nameWithType: RenderBitmapRegistry.Get
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register(System.Object,System.String)
+  name: Register(object, string?)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Register_System_Object_System_String_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register(System.Object,System.String)
+  name.vb: Register(Object, String)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register(object, string?)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register(Object, String)
+  nameWithType: RenderBitmapRegistry.Register(object, string?)
+  nameWithType.vb: RenderBitmapRegistry.Register(Object, String)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register*
+  name: Register
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Register_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Register
+  nameWithType: RenderBitmapRegistry.Register
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync(System.Uri)
+  name: RegisterAsync(Uri)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_RegisterAsync_System_Uri_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync(System.Uri)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync(System.Uri)
+  nameWithType: RenderBitmapRegistry.RegisterAsync(Uri)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync*
+  name: RegisterAsync
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_RegisterAsync_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.RegisterAsync
+  nameWithType: RenderBitmapRegistry.RegisterAsync
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId(System.String,System.Int32@)
+  name: TryGetBitmapId(string, out int)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_TryGetBitmapId_System_String_System_Int32__
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId(System.String,System.Int32@)
+  name.vb: TryGetBitmapId(String, Integer)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId(string, out int)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId(String, Integer)
+  nameWithType: RenderBitmapRegistry.TryGetBitmapId(string, out int)
+  nameWithType.vb: RenderBitmapRegistry.TryGetBitmapId(String, Integer)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId*
+  name: TryGetBitmapId
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_TryGetBitmapId_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.TryGetBitmapId
+  nameWithType: RenderBitmapRegistry.TryGetBitmapId
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister(System.Int32)
+  name: Unregister(int)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Unregister_System_Int32_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister(System.Int32)
+  name.vb: Unregister(Integer)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister(int)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister(Integer)
+  nameWithType: RenderBitmapRegistry.Unregister(int)
+  nameWithType.vb: RenderBitmapRegistry.Unregister(Integer)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister*
+  name: Unregister
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Unregister_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Unregister
+  nameWithType: RenderBitmapRegistry.Unregister
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update(System.Int32,System.Object)
+  name: Update(int, object)
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Update_System_Int32_System_Object_
+  commentId: M:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update(System.Int32,System.Object)
+  name.vb: Update(Integer, Object)
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update(int, object)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update(Integer, Object)
+  nameWithType: RenderBitmapRegistry.Update(int, object)
+  nameWithType.vb: RenderBitmapRegistry.Update(Integer, Object)
+- uid: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update*
+  name: Update
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.html#Mapsui_Rendering_Skia_Cache_RenderBitmapRegistry_Update_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderBitmapRegistry.Update
+  nameWithType: RenderBitmapRegistry.Update
 - uid: Mapsui.Rendering.Skia.Cache.RenderService
   name: RenderService
   href: pages/Mapsui.Rendering.Skia.Cache.RenderService.html
@@ -21854,6 +21998,19 @@ references:
   fullName.vb: Mapsui.Rendering.Skia.Cache.RenderService.New
   nameWithType: RenderService.RenderService
   nameWithType.vb: RenderService.New
+- uid: Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry
+  name: BitmapRegistry
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderService.html#Mapsui_Rendering_Skia_Cache_RenderService_BitmapRegistry
+  commentId: P:Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry
+  fullName: Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry
+  nameWithType: RenderService.BitmapRegistry
+- uid: Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry*
+  name: BitmapRegistry
+  href: pages/Mapsui.Rendering.Skia.Cache.RenderService.html#Mapsui_Rendering_Skia_Cache_RenderService_BitmapRegistry_
+  commentId: Overload:Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry
+  isSpec: "True"
+  fullName: Mapsui.Rendering.Skia.Cache.RenderService.BitmapRegistry
+  nameWithType: RenderService.BitmapRegistry
 - uid: Mapsui.Rendering.Skia.Cache.RenderService.Dispose
   name: Dispose()
   href: pages/Mapsui.Rendering.Skia.Cache.RenderService.html#Mapsui_Rendering_Skia_Cache_RenderService_Dispose
@@ -22027,15 +22184,15 @@ references:
   commentId: T:Mapsui.Rendering.Skia.Cache.VectorCache
   fullName: Mapsui.Rendering.Skia.Cache.VectorCache
   nameWithType: VectorCache
-- uid: Mapsui.Rendering.Skia.Cache.VectorCache.#ctor(Mapsui.Rendering.ISymbolCache,System.Int32)
-  name: VectorCache(ISymbolCache, int)
-  href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache__ctor_Mapsui_Rendering_ISymbolCache_System_Int32_
-  commentId: M:Mapsui.Rendering.Skia.Cache.VectorCache.#ctor(Mapsui.Rendering.ISymbolCache,System.Int32)
-  name.vb: New(ISymbolCache, Integer)
-  fullName: Mapsui.Rendering.Skia.Cache.VectorCache.VectorCache(Mapsui.Rendering.ISymbolCache, int)
-  fullName.vb: Mapsui.Rendering.Skia.Cache.VectorCache.New(Mapsui.Rendering.ISymbolCache, Integer)
-  nameWithType: VectorCache.VectorCache(ISymbolCache, int)
-  nameWithType.vb: VectorCache.New(ISymbolCache, Integer)
+- uid: Mapsui.Rendering.Skia.Cache.VectorCache.#ctor(Mapsui.Rendering.IRenderService,System.Int32)
+  name: VectorCache(IRenderService, int)
+  href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache__ctor_Mapsui_Rendering_IRenderService_System_Int32_
+  commentId: M:Mapsui.Rendering.Skia.Cache.VectorCache.#ctor(Mapsui.Rendering.IRenderService,System.Int32)
+  name.vb: New(IRenderService, Integer)
+  fullName: Mapsui.Rendering.Skia.Cache.VectorCache.VectorCache(Mapsui.Rendering.IRenderService, int)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.VectorCache.New(Mapsui.Rendering.IRenderService, Integer)
+  nameWithType: VectorCache.VectorCache(IRenderService, int)
+  nameWithType.vb: VectorCache.New(IRenderService, Integer)
 - uid: Mapsui.Rendering.Skia.Cache.VectorCache.#ctor*
   name: VectorCache
   href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache__ctor_
@@ -22079,15 +22236,15 @@ references:
   isSpec: "True"
   fullName: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint
   nameWithType: VectorCache.GetOrCreatePaint
-- uid: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.ISymbolCache,``1})
-  name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, ISymbolCache, TPaint>)
-  href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache_GetOrCreatePaint__2___0_System_Func___0_Mapsui_Rendering_ISymbolCache___1__
-  commentId: M:Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.ISymbolCache,``1})
-  name.vb: GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, ISymbolCache, TPaint))
-  fullName: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, System.Func<TParam, Mapsui.Rendering.ISymbolCache, TPaint>)
-  fullName.vb: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, System.Func(Of TParam, Mapsui.Rendering.ISymbolCache, TPaint))
-  nameWithType: VectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, ISymbolCache, TPaint>)
-  nameWithType.vb: VectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, ISymbolCache, TPaint))
+- uid: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.IRenderService,``1})
+  name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, IRenderService, TPaint>)
+  href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache_GetOrCreatePaint__2___0_System_Func___0_Mapsui_Rendering_IRenderService___1__
+  commentId: M:Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint``2(``0,System.Func{``0,Mapsui.Rendering.IRenderService,``1})
+  name.vb: GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, IRenderService, TPaint))
+  fullName: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, System.Func<TParam, Mapsui.Rendering.IRenderService, TPaint>)
+  fullName.vb: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, System.Func(Of TParam, Mapsui.Rendering.IRenderService, TPaint))
+  nameWithType: VectorCache.GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, IRenderService, TPaint>)
+  nameWithType.vb: VectorCache.GetOrCreatePaint(Of TParam, TPaint)(TParam, Func(Of TParam, IRenderService, TPaint))
 - uid: Mapsui.Rendering.Skia.Cache.VectorCache.GetOrCreatePaint``2(``0,System.Func{``0,``1})
   name: GetOrCreatePaint<TParam, TPaint>(TParam, Func<TParam, TPaint>)
   href: pages/Mapsui.Rendering.Skia.Cache.VectorCache.html#Mapsui_Rendering_Skia_Cache_VectorCache_GetOrCreatePaint__2___0_System_Func___0___1__
@@ -23226,12 +23383,12 @@ references:
   isSpec: "True"
   fullName: Mapsui.Rendering.Skia.SymbolStyleRenderer.DrawXY
   nameWithType: SymbolStyleRenderer.DrawXY
-- uid: Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle,Mapsui.Rendering.ISymbolCache)
-  name: FeatureSize(SymbolStyle, ISymbolCache)
-  href: pages/Mapsui.Rendering.Skia.SymbolStyleRenderer.html#Mapsui_Rendering_Skia_SymbolStyleRenderer_FeatureSize_Mapsui_Styles_SymbolStyle_Mapsui_Rendering_ISymbolCache_
-  commentId: M:Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle,Mapsui.Rendering.ISymbolCache)
-  fullName: Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle, Mapsui.Rendering.ISymbolCache)
-  nameWithType: SymbolStyleRenderer.FeatureSize(SymbolStyle, ISymbolCache)
+- uid: Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle,Mapsui.Rendering.IRenderService)
+  name: FeatureSize(SymbolStyle, IRenderService)
+  href: pages/Mapsui.Rendering.Skia.SymbolStyleRenderer.html#Mapsui_Rendering_Skia_SymbolStyleRenderer_FeatureSize_Mapsui_Styles_SymbolStyle_Mapsui_Rendering_IRenderService_
+  commentId: M:Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle,Mapsui.Rendering.IRenderService)
+  fullName: Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize(Mapsui.Styles.SymbolStyle, Mapsui.Rendering.IRenderService)
+  nameWithType: SymbolStyleRenderer.FeatureSize(SymbolStyle, IRenderService)
 - uid: Mapsui.Rendering.Skia.SymbolStyleRenderer.FeatureSize*
   name: FeatureSize
   href: pages/Mapsui.Rendering.Skia.SymbolStyleRenderer.html#Mapsui_Rendering_Skia_SymbolStyleRenderer_FeatureSize_
@@ -23580,6 +23737,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.Brush.BitmapId
   nameWithType: Brush.BitmapId
+- uid: Mapsui.Styles.Brush.BitmapPath
+  name: BitmapPath
+  href: pages/Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_BitmapPath
+  commentId: P:Mapsui.Styles.Brush.BitmapPath
+  fullName: Mapsui.Styles.Brush.BitmapPath
+  nameWithType: Brush.BitmapPath
+- uid: Mapsui.Styles.Brush.BitmapPath*
+  name: BitmapPath
+  href: pages/Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_BitmapPath_
+  commentId: Overload:Mapsui.Styles.Brush.BitmapPath
+  isSpec: "True"
+  fullName: Mapsui.Styles.Brush.BitmapPath
+  nameWithType: Brush.BitmapPath
 - uid: Mapsui.Styles.Brush.Color
   name: Color
   href: pages/Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_Color
@@ -27715,6 +27885,15 @@ references:
   fullName.vb: Mapsui.Styles.Sprite.New(Integer, Integer, Integer, Integer, Integer, Single)
   nameWithType: Sprite.Sprite(int, int, int, int, int, float)
   nameWithType.vb: Sprite.New(Integer, Integer, Integer, Integer, Integer, Single)
+- uid: Mapsui.Styles.Sprite.#ctor(System.Uri,System.Int32,System.Int32,System.Int32,System.Int32,System.Single)
+  name: Sprite(Uri, int, int, int, int, float)
+  href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite__ctor_System_Uri_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_
+  commentId: M:Mapsui.Styles.Sprite.#ctor(System.Uri,System.Int32,System.Int32,System.Int32,System.Int32,System.Single)
+  name.vb: New(Uri, Integer, Integer, Integer, Integer, Single)
+  fullName: Mapsui.Styles.Sprite.Sprite(System.Uri, int, int, int, int, float)
+  fullName.vb: Mapsui.Styles.Sprite.New(System.Uri, Integer, Integer, Integer, Integer, Single)
+  nameWithType: Sprite.Sprite(Uri, int, int, int, int, float)
+  nameWithType.vb: Sprite.New(Uri, Integer, Integer, Integer, Integer, Single)
 - uid: Mapsui.Styles.Sprite.#ctor*
   name: Sprite
   href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite__ctor_
@@ -27738,6 +27917,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.Sprite.Atlas
   nameWithType: Sprite.Atlas
+- uid: Mapsui.Styles.Sprite.AtlasPath
+  name: AtlasPath
+  href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_AtlasPath
+  commentId: P:Mapsui.Styles.Sprite.AtlasPath
+  fullName: Mapsui.Styles.Sprite.AtlasPath
+  nameWithType: Sprite.AtlasPath
+- uid: Mapsui.Styles.Sprite.AtlasPath*
+  name: AtlasPath
+  href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_AtlasPath_
+  commentId: Overload:Mapsui.Styles.Sprite.AtlasPath
+  isSpec: "True"
+  fullName: Mapsui.Styles.Sprite.AtlasPath
+  nameWithType: Sprite.AtlasPath
 - uid: Mapsui.Styles.Sprite.Data
   name: Data
   href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_Data
@@ -27764,6 +27956,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.Sprite.Height
   nameWithType: Sprite.Height
+- uid: Mapsui.Styles.Sprite.LoadBitmapIdAsync(Mapsui.Styles.IBitmapRegistry)
+  name: LoadBitmapIdAsync(IBitmapRegistry)
+  href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_LoadBitmapIdAsync_Mapsui_Styles_IBitmapRegistry_
+  commentId: M:Mapsui.Styles.Sprite.LoadBitmapIdAsync(Mapsui.Styles.IBitmapRegistry)
+  fullName: Mapsui.Styles.Sprite.LoadBitmapIdAsync(Mapsui.Styles.IBitmapRegistry)
+  nameWithType: Sprite.LoadBitmapIdAsync(IBitmapRegistry)
+- uid: Mapsui.Styles.Sprite.LoadBitmapIdAsync*
+  name: LoadBitmapIdAsync
+  href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_LoadBitmapIdAsync_
+  commentId: Overload:Mapsui.Styles.Sprite.LoadBitmapIdAsync
+  isSpec: "True"
+  fullName: Mapsui.Styles.Sprite.LoadBitmapIdAsync
+  nameWithType: Sprite.LoadBitmapIdAsync
 - uid: Mapsui.Styles.Sprite.PixelRatio
   name: PixelRatio
   href: pages/Mapsui.Styles.Sprite.html#Mapsui_Styles_Sprite_PixelRatio
@@ -28083,6 +28288,19 @@ references:
   isSpec: "True"
   fullName: Mapsui.Styles.SymbolStyle.BitmapId
   nameWithType: SymbolStyle.BitmapId
+- uid: Mapsui.Styles.SymbolStyle.BitmapPath
+  name: BitmapPath
+  href: pages/Mapsui.Styles.SymbolStyle.html#Mapsui_Styles_SymbolStyle_BitmapPath
+  commentId: P:Mapsui.Styles.SymbolStyle.BitmapPath
+  fullName: Mapsui.Styles.SymbolStyle.BitmapPath
+  nameWithType: SymbolStyle.BitmapPath
+- uid: Mapsui.Styles.SymbolStyle.BitmapPath*
+  name: BitmapPath
+  href: pages/Mapsui.Styles.SymbolStyle.html#Mapsui_Styles_SymbolStyle_BitmapPath_
+  commentId: Overload:Mapsui.Styles.SymbolStyle.BitmapPath
+  isSpec: "True"
+  fullName: Mapsui.Styles.SymbolStyle.BitmapPath
+  nameWithType: SymbolStyle.BitmapPath
 - uid: Mapsui.Styles.SymbolStyle.BlendModeColor
   name: BlendModeColor
   href: pages/Mapsui.Styles.SymbolStyle.html#Mapsui_Styles_SymbolStyle_BlendModeColor
