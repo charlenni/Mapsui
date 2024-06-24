@@ -58,7 +58,7 @@ public class MemoryProvider : IProvider, IList<IFeature>
     public IReadOnlyList<IFeature> Features => _features.AsReadOnly();
 
     /// <summary>
-    /// Default ymbolSize for increasing the bounding box
+    /// Default SymbolSize for increasing the bounding box
     /// </summary>
     public double SymbolSize { get; set; } = 64;
 
