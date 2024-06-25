@@ -90,7 +90,6 @@
   </div>
   <div class="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Mapsui.Rendering.ITileCache.html">ITileCache</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
@@ -118,7 +117,7 @@
   <h6><strong>Assembly</strong>: Mapsui.Rendering.Skia.dll</h6>
   <h5 id="Mapsui_Rendering_Skia_Cache_TileCache_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class TileCache : ITileCache, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class TileCache : IDisposable</code></pre>
   </div>
   <h3 id="methods">Methods
 </h3>
@@ -127,7 +126,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Rendering_Skia_Cache_TileCache_Dispose.md&amp;value=---%0Auid%3A%20Mapsui.Rendering.Skia.Cache.TileCache.Dispose%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L77">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L86">View Source</a>
   </span>
   <a id="Mapsui_Rendering_Skia_Cache_TileCache_Dispose_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.Dispose*"></a>
   <h4 id="Mapsui_Rendering_Skia_Cache_TileCache_Dispose" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.Dispose">Dispose()</h4>
@@ -143,7 +142,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Rendering_Skia_Cache_TileCache_GetOrCreate_Mapsui_MRaster_System_Int64_.md&amp;value=---%0Auid%3A%20Mapsui.Rendering.Skia.Cache.TileCache.GetOrCreate(Mapsui.MRaster%2CSystem.Int64)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L18">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L20">View Source</a>
   </span>
   <a id="Mapsui_Rendering_Skia_Cache_TileCache_GetOrCreate_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.GetOrCreate*"></a>
   <h4 id="Mapsui_Rendering_Skia_Cache_TileCache_GetOrCreate_Mapsui_MRaster_System_Int64_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.GetOrCreate(Mapsui.MRaster,System.Int64)">GetOrCreate(MRaster, long)</h4>
@@ -151,7 +150,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IBitmapInfo? GetOrCreate(MRaster raster, long currentIteration)</code></pre>
+    <pre><code class="lang-csharp hljs">public TileCacheEntry GetOrCreate(MRaster raster, long currentIteration)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -185,7 +184,54 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Mapsui.Rendering.IBitmapInfo.html">IBitmapInfo</a></td>
+        <td><a class="xref" href="Mapsui.Rendering.Skia.Tiling.TileCacheEntry.html">TileCacheEntry</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Rendering_Skia_Cache_TileCache_ToTileCacheEntry_System_Byte___.md&amp;value=---%0Auid%3A%20Mapsui.Rendering.Skia.Cache.TileCache.ToTileCacheEntry(System.Byte%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L47">View Source</a>
+  </span>
+  <a id="Mapsui_Rendering_Skia_Cache_TileCache_ToTileCacheEntry_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.ToTileCacheEntry*"></a>
+  <h4 id="Mapsui_Rendering_Skia_Cache_TileCache_ToTileCacheEntry_System_Byte___" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.ToTileCacheEntry(System.Byte[])">ToTileCacheEntry(byte[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TileCacheEntry ToTileCacheEntry(byte[] data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Mapsui.Rendering.Skia.Tiling.TileCacheEntry.html">TileCacheEntry</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -195,7 +241,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Rendering_Skia_Cache_TileCache_UpdateCache_System_Int64_.md&amp;value=---%0Auid%3A%20Mapsui.Rendering.Skia.Cache.TileCache.UpdateCache(System.Int64)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L40">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L38">View Source</a>
   </span>
   <a id="Mapsui_Rendering_Skia_Cache_TileCache_UpdateCache_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.UpdateCache*"></a>
   <h4 id="Mapsui_Rendering_Skia_Cache_TileCache_UpdateCache_System_Int64_" data-uid="Mapsui.Rendering.Skia.Cache.TileCache.UpdateCache(System.Int64)">UpdateCache(long)</h4>
@@ -224,9 +270,6 @@
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Mapsui.Rendering.ITileCache.html">ITileCache</a>
-  </div>
-  <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
@@ -245,7 +288,7 @@
                     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Rendering_Skia_Cache_TileCache.md&amp;value=---%0Auid%3A%20Mapsui.Rendering.Skia.Cache.TileCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                   </li>
                   <li>
-                    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Rendering.Skia/Cache/TileCache.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

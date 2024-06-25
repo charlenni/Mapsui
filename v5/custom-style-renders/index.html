@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.21">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
       
 
@@ -151,7 +151,7 @@
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -865,7 +865,7 @@
 <p>This is the ISkiaStyleRenderer interface that you need to implement:
 <div class="language-csharp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ISkiaStyleRenderer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IStyleRenderer</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">{</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Draw</span><span class="p">(</span><span class="n">SKCanvas</span><span class="w"> </span><span class="n">canvas</span><span class="p">,</span><span class="w"> </span><span class="n">IReadOnlyViewport</span><span class="w"> </span><span class="n">viewport</span><span class="p">,</span><span class="w"> </span><span class="n">ILayer</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">IFeature</span><span class="w"> </span><span class="n">feature</span><span class="p">,</span><span class="w"> </span><span class="n">IStyle</span><span class="w"> </span><span class="n">style</span><span class="p">,</span><span class="w"> </span><span class="n">ISymbolCache</span><span class="w"> </span><span class="n">symbolCache</span><span class="p">);</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Draw</span><span class="p">(</span><span class="n">SKCanvas</span><span class="w"> </span><span class="n">canvas</span><span class="p">,</span><span class="w"> </span><span class="n">IReadOnlyViewport</span><span class="w"> </span><span class="n">viewport</span><span class="p">,</span><span class="w"> </span><span class="n">ILayer</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">IFeature</span><span class="w"> </span><span class="n">feature</span><span class="p">,</span><span class="w"> </span><span class="n">IStyle</span><span class="w"> </span><span class="n">style</span><span class="p">,</span><span class="w"> </span><span class="n">IRenderService</span><span class="w"> </span><span class="n">renderService</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">iteration</span><span class="p">);</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p>The IFeature has a Geometry field. The renderer is responsible to cast the IFeature.Geometry to the type it intends to render. The IStyle is the custom style the user defined. It could contain extra style information not present in the default style classes. The user will need to cast that IStyle to the custom style to use this extra information.</p>
@@ -926,7 +926,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": ["content.action.edit", "content.tabs.link", "navigation.expand", "navigation.sections", "search.highlight", "search.share", "search.suggest", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.a7c05c9e.min.js"></script>
+      <script src="../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

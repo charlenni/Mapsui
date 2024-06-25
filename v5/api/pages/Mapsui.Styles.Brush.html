@@ -88,6 +88,10 @@
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Brush</span></div>
   </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Mapsui.Styles.IHasImageSource.html">IHasImageSource</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -110,7 +114,7 @@
   <h6><strong>Assembly</strong>: Mapsui.dll</h6>
   <h5 id="Mapsui_Styles_Brush_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Brush</code></pre>
+    <pre><code class="lang-csharp hljs">public class Brush : IHasImageSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -119,7 +123,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush__ctor.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L12">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L11">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush__ctor_" data-uid="Mapsui.Styles.Brush.#ctor*"></a>
   <h4 id="Mapsui_Styles_Brush__ctor" data-uid="Mapsui.Styles.Brush.#ctor">Brush()</h4>
@@ -134,7 +138,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush__ctor_Mapsui_Styles_Brush_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.%23ctor(Mapsui.Styles.Brush)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L21">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L20">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush__ctor_" data-uid="Mapsui.Styles.Brush.#ctor*"></a>
   <h4 id="Mapsui_Styles_Brush__ctor_Mapsui_Styles_Brush_" data-uid="Mapsui.Styles.Brush.#ctor(Mapsui.Styles.Brush)">Brush(Brush)</h4>
@@ -166,7 +170,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush__ctor_Mapsui_Styles_Color_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.%23ctor(Mapsui.Styles.Color)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L16">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L15">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush__ctor_" data-uid="Mapsui.Styles.Brush.#ctor*"></a>
   <h4 id="Mapsui_Styles_Brush__ctor_Mapsui_Styles_Color_" data-uid="Mapsui.Styles.Brush.#ctor(Mapsui.Styles.Color)">Brush(Color)</h4>
@@ -200,7 +204,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_Background.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.Background%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L34">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L32">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_Background_" data-uid="Mapsui.Styles.Brush.Background*"></a>
   <h4 id="Mapsui_Styles_Brush_Background" data-uid="Mapsui.Styles.Brush.Background">Background</h4>
@@ -227,19 +231,21 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_BitmapId.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.BitmapId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_BitmapRegion.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.BitmapRegion%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L39">View Source</a>
   </span>
-  <a id="Mapsui_Styles_Brush_BitmapId_" data-uid="Mapsui.Styles.Brush.BitmapId*"></a>
-  <h4 id="Mapsui_Styles_Brush_BitmapId" data-uid="Mapsui.Styles.Brush.BitmapId">BitmapId</h4>
-  <div class="markdown level1 summary"><p>This identifies bitmap in the BitmapRegistry</p>
+  <a id="Mapsui_Styles_Brush_BitmapRegion_" data-uid="Mapsui.Styles.Brush.BitmapRegion*"></a>
+  <h4 id="Mapsui_Styles_Brush_BitmapRegion" data-uid="Mapsui.Styles.Brush.BitmapRegion">BitmapRegion</h4>
+  <div class="markdown level1 summary"><p>If a bitmap is used as <a class="xref" href="Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_ImageSource">ImageSource</a> the <a class="xref" href="Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_BitmapRegion">BitmapRegion</a> can be used to specific a
+subregion that will be used as image symbol. This way the  <a class="xref" href="Mapsui.Styles.Brush.html#Mapsui_Styles_Brush_ImageSource">ImageSource</a> can be used as an 'atlas'
+for 'sprites', which is a common mechanism in 2D gaming engines This will not affect SVGs.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int BitmapId { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public BitmapRegion? BitmapRegion { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -251,37 +257,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_BitmapPath.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.BitmapPath%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L50">View Source</a>
-  </span>
-  <a id="Mapsui_Styles_Brush_BitmapPath_" data-uid="Mapsui.Styles.Brush.BitmapPath*"></a>
-  <h4 id="Mapsui_Styles_Brush_BitmapPath" data-uid="Mapsui.Styles.Brush.BitmapPath">BitmapPath</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Uri? BitmapPath { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></td>
+        <td><a class="xref" href="Mapsui.Styles.BitmapRegion.html">BitmapRegion</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -291,7 +267,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_Color.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.Color%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L29">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L27">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_Color_" data-uid="Mapsui.Styles.Brush.Color*"></a>
   <h4 id="Mapsui_Styles_Brush_Color" data-uid="Mapsui.Styles.Brush.Color">Color</h4>
@@ -321,7 +297,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_FillStyle.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.FillStyle%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L70">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L61">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_FillStyle_" data-uid="Mapsui.Styles.Brush.FillStyle*"></a>
   <h4 id="Mapsui_Styles_Brush_FillStyle" data-uid="Mapsui.Styles.Brush.FillStyle">FillStyle</h4>
@@ -347,6 +323,36 @@
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_ImageSource.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.ImageSource%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L41">View Source</a>
+  </span>
+  <a id="Mapsui_Styles_Brush_ImageSource_" data-uid="Mapsui.Styles.Brush.ImageSource*"></a>
+  <h4 id="Mapsui_Styles_Brush_ImageSource" data-uid="Mapsui.Styles.Brush.ImageSource">ImageSource</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? ImageSource { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
@@ -354,7 +360,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_Equals_Mapsui_Styles_Brush_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.Equals(Mapsui.Styles.Brush)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L92">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L83">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_Equals_" data-uid="Mapsui.Styles.Brush.Equals*"></a>
   <h4 id="Mapsui_Styles_Brush_Equals_Mapsui_Styles_Brush_" data-uid="Mapsui.Styles.Brush.Equals(Mapsui.Styles.Brush)">Equals(Brush?)</h4>
@@ -401,7 +407,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.Equals(System.Object)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L72">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L63">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_Equals_" data-uid="Mapsui.Styles.Brush.Equals*"></a>
   <h4 id="Mapsui_Styles_Brush_Equals_System_Object_" data-uid="Mapsui.Styles.Brush.Equals(System.Object)">Equals(object?)</h4>
@@ -453,7 +459,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_GetHashCode.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.GetHashCode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L100">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L91">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_GetHashCode_" data-uid="Mapsui.Styles.Brush.GetHashCode*"></a>
   <h4 id="Mapsui_Styles_Brush_GetHashCode" data-uid="Mapsui.Styles.Brush.GetHashCode">GetHashCode()</h4>
@@ -489,7 +495,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_op_Equality_Mapsui_Styles_Brush_Mapsui_Styles_Brush_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.op_Equality(Mapsui.Styles.Brush%2CMapsui.Styles.Brush)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L112">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L96">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_op_Equality_" data-uid="Mapsui.Styles.Brush.op_Equality*"></a>
   <h4 id="Mapsui_Styles_Brush_op_Equality_Mapsui_Styles_Brush_Mapsui_Styles_Brush_" data-uid="Mapsui.Styles.Brush.op_Equality(Mapsui.Styles.Brush,Mapsui.Styles.Brush)">operator ==(Brush?, Brush?)</h4>
@@ -541,7 +547,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Styles_Brush_op_Inequality_Mapsui_Styles_Brush_Mapsui_Styles_Brush_.md&amp;value=---%0Auid%3A%20Mapsui.Styles.Brush.op_Inequality(Mapsui.Styles.Brush%2CMapsui.Styles.Brush)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L117">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Styles/Brush.cs/#L101">View Source</a>
   </span>
   <a id="Mapsui_Styles_Brush_op_Inequality_" data-uid="Mapsui.Styles.Brush.op_Inequality*"></a>
   <h4 id="Mapsui_Styles_Brush_op_Inequality_Mapsui_Styles_Brush_Mapsui_Styles_Brush_" data-uid="Mapsui.Styles.Brush.op_Inequality(Mapsui.Styles.Brush,Mapsui.Styles.Brush)">operator !=(Brush?, Brush?)</h4>
@@ -588,6 +594,10 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Mapsui.Styles.IHasImageSource.html">IHasImageSource</a>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Mapsui.Extensions.BrushExtensions.html#Mapsui_Extensions_BrushExtensions_IsVisible_Mapsui_Styles_Brush_">BrushExtensions.IsVisible(Brush?)</a>
