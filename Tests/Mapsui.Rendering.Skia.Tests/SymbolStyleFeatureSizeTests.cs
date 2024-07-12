@@ -1,10 +1,8 @@
 using System;
-using System.IO;
+using System.Threading.Tasks;
 using Mapsui.Rendering.Skia.Cache;
 using Mapsui.Styles;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
-using SkiaSharp;
 
 namespace Mapsui.Rendering.Skia.Tests;
 
@@ -22,7 +20,7 @@ public class SymbolStyleFeatureSizeTests
         using var renderService = new RenderService();
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1);
+        Assert.That(size, Is.EqualTo(Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1));
     }
 
     [Test]
@@ -37,7 +35,7 @@ public class SymbolStyleFeatureSizeTests
         using var renderService = new RenderService();
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, (Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1) * 2);
+        Assert.That(size, Is.EqualTo((Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1) * 2));
     }
 
     [Test]
@@ -52,7 +50,7 @@ public class SymbolStyleFeatureSizeTests
         using var renderService = new RenderService();
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 2 * 2 + 1);
+        Assert.That(size, Is.EqualTo(Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 2 * 2 + 1));
     }
 
     [Test]
@@ -67,7 +65,7 @@ public class SymbolStyleFeatureSizeTests
         using var renderService = new RenderService();
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 2 * 2 + 1);
+        Assert.That(size, Is.EqualTo(Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 2 * 2 + 1));
     }
 
     [Test]
@@ -82,35 +80,26 @@ public class SymbolStyleFeatureSizeTests
         using var renderService = new RenderService();
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1 + Math.Sqrt(2 * 2 + 2 * 2) * 2);
+        Assert.That(size, Is.EqualTo(Math.Max(SymbolStyle.DefaultHeight, SymbolStyle.DefaultWidth) + 1 + Math.Sqrt(2 * 2 + 2 * 2) * 2));
     }
 
     [Test]
-    public void BitmapInfoFeatureSize()
+    public async Task ImageFeatureSizeAsync()
     {
+        // Arrange
         using var renderService = new RenderService();
-
-        var bitmapId = BitmapRegistry.Instance.Register(CreatePng(100, 100));
-
         var symbolStyle = new SymbolStyle
         {
-            BitmapId = bitmapId,
+            ImageSource = "embedded://Mapsui.Resources.Images.Pin.svg",
         };
 
+        await renderService.ImageSourceCache.RegisterAsync(symbolStyle.ImageSource);
+
+        // Act
         var size = SymbolStyleRenderer.FeatureSize(symbolStyle, renderService);
 
-        ClassicAssert.AreEqual(size, 100);
-    }
+        // Assert
+        Assert.That(size, Is.EqualTo(56));
 
-    private object CreatePng(int x, int y)
-    {
-        var imageInfo = new SKImageInfo(x, y);
-
-        using var surface = SKSurface.Create(imageInfo);
-        using var image = surface.Snapshot();
-        using var data = image.Encode();
-        using var memoryStream = new MemoryStream();
-        data.SaveTo(memoryStream);
-        return memoryStream.ToArray();
     }
 }

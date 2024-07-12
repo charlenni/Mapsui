@@ -38,7 +38,7 @@ public abstract class BaseLayer : ILayer
         Id = NextId();
     }
 
-    internal static int NextId()
+    public static int NextId()
     {
         // use interlocked which is thread safe ++ is not thread safe
         return Interlocked.Increment(ref _instanceCounter);
@@ -201,7 +201,7 @@ public abstract class BaseLayer : ILayer
 
     public void DataHasChanged()
     {
-        DataChanged?.Invoke(this, new DataChangedEventArgs());
+        DataChanged?.Invoke(this, new DataChangedEventArgs(Name));
     }
 
     public override string ToString()

@@ -2,12 +2,11 @@
 // The Mapsui authors licensed this file under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-// This file was originally created by Paul den Dulk (Geodan) as part of SharpMap
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BruTile;
 using BruTile.Cache;
@@ -17,6 +16,7 @@ using Mapsui.Styles;
 using Mapsui.Tiling.Extensions;
 using Mapsui.Tiling.Fetcher;
 using Mapsui.Tiling.Rendering;
+using Mapsui.Tiling.Utilities;
 
 namespace Mapsui.Tiling.Layers;
 
@@ -32,6 +32,7 @@ public class TileLayer : BaseLayer, IAsyncDataFetcher, IDisposable
     private int _numberTilesNeeded;
     private readonly TileFetchDispatcher _tileFetchDispatcher;
     private readonly MRect? _extent;
+    private readonly HttpClient _httpClient = new();
 
     /// <summary>
     /// Create tile layer for given tile source
@@ -52,8 +53,8 @@ public class TileLayer : BaseLayer, IAsyncDataFetcher, IDisposable
         _tileSource = tileSource ?? throw new ArgumentException($"{tileSource} can not null");
         MemoryCache = new MemoryCache<IFeature?>(minTiles, maxTiles);
         Style = new RasterStyle();
-        Attribution.Text = _tileSource.Attribution?.Text;
-        Attribution.Url = _tileSource.Attribution?.Url;
+        Attribution.Text = _tileSource.Attribution.Text;
+        Attribution.Url = _tileSource.Attribution.Url;
         _extent = _tileSource.Schema?.Extent.ToMRect();
         dataFetchStrategy ??= new DataFetchStrategy(3);
         _renderFetchStrategy = renderFetchStrategy ?? new RenderFetchStrategy();
@@ -62,6 +63,8 @@ public class TileLayer : BaseLayer, IAsyncDataFetcher, IDisposable
         _tileFetchDispatcher = new TileFetchDispatcher(MemoryCache, _tileSource.Schema, fetchTileAsFeature ?? ToFeatureAsync, dataFetchStrategy);
         _tileFetchDispatcher.DataChanged += TileFetchDispatcherOnDataChanged;
         _tileFetchDispatcher.PropertyChanged += TileFetchDispatcherOnPropertyChanged;
+        // There should be a way to override the application wide default user agent.
+        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", HttpClientTools.GetDefaultApplicationUserAgent());
     }
 
     /// <summary>
@@ -114,7 +117,10 @@ public class TileLayer : BaseLayer, IAsyncDataFetcher, IDisposable
     protected override void Dispose(bool disposing)
     {
         if (disposing)
+        {
             MemoryCache.Dispose();
+            _httpClient.Dispose();
+        }
 
         base.Dispose(disposing);
     }
@@ -135,16 +141,29 @@ public class TileLayer : BaseLayer, IAsyncDataFetcher, IDisposable
         MemoryCache.MaxTiles = _numberTilesNeeded + _maxExtraTiles;
     }
 
-    private void TileFetchDispatcherOnDataChanged(object sender, DataChangedEventArgs e)
+    private void TileFetchDispatcherOnDataChanged(object? sender, Exception? ex)
     {
-        OnDataChanged(e);
+        OnDataChanged(new DataChangedEventArgs(ex, Name));
     }
 
     private async Task<IFeature?> ToFeatureAsync(TileInfo tileInfo)
     {
-        var tileData = await _tileSource.GetTileAsync(tileInfo).ConfigureAwait(false);
-        var mRaster = ToRaster(tileInfo, tileData);
-        return new RasterFeature(mRaster);
+        if (_tileSource is IHttpTileSource httpTileSource)
+        {
+            var tileData = await httpTileSource.GetTileAsync(_httpClient, tileInfo).ConfigureAwait(false);
+            var mRaster = ToRaster(tileInfo, tileData);
+            return new RasterFeature(mRaster);
+        }
+        else if (_tileSource is ILocalTileSource localTileSource)
+        {
+            var tileData = await localTileSource.GetTileAsync(tileInfo).ConfigureAwait(false);
+            var mRaster = ToRaster(tileInfo, tileData);
+            return new RasterFeature(mRaster);
+        }
+        else
+        {
+            throw new NotImplementedException("ToFeatureAsync is not implemented for this type of TileSource");
+        }
     }
 
     private static MRaster? ToRaster(TileInfo tileInfo, byte[]? tileData)
