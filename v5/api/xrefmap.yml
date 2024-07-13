@@ -29492,189 +29492,125 @@ references:
   commentId: N:Mapsui.Tiling.Provider
   fullName: Mapsui.Tiling.Provider
   nameWithType: Mapsui.Tiling.Provider
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider
-  name: RasterizingTileProvider
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html
-  commentId: T:Mapsui.Tiling.Provider.RasterizingTileProvider
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider
-  nameWithType: RasterizingTileProvider
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.#ctor(Mapsui.Layers.ILayer,Mapsui.Rendering.IRenderer,System.Single,BruTile.Cache.IPersistentCache{System.Byte[]},Mapsui.Projections.IProjection,Mapsui.Rendering.RenderFormat)
-  name: RasterizingTileProvider(ILayer, IRenderer?, float, IPersistentCache<byte[]>?, IProjection?, RenderFormat)
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider__ctor_Mapsui_Layers_ILayer_Mapsui_Rendering_IRenderer_System_Single_BruTile_Cache_IPersistentCache_System_Byte____Mapsui_Projections_IProjection_Mapsui_Rendering_RenderFormat_
-  commentId: M:Mapsui.Tiling.Provider.RasterizingTileProvider.#ctor(Mapsui.Layers.ILayer,Mapsui.Rendering.IRenderer,System.Single,BruTile.Cache.IPersistentCache{System.Byte[]},Mapsui.Projections.IProjection,Mapsui.Rendering.RenderFormat)
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource
+  name: RasterizingTileSource
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html
+  commentId: T:Mapsui.Tiling.Provider.RasterizingTileSource
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource
+  nameWithType: RasterizingTileSource
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.#ctor(Mapsui.Layers.ILayer,Mapsui.Rendering.IRenderer,System.Single,BruTile.Cache.IPersistentCache{System.Byte[]},Mapsui.Projections.IProjection,Mapsui.Rendering.RenderFormat)
+  name: RasterizingTileSource(ILayer, IRenderer?, float, IPersistentCache<byte[]>?, IProjection?, RenderFormat)
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource__ctor_Mapsui_Layers_ILayer_Mapsui_Rendering_IRenderer_System_Single_BruTile_Cache_IPersistentCache_System_Byte____Mapsui_Projections_IProjection_Mapsui_Rendering_RenderFormat_
+  commentId: M:Mapsui.Tiling.Provider.RasterizingTileSource.#ctor(Mapsui.Layers.ILayer,Mapsui.Rendering.IRenderer,System.Single,BruTile.Cache.IPersistentCache{System.Byte[]},Mapsui.Projections.IProjection,Mapsui.Rendering.RenderFormat)
   name.vb: New(ILayer, IRenderer, Single, IPersistentCache(Of Byte()), IProjection, RenderFormat)
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.RasterizingTileProvider(Mapsui.Layers.ILayer, Mapsui.Rendering.IRenderer?, float, BruTile.Cache.IPersistentCache<byte[]>?, Mapsui.Projections.IProjection?, Mapsui.Rendering.RenderFormat)
-  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileProvider.New(Mapsui.Layers.ILayer, Mapsui.Rendering.IRenderer, Single, BruTile.Cache.IPersistentCache(Of Byte()), Mapsui.Projections.IProjection, Mapsui.Rendering.RenderFormat)
-  nameWithType: RasterizingTileProvider.RasterizingTileProvider(ILayer, IRenderer?, float, IPersistentCache<byte[]>?, IProjection?, RenderFormat)
-  nameWithType.vb: RasterizingTileProvider.New(ILayer, IRenderer, Single, IPersistentCache(Of Byte()), IProjection, RenderFormat)
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.#ctor*
-  name: RasterizingTileProvider
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider__ctor_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.#ctor
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.RasterizingTileSource(Mapsui.Layers.ILayer, Mapsui.Rendering.IRenderer?, float, BruTile.Cache.IPersistentCache<byte[]>?, Mapsui.Projections.IProjection?, Mapsui.Rendering.RenderFormat)
+  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileSource.New(Mapsui.Layers.ILayer, Mapsui.Rendering.IRenderer, Single, BruTile.Cache.IPersistentCache(Of Byte()), Mapsui.Projections.IProjection, Mapsui.Rendering.RenderFormat)
+  nameWithType: RasterizingTileSource.RasterizingTileSource(ILayer, IRenderer?, float, IPersistentCache<byte[]>?, IProjection?, RenderFormat)
+  nameWithType.vb: RasterizingTileSource.New(ILayer, IRenderer, Single, IPersistentCache(Of Byte()), IProjection, RenderFormat)
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.#ctor*
+  name: RasterizingTileSource
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource__ctor_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.#ctor
   isSpec: "True"
   name.vb: New
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.RasterizingTileProvider
-  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileProvider.New
-  nameWithType: RasterizingTileProvider.RasterizingTileProvider
-  nameWithType.vb: RasterizingTileProvider.New
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.RasterizingTileSource
+  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileSource.New
+  nameWithType: RasterizingTileSource.RasterizingTileSource
+  nameWithType.vb: RasterizingTileSource.New
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Attribution
   name: Attribution
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Attribution
-  commentId: P:Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution
-  nameWithType: RasterizingTileProvider.Attribution
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Attribution
+  commentId: P:Mapsui.Tiling.Provider.RasterizingTileSource.Attribution
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Attribution
+  nameWithType: RasterizingTileSource.Attribution
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Attribution*
   name: Attribution
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Attribution_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Attribution_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.Attribution
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Attribution
-  nameWithType: RasterizingTileProvider.Attribution
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync(Mapsui.Viewport,System.Double,System.Double)
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Attribution
+  nameWithType: RasterizingTileSource.Attribution
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync(Mapsui.Viewport,System.Double,System.Double)
   name: GetFeatureInfoAsync(Viewport, double, double)
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_GetFeatureInfoAsync_Mapsui_Viewport_System_Double_System_Double_
-  commentId: M:Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync(Mapsui.Viewport,System.Double,System.Double)
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_GetFeatureInfoAsync_Mapsui_Viewport_System_Double_System_Double_
+  commentId: M:Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync(Mapsui.Viewport,System.Double,System.Double)
   name.vb: GetFeatureInfoAsync(Viewport, Double, Double)
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync(Mapsui.Viewport, double, double)
-  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync(Mapsui.Viewport, Double, Double)
-  nameWithType: RasterizingTileProvider.GetFeatureInfoAsync(Viewport, double, double)
-  nameWithType.vb: RasterizingTileProvider.GetFeatureInfoAsync(Viewport, Double, Double)
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync*
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync(Mapsui.Viewport, double, double)
+  fullName.vb: Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync(Mapsui.Viewport, Double, Double)
+  nameWithType: RasterizingTileSource.GetFeatureInfoAsync(Viewport, double, double)
+  nameWithType.vb: RasterizingTileSource.GetFeatureInfoAsync(Viewport, Double, Double)
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync*
   name: GetFeatureInfoAsync
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_GetFeatureInfoAsync_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_GetFeatureInfoAsync_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.GetFeatureInfoAsync
-  nameWithType: RasterizingTileProvider.GetFeatureInfoAsync
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync(BruTile.TileInfo)
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.GetFeatureInfoAsync
+  nameWithType: RasterizingTileSource.GetFeatureInfoAsync
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync(BruTile.TileInfo)
   name: GetTileAsync(TileInfo)
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_GetTileAsync_BruTile_TileInfo_
-  commentId: M:Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync(BruTile.TileInfo)
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync(BruTile.TileInfo)
-  nameWithType: RasterizingTileProvider.GetTileAsync(TileInfo)
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_GetTileAsync_BruTile_TileInfo_
+  commentId: M:Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync(BruTile.TileInfo)
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync(BruTile.TileInfo)
+  nameWithType: RasterizingTileSource.GetTileAsync(TileInfo)
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync*
   name: GetTileAsync
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_GetTileAsync_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_GetTileAsync_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.GetTileAsync
-  nameWithType: RasterizingTileProvider.GetTileAsync
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Name
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.GetTileAsync
+  nameWithType: RasterizingTileSource.GetTileAsync
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Name
   name: Name
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Name
-  commentId: P:Mapsui.Tiling.Provider.RasterizingTileProvider.Name
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Name
-  nameWithType: RasterizingTileProvider.Name
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Name*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Name
+  commentId: P:Mapsui.Tiling.Provider.RasterizingTileSource.Name
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Name
+  nameWithType: RasterizingTileSource.Name
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Name*
   name: Name
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Name_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.Name
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Name_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.Name
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Name
-  nameWithType: RasterizingTileProvider.Name
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Name
+  nameWithType: RasterizingTileSource.Name
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache
   name: PersistentCache
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_PersistentCache
-  commentId: P:Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache
-  nameWithType: RasterizingTileProvider.PersistentCache
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_PersistentCache
+  commentId: P:Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache
+  nameWithType: RasterizingTileSource.PersistentCache
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache*
   name: PersistentCache
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_PersistentCache_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_PersistentCache_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.PersistentCache
-  nameWithType: RasterizingTileProvider.PersistentCache
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Schema
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.PersistentCache
+  nameWithType: RasterizingTileSource.PersistentCache
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Schema
   name: Schema
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Schema
-  commentId: P:Mapsui.Tiling.Provider.RasterizingTileProvider.Schema
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Schema
-  nameWithType: RasterizingTileProvider.Schema
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.Schema*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Schema
+  commentId: P:Mapsui.Tiling.Provider.RasterizingTileSource.Schema
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Schema
+  nameWithType: RasterizingTileSource.Schema
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.Schema*
   name: Schema
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_Schema_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.Schema
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_Schema_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.Schema
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.Schema
-  nameWithType: RasterizingTileProvider.Schema
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport(Mapsui.MSection)
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.Schema
+  nameWithType: RasterizingTileSource.Schema
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport(Mapsui.MSection)
   name: ToViewport(MSection)
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_ToViewport_Mapsui_MSection_
-  commentId: M:Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport(Mapsui.MSection)
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport(Mapsui.MSection)
-  nameWithType: RasterizingTileProvider.ToViewport(MSection)
-- uid: Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport*
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_ToViewport_Mapsui_MSection_
+  commentId: M:Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport(Mapsui.MSection)
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport(Mapsui.MSection)
+  nameWithType: RasterizingTileSource.ToViewport(MSection)
+- uid: Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport*
   name: ToViewport
-  href: pages/Mapsui.Tiling.Provider.RasterizingTileProvider.html#Mapsui_Tiling_Provider_RasterizingTileProvider_ToViewport_
-  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport
+  href: pages/Mapsui.Tiling.Provider.RasterizingTileSource.html#Mapsui_Tiling_Provider_RasterizingTileSource_ToViewport_
+  commentId: Overload:Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport
   isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.RasterizingTileProvider.ToViewport
-  nameWithType: RasterizingTileProvider.ToViewport
-- uid: Mapsui.Tiling.Provider.TileProvider
-  name: TileProvider
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html
-  commentId: T:Mapsui.Tiling.Provider.TileProvider
-  fullName: Mapsui.Tiling.Provider.TileProvider
-  nameWithType: TileProvider
-- uid: Mapsui.Tiling.Provider.TileProvider.#ctor(BruTile.ITileSource)
-  name: TileProvider(ITileSource)
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider__ctor_BruTile_ITileSource_
-  commentId: M:Mapsui.Tiling.Provider.TileProvider.#ctor(BruTile.ITileSource)
-  name.vb: New(ITileSource)
-  fullName: Mapsui.Tiling.Provider.TileProvider.TileProvider(BruTile.ITileSource)
-  fullName.vb: Mapsui.Tiling.Provider.TileProvider.New(BruTile.ITileSource)
-  nameWithType: TileProvider.TileProvider(ITileSource)
-  nameWithType.vb: TileProvider.New(ITileSource)
-- uid: Mapsui.Tiling.Provider.TileProvider.#ctor*
-  name: TileProvider
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider__ctor_
-  commentId: Overload:Mapsui.Tiling.Provider.TileProvider.#ctor
-  isSpec: "True"
-  name.vb: New
-  fullName: Mapsui.Tiling.Provider.TileProvider.TileProvider
-  fullName.vb: Mapsui.Tiling.Provider.TileProvider.New
-  nameWithType: TileProvider.TileProvider
-  nameWithType.vb: TileProvider.New
-- uid: Mapsui.Tiling.Provider.TileProvider.CRS
-  name: CRS
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_CRS
-  commentId: P:Mapsui.Tiling.Provider.TileProvider.CRS
-  fullName: Mapsui.Tiling.Provider.TileProvider.CRS
-  nameWithType: TileProvider.CRS
-- uid: Mapsui.Tiling.Provider.TileProvider.CRS*
-  name: CRS
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_CRS_
-  commentId: Overload:Mapsui.Tiling.Provider.TileProvider.CRS
-  isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.TileProvider.CRS
-  nameWithType: TileProvider.CRS
-- uid: Mapsui.Tiling.Provider.TileProvider.GetExtent
-  name: GetExtent()
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_GetExtent
-  commentId: M:Mapsui.Tiling.Provider.TileProvider.GetExtent
-  fullName: Mapsui.Tiling.Provider.TileProvider.GetExtent()
-  nameWithType: TileProvider.GetExtent()
-- uid: Mapsui.Tiling.Provider.TileProvider.GetExtent*
-  name: GetExtent
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_GetExtent_
-  commentId: Overload:Mapsui.Tiling.Provider.TileProvider.GetExtent
-  isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.TileProvider.GetExtent
-  nameWithType: TileProvider.GetExtent
-- uid: Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync(Mapsui.Layers.FetchInfo)
-  name: GetFeaturesAsync(FetchInfo)
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_GetFeaturesAsync_Mapsui_Layers_FetchInfo_
-  commentId: M:Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync(Mapsui.Layers.FetchInfo)
-  fullName: Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync(Mapsui.Layers.FetchInfo)
-  nameWithType: TileProvider.GetFeaturesAsync(FetchInfo)
-- uid: Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync*
-  name: GetFeaturesAsync
-  href: pages/Mapsui.Tiling.Provider.TileProvider.html#Mapsui_Tiling_Provider_TileProvider_GetFeaturesAsync_
-  commentId: Overload:Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync
-  isSpec: "True"
-  fullName: Mapsui.Tiling.Provider.TileProvider.GetFeaturesAsync
-  nameWithType: TileProvider.GetFeaturesAsync
+  fullName: Mapsui.Tiling.Provider.RasterizingTileSource.ToViewport
+  nameWithType: RasterizingTileSource.ToViewport
 - uid: Mapsui.Tiling.Rendering
   name: Mapsui.Tiling.Rendering
   href: pages/Mapsui.Tiling.Rendering.html
@@ -29838,6 +29774,31 @@ references:
   isSpec: "True"
   fullName: Mapsui.Tiling.Rendering.TilingRenderFetchStrategy.Get
   nameWithType: TilingRenderFetchStrategy.Get
+- uid: Mapsui.Tiling.Utilities
+  name: Mapsui.Tiling.Utilities
+  href: pages/Mapsui.Tiling.Utilities.html
+  commentId: N:Mapsui.Tiling.Utilities
+  fullName: Mapsui.Tiling.Utilities
+  nameWithType: Mapsui.Tiling.Utilities
+- uid: Mapsui.Tiling.Utilities.HttpClientTools
+  name: HttpClientTools
+  href: pages/Mapsui.Tiling.Utilities.HttpClientTools.html
+  commentId: T:Mapsui.Tiling.Utilities.HttpClientTools
+  fullName: Mapsui.Tiling.Utilities.HttpClientTools
+  nameWithType: HttpClientTools
+- uid: Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent
+  name: GetDefaultApplicationUserAgent()
+  href: pages/Mapsui.Tiling.Utilities.HttpClientTools.html#Mapsui_Tiling_Utilities_HttpClientTools_GetDefaultApplicationUserAgent
+  commentId: M:Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent
+  fullName: Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent()
+  nameWithType: HttpClientTools.GetDefaultApplicationUserAgent()
+- uid: Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent*
+  name: GetDefaultApplicationUserAgent
+  href: pages/Mapsui.Tiling.Utilities.HttpClientTools.html#Mapsui_Tiling_Utilities_HttpClientTools_GetDefaultApplicationUserAgent_
+  commentId: Overload:Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent
+  isSpec: "True"
+  fullName: Mapsui.Tiling.Utilities.HttpClientTools.GetDefaultApplicationUserAgent
+  nameWithType: HttpClientTools.GetDefaultApplicationUserAgent
 - uid: Mapsui.UI
   name: Mapsui.UI
   href: pages/Mapsui.UI.html
