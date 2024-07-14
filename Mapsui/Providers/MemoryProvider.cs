@@ -155,9 +155,7 @@ public class MemoryProvider : IProvider, IList<IFeature>
         IFeature? result;
 
         lock (_sync)
-        {
             result = _features.FirstOrDefault(f => value != null && f[fieldName] == value);
-        }
 
         return result;
     }
