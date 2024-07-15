@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Mapsui.Manipulations;
+using Mapsui.Styles;
+using System.Threading.Tasks;
 #if __MAUI__
 using Microsoft.Maui.Controls;
 namespace Mapsui.UI.Maui;
@@ -38,6 +40,8 @@ using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Mapsui.UI.Blazor;
+#elif __WINDOWSFORMS__
+namespace Mapsui.UI.WindowsForms;
 #else
 namespace Mapsui.UI.Wpf;
 #endif
@@ -55,7 +59,7 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
     // Action to call for a redraw of the control
     private protected Action? _invalidate;
     // Timer for loop to invalidating the control
-    private Timer? _invalidateTimer;
+    private System.Threading.Timer? _invalidateTimer;
     // Interval between two calls of the invalidate function in ms
     private int _updateInterval = 16;
     // Stopwatch for measuring drawing times
@@ -80,7 +84,7 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
         PlatformUtilities.SetOpenInBrowserFunc(OpenInBrowser);
         // Create timer for invalidating the control
         _invalidateTimer?.Dispose();
-        _invalidateTimer = new Timer(InvalidateTimerCallback, null, Timeout.Infinite, 16);
+        _invalidateTimer = new (InvalidateTimerCallback, null, Timeout.Infinite, 16);
         // Start the invalidation timer
         StartUpdates(false);
         // Mapsui.Rendering.Skia use Mapsui.Nts where GetDbaseLanguageDriver need encoding providers
@@ -102,6 +106,14 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
 
         // All requested updates up to this point will be handled by this redraw
         _refresh = false;
+
+        // Start initializing symbol styles and refresh to trigger another render loop.
+        InitializeSymbolStyles((needRefresh) => 
+            { 
+                if (needRefresh) 
+                    RefreshGraphics(); 
+            }); 
+
         Renderer.Render(canvas, Map.Navigator.Viewport, Map.Layers, Map.Widgets, Map.BackColor);
 
         // Stop stopwatch after drawing control
@@ -115,6 +127,10 @@ public partial class MapControl : INotifyPropertyChanged, IDisposable
         _invalidated = false;
     }
 
+    public void InitializeSymbolStyles(Action<bool> doneInitializing) =>
+        ImageSourceCacheInitializer.FetchImagesInViewport(_renderer.ImageSourceCache, Map.Navigator.Viewport, 
+            Map.Layers, Map.Widgets, doneInitializing);
+    
     private void InvalidateTimerCallback(object? state)
     {
         try

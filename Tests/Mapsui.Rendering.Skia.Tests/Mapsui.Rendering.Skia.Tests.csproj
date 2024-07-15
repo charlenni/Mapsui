@@ -42,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\Cache\ArcGisImageServiceSample.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Cache\BingArial.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -67,6 +70,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Cache\WmtsSample.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Cache\WmtsZurichSample.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Images\Original\AsyncFetchSample.Regression.png">
@@ -383,7 +389,6 @@
     <None Remove="Resources\Images\OriginalRegression\AnimatedBusSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\AnimatedPointsSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\ArcGISDynamicServiceSample.Regression.png" />
-    <None Remove="Resources\Images\OriginalRegression\BitmapUriSymbolSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\EditingAddLineSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\EditingAddPointSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\EditingAddPolygonSample.Regression.png" />
@@ -400,6 +405,7 @@
     <None Remove="Resources\Images\OriginalRegression\ProjectionTestSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\RasterizingTileLayerWithDynamicPointsSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\RasterizingTileLayerWithThousandsOfPolygonsSample.Regression.png" />
+    <None Remove="Resources\Images\OriginalRegression\WfsOgcFilterSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\WfsPointsSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\WmsBasilicataSample.Regression.png" />
     <None Remove="Resources\Images\OriginalRegression\WmsOpenSeaSample.Regression.png" />
