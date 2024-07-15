@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.76a95c52.min.css">
       
       
 
@@ -898,7 +898,7 @@
 <h3 id="image-types">Image Types</h3>
 <p>An ImageSource can point to an SVG (supported via <a href="https://github.com/wieslawsoltes/Svg.Skia">Svg.Skia</a>) or a bitmap type, which can be PNG, WEBP, JPEG, and any other formats <a href="https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skencodedimageformat?view=skiasharp-2.88#fields">supported by SkiaSharp</a>.</p>
 <h3 id="types-with-an-imagesource">Types with an ImageSource</h3>
-<p>The following types in Mapsui currently support the ImageSource path:</p>
+<p>In Mapsui 5.0.0-beta.2 the following types support the ImageSource path:</p>
 <ul>
 <li>SymbolStyle</li>
 <li>CalloutStyle</li>
@@ -906,7 +906,8 @@
 <li>ImageButtonWidget</li>
 </ul>
 <h3 id="bitmapregion-for-bitmap-types">BitmapRegion for Bitmap Types</h3>
-<p>For bitmap types, you can specify a sub-region of the bitmap to use. This is useful for utilizing a smaller part of a bitmap or working with a meta image (or atlas) that contains multiple smaller images. In Mapsui 5.0.0-beta.2, BitmapRegions are supported by:</p>
+<p>For bitmap types, you can specify a sub-region of the bitmap to use. This is useful for utilizing a smaller part of a bitmap or working with a meta image (or atlas) that contains multiple smaller images. </p>
+<p>In Mapsui 5.0.0-beta.2 the following types support the BitmapRegion:</p>
 <ul>
 <li>SymbolStyle </li>
 <li>Brush</li>
@@ -917,7 +918,8 @@
 <li>SvgFillColor</li>
 <li>SvgStrokeColor</li>
 </ul>
-<p>This feature offers great flexibility, allowing you to, for instance, indicate different types of vehicles or different states of a single vehicle.</p>
+<p>This feature offers great flexibility, allowing you to, for instance, indicate different types of vehicles or different states of a single vehicle. </p>
+<p>In Mapsui 5.0.0-beta.2 only the SymbolStyle supports SvgFillColor and SvgStrokeColor.</p>
 
 
 
