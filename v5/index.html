@@ -970,7 +970,7 @@
 <p>Try the quick-start for your favorite framework below.</p>
 <div class="admonition quickstart guides">
 <p class="admonition-title">Quickstart</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:8"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><input id="__tabbed_1_8" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">MAUI</label><label for="__tabbed_1_2">Uno</label><label for="__tabbed_1_3">Avalonia</label><label for="__tabbed_1_4">Blazor</label><label for="__tabbed_1_5">WPF</label><label for="__tabbed_1_6">WinUI</label><label for="__tabbed_1_7">.NET for iOS</label><label for="__tabbed_1_8">.NET for Android</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:10"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><input id="__tabbed_1_8" name="__tabbed_1" type="radio" /><input id="__tabbed_1_9" name="__tabbed_1" type="radio" /><input id="__tabbed_1_10" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">MAUI</label><label for="__tabbed_1_2">Uno</label><label for="__tabbed_1_3">Avalonia</label><label for="__tabbed_1_4">Blazor</label><label for="__tabbed_1_5">WPF</label><label for="__tabbed_1_6">WinUI</label><label for="__tabbed_1_7">.NET for iOS</label><label for="__tabbed_1_8">.NET for Android</label><label for="__tabbed_1_9">Eto Forms</label><label for="__tabbed_1_10">Windows Forms</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><strong>Step 1:</strong> Create a new .NET 7.0 MAUI application in Visual Studio.</p>
@@ -1222,29 +1222,18 @@ Add Follwing to the Blazor project, is a workaround that text is rendered.</li>
 </span></code></pre></div>
 <p><strong>Step 5:</strong> Run it and you should see a map of the world.</p>
 </div>
+<div class="tabbed-block">
+<p><strong>Step 1:</strong> Start a new <a href="https://github.com/picoe/Eto/wiki/Quick-Start">Eto.Forms</a> application in Visual Studio.</p>
+<p><strong>Step 2:</strong> In the package manager console type:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="go">PM&gt; Install-Package Mapsui.Eto</span>
+</span></code></pre></div>
+<p><strong>Step 3:</strong> In MainForm.cs add this to the class constructor:</p>
+<div class="language-csharp highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kt">var</span><span class="w"> </span><span class="n">mapControl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Mapsui</span><span class="p">.</span><span class="n">UI</span><span class="p">.</span><span class="n">Eto</span><span class="p">.</span><span class="n">MapControl</span><span class="p">();</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="n">mapControl</span><span class="p">.</span><span class="n">Map</span><span class="p">.</span><span class="n">Layers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Mapsui</span><span class="p">.</span><span class="n">Tiling</span><span class="p">.</span><span class="n">OpenStreetMap</span><span class="p">.</span><span class="n">CreateTileLayer</span><span class="p">());</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="n">Content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapControl</span><span class="p">;</span>
+</span></code></pre></div>
+<p><strong>Step 4:</strong> Run it and you should see a map of the world.</p>
 </div>
-</div>
-<p>=== "Eto Forms"</p>
-<div class="language-text highlight"><pre><span></span><code>**Step 1:** Start a new [Eto.Forms](https://github.com/picoe/Eto/wiki/Quick-Start) application in Visual Studio.
-
-**Step 2:** In the package manager console type:
-
-```console
-PM&gt; Install-Package Mapsui.Eto
-```
-
-**Step 3:** In MainForm.cs add this to the class constructor:
-
-```csharp
-var mapControl = new Mapsui.UI.Eto.MapControl();
-mapControl.Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
-Content = mapControl;
-```
-
-**Step 4:** Run it and you should see a map of the world.
-</code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Windows Forms</label></div>
-<div class="tabbed-content">
 <div class="tabbed-block">
 <p><strong>Step 1:</strong> Start a new Windows Forms App in Visual Studio.</p>
 <p><strong>Step 2:</strong> In the package manager console type:</p>
