@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
 
@@ -63,7 +63,7 @@
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -141,19 +141,19 @@ M and Z values in a shapefile is ignored by Mapsui.
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.%23ctor(System.String%2CSystem.Boolean%2CSystem.Boolean%2CMapsui.Projections.IProjectionCrs)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs_System_Boolean_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.%23ctor(System.String%2CSystem.Boolean%2CSystem.Boolean%2CMapsui.Projections.IProjectionCrs%2CSystem.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L195">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L196">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.#ctor*"></a>
-  <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.#ctor(System.String,System.Boolean,System.Boolean,Mapsui.Projections.IProjectionCrs)">ShapeFile(string, bool, bool, IProjectionCrs?)</h4>
+  <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs_System_Boolean_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.#ctor(System.String,System.Boolean,System.Boolean,Mapsui.Projections.IProjectionCrs,System.Boolean)">ShapeFile(string, bool, bool, IProjectionCrs?, bool)</h4>
   <div class="markdown level1 summary"><p>Initializes a ShapeFile DataProvider.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ShapeFile(string filename, bool fileBasedIndex = false, bool readPrjFile = false, IProjectionCrs? projectionCrs = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public ShapeFile(string filename, bool fileBasedIndex = false, bool readPrjFile = false, IProjectionCrs? projectionCrs = null, bool calculateBoundingBoxes = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -189,9 +189,15 @@ M and Z values in a shapefile is ignored by Mapsui.
         <td><p>Projection Crs</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">calculateBoundingBoxes</span></td>
+        <td><p>if true the Bounding Box of Features is calculated instead of being read solves problems in Zooming when the written Bounding Boxes are not correct.</p>
+</td>
+      </tr>
     </tbody>
   </table>
-  <h5 id="Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs__remarks">Remarks</h5>
+  <h5 id="Mapsui_Nts_Providers_Shapefile_ShapeFile__ctor_System_String_System_Boolean_System_Boolean_Mapsui_Projections_IProjectionCrs_System_Boolean__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>If FileBasedIndex is true, the spatial index will be read from a local copy. If it doesn't exist,
 it will be generated and saved to [filename] + '.sidx'.</p>
 <p>Using a file-based index is especially recommended for ASP.NET applications which will speed up
@@ -205,7 +211,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_CRS.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.CRS%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L494">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L497">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_CRS_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.CRS*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_CRS" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.CRS">CRS</h4>
@@ -236,7 +242,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_Encoding.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.Encoding%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L257">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L259">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Encoding_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Encoding*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Encoding" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Encoding">Encoding</h4>
@@ -270,7 +276,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_Filename.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.Filename%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L231">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L233">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Filename_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Filename*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Filename" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Filename">Filename</h4>
@@ -304,7 +310,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_FilterDelegate.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.FilterDelegate%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L270">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L272">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_FilterDelegate_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.FilterDelegate*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_FilterDelegate" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.FilterDelegate">FilterDelegate</h4>
@@ -335,7 +341,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_Id.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.Id%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L214">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L216">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Id_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Id*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Id" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Id">Id</h4>
@@ -365,7 +371,7 @@ start-up time when the cache has been emptied.
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_ShapeType.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.ShapeType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L225">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L227">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_ShapeType_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.ShapeType*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_ShapeType" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.ShapeType">ShapeType</h4>
@@ -404,7 +410,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_Dispose.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.Dispose%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L279">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L282">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Dispose_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Dispose*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Dispose" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Dispose">Dispose()</h4>
@@ -420,7 +426,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_Finalize.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.Finalize%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L303">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L306">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Finalize_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Finalize*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_Finalize" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.Finalize">~ShapeFile()</h4>
@@ -436,7 +442,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetExtent.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetExtent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L472">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L475">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetExtent_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetExtent*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetExtent" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetExtent">GetExtent()</h4>
@@ -467,7 +473,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeature_System_UInt32_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeature(System.UInt32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L870">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L883">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeature_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeature*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeature_System_UInt32_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeature(System.UInt32)">GetFeature(uint)</h4>
@@ -515,7 +521,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeatureCount.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeatureCount%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L463">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L466">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeatureCount_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeatureCount*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeatureCount" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeatureCount">GetFeatureCount()</h4>
@@ -546,7 +552,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeaturesAsync_Mapsui_Layers_FetchInfo_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeaturesAsync(Mapsui.Layers.FetchInfo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L904">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L917">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeaturesAsync_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeaturesAsync*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetFeaturesAsync_Mapsui_Layers_FetchInfo_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetFeaturesAsync(Mapsui.Layers.FetchInfo)">GetFeaturesAsync(FetchInfo)</h4>
@@ -593,7 +599,7 @@ type.</p>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometriesInView_Mapsui_MRect_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometriesInView(Mapsui.MRect)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L363">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L366">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometriesInView_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometriesInView*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometriesInView_Mapsui_MRect_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometriesInView(Mapsui.MRect)">GetGeometriesInView(MRect)</h4>
@@ -647,7 +653,7 @@ are performed on objects simplified by their BoundingBox, and using the Spatial 
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometry_System_UInt32_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometry(System.UInt32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L432">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L435">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometry_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometry*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetGeometry_System_UInt32_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetGeometry(System.UInt32)">GetGeometry(uint)</h4>
@@ -697,7 +703,7 @@ are performed on objects simplified by their BoundingBox, and using the Spatial 
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_GetObjectIDsInView_Mapsui_MRect_.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.GetObjectIDsInView(Mapsui.MRect)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L399">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L402">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetObjectIDsInView_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetObjectIDsInView*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_GetObjectIDsInView_Mapsui_MRect_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.GetObjectIDsInView(Mapsui.MRect)">GetObjectIDsInView(MRect)</h4>
@@ -745,7 +751,7 @@ are performed on objects simplified by their BoundingBox, and using the Spatial 
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Nts_Providers_Shapefile_ShapeFile_RebuildSpatialIndex.md&amp;value=---%0Auid%3A%20Mapsui.Nts.Providers.Shapefile.ShapeFile.RebuildSpatialIndex%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L678">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui.Nts/Providers/Shapefile/ShapeFile.cs/#L681">View Source</a>
   </span>
   <a id="Mapsui_Nts_Providers_Shapefile_ShapeFile_RebuildSpatialIndex_" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.RebuildSpatialIndex*"></a>
   <h4 id="Mapsui_Nts_Providers_Shapefile_ShapeFile_RebuildSpatialIndex" data-uid="Mapsui.Nts.Providers.Shapefile.ShapeFile.RebuildSpatialIndex">RebuildSpatialIndex()</h4>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
 
@@ -63,7 +63,7 @@
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -105,6 +105,9 @@
     </div>
     <div>
       <a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_Fields">BaseFeature.Fields</a>
+    </div>
+    <div>
+      <a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_Data">BaseFeature.Data</a>
     </div>
     <div>
       <a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_Item_System_String_">BaseFeature.this[string]</a>
@@ -222,7 +225,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MRect? Extent { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public override MRect? Extent { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -239,6 +242,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_Extent">BaseFeature.Extent</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Layers_RasterFeature_Raster.md&amp;value=---%0Auid%3A%20Mapsui.Layers.RasterFeature.Raster%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
@@ -270,37 +275,6 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Layers_RasterFeature_ZOrder.md&amp;value=---%0Auid%3A%20Mapsui.Layers.RasterFeature.ZOrder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Features/RasterFeature.cs/#L33">View Source</a>
-  </span>
-  <a id="Mapsui_Layers_RasterFeature_ZOrder_" data-uid="Mapsui.Layers.RasterFeature.ZOrder*"></a>
-  <h4 id="Mapsui_Layers_RasterFeature_ZOrder" data-uid="Mapsui.Layers.RasterFeature.ZOrder">ZOrder</h4>
-  <div class="markdown level1 summary"><p>Order of feature which is here always 0, because all rasters are on the same level</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int ZOrder { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
@@ -308,7 +282,7 @@
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Layers_RasterFeature_Clone.md&amp;value=---%0Auid%3A%20Mapsui.Layers.RasterFeature.Clone%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Features/RasterFeature.cs/#L50">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Features/RasterFeature.cs/#L45">View Source</a>
   </span>
   <a id="Mapsui_Layers_RasterFeature_Clone_" data-uid="Mapsui.Layers.RasterFeature.Clone*"></a>
   <h4 id="Mapsui_Layers_RasterFeature_Clone" data-uid="Mapsui.Layers.RasterFeature.Clone">Clone()</h4>
@@ -317,7 +291,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual object Clone()</code></pre>
+    <pre><code class="lang-csharp hljs">public override object Clone()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-condensed">
@@ -335,12 +309,14 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_Clone">BaseFeature.Clone()</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/charlenni/Mapsui/new/main/apiSpec/new?filename=Mapsui_Layers_RasterFeature_CoordinateVisitor_System_Action_System_Double_System_Double_Mapsui_CoordinateSetter__.md&amp;value=---%0Auid%3A%20Mapsui.Layers.RasterFeature.CoordinateVisitor(System.Action%7BSystem.Double%2CSystem.Double%2CMapsui.CoordinateSetter%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Features/RasterFeature.cs/#L39">View Source</a>
+    <a href="https://github.com/charlenni/Mapsui/blob/main/Mapsui/Features/RasterFeature.cs/#L34">View Source</a>
   </span>
   <a id="Mapsui_Layers_RasterFeature_CoordinateVisitor_" data-uid="Mapsui.Layers.RasterFeature.CoordinateVisitor*"></a>
   <h4 id="Mapsui_Layers_RasterFeature_CoordinateVisitor_System_Action_System_Double_System_Double_Mapsui_CoordinateSetter__" data-uid="Mapsui.Layers.RasterFeature.CoordinateVisitor(System.Action{System.Double,System.Double,Mapsui.CoordinateSetter})">CoordinateVisitor(Action&lt;double, double, CoordinateSetter&gt;)</h4>
@@ -349,7 +325,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CoordinateVisitor(Action&lt;double, double, CoordinateSetter&gt; visit)</code></pre>
+    <pre><code class="lang-csharp hljs">public override void CoordinateVisitor(Action&lt;double, double, CoordinateSetter&gt; visit)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -368,6 +344,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Mapsui.Layers.BaseFeature.html#Mapsui_Layers_BaseFeature_CoordinateVisitor_System_Action_System_Double_System_Double_Mapsui_CoordinateSetter__">BaseFeature.CoordinateVisitor(Action&lt;double, double, CoordinateSetter&gt;)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Mapsui.IFeature.html">IFeature</a>
